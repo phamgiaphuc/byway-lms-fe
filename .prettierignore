@@ -1,0 +1,45 @@
+# Build output
+dist
+build
+.output
+
+# Node modules
+node_modules
+
+# TypeScript build info
+tsconfig.tsbuildinfo
+
+# Vite cache
+.vite
+vite.config.ts.timestamp-*
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.idea
+.vscode
+*.swp
+
+# Lock files (optional, if managed externally)
+pnpm-lock.yaml
+yarn.lock
+package-lock.json
+
+# Coverage / testing
+coverage
+*.snap
+
+# Generated assets
+*.min.js
+*.min.css
+
+# ESLint cache
+.eslintcache
