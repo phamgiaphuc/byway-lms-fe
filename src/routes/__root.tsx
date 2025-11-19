@@ -1,4 +1,4 @@
-import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
+import { createRootRoute, HeadContent, Outlet } from "@tanstack/react-router";
 import React from "react";
 
 const TanStackRouterDevtools = import.meta.env.PROD
@@ -11,15 +11,7 @@ const TanStackRouterDevtools = import.meta.env.PROD
 
 const RootLayout = () => (
   <>
-    <div className="flex gap-2 p-2">
-      <Link to="/" className="[&.active]:font-bold">
-        Home
-      </Link>
-      <Link to="/about" className="[&.active]:font-bold">
-        About
-      </Link>
-    </div>
-    <hr />
+    <HeadContent />
     <Outlet />
     <TanStackRouterDevtools />
   </>
