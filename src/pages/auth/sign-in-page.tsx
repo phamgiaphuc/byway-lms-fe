@@ -1,98 +1,132 @@
-import React from 'react';
+import signInBg from "@/assets/backgrounds/sign-in-bg.png";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { initialSignIn, signInSchema, type SignInSchema } from "@/types/auth/sign-in";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+} from "@/components/ui/input-group";
+import { ArrowRight, Eye, EyeOff, Lock, Mail } from "lucide-react";
 import { useState } from "react";
-import SearchBar from './searchbar';
-import Background from "C:/Users/Admin/Desktop/lms/byway-lms-fe/src/assets/sign_in_pic.png"
+import { Button } from "@/components/ui/button";
+import GoogleLogo from "@/assets/brands/google.svg";
+import FacebookLogo from "@/assets/brands/facebook.svg";
 
 const SignInPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const form = useForm({
+    resolver: zodResolver(signInSchema),
+    defaultValues: initialSignIn,
+  });
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    console.log({ email, password });
-  }
+  const onSubmit = (values: SignInSchema) => {
+    console.log(values);
+  };
 
   return (
-
-    <div className="min-h-screen w-full bg-white">
-      <header>
-        <SearchBar />
-      </header>
-      <hr className="border-t border-gray-300" />
-
-      <div className="flex min-h-screen">
-
-        <div className="flex-1 flex flex-col items-center justify-center p-8 -mt-60">
-          <div className="w-full  p-6 rounded-lg ">
-            <h1 className="text-4xl font-bold mb-2 text-center ">Sign into your account</h1>
-
-
-            <form onSubmit={handleSubmit} className="grid gap-4 justify-center ">
-              <div className="grid gap-2">
-                <label htmlFor="email">Email</label>
-                <input
-                  id="email"
-                  type="email"
-                  className="border p-2 rounded-md w-[690px] "
-                  placeholder="youremailhere@email.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
+    <div className="relative flex min-h-[calc(100vh-4rem)] flex-col">
+      <div className="container mx-auto flex flex-1">
+        <div className="flex flex-1 items-center justify-center px-5">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-lg space-y-5">
+              <div className="text-center">
+                <label className="text-2xl font-medium">Sign in to your account</label>
               </div>
-
-              <div className="grid gap-2">
-                <label htmlFor="password">Password</label>
-                <input
-                  id="password"
-                  type="password"
-                  className="border p-2 rounded-md w-[690px]"
-                  placeholder="•••••••••"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <InputGroup>
+                        <InputGroupInput placeholder="Enter your email" {...field} />
+                        <InputGroupAddon>
+                          <Mail />
+                        </InputGroupAddon>
+                      </InputGroup>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <InputGroup>
+                        <InputGroupInput
+                          placeholder="Enter your password"
+                          type={showPassword ? "text" : "password"}
+                          {...field}
+                        />
+                        <InputGroupAddon>
+                          <Lock />
+                        </InputGroupAddon>
+                        <InputGroupAddon align="inline-end">
+                          <InputGroupButton
+                            variant="ghost"
+                            size="icon-xs"
+                            onClick={() => setShowPassword(!showPassword)}
+                          >
+                            {showPassword ? <EyeOff /> : <Eye />}
+                            <span className="sr-only">Toogle password type</span>
+                          </InputGroupButton>
+                        </InputGroupAddon>
+                      </InputGroup>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit" className="group w-full">
+                Sign in
+                <ArrowRight className="transition-transform group-hover:translate-x-1" />
+              </Button>
+              <div className="relative py-1.5">
+                <div className="absolute inset-0 flex items-center">
+                  <span className="w-full border-t"></span>
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="bg-background text-muted-foreground px-2">Sign in with</span>
+                </div>
               </div>
-
-              <button
-                type="submit"
-                className="w-[124px] bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-500 text-sm"
-              >
-                Sign In →
-              </button>
-
-              <div className="flex items-center my-6 w-[690px]">
-                <hr className="flex-grow border-gray-300" />
-                <span className="mx-4 text-gray-500 text-sm">Sign in with</span>
-                <hr className="flex-grow border-gray-300" />
+              <div className="grid grid-cols-2 gap-3.5">
+                <Button type="button" variant="outline" className="w-full">
+                  <img src={GoogleLogo} alt="Google" className="size-4" />
+                  Google
+                </Button>
+                <Button type="button" variant="outline" className="w-full">
+                  <img src={FacebookLogo} alt="Google" className="size-4" />
+                  Facebook
+                </Button>
               </div>
-
-              <button
-                type="button"
-                className="w-[690px] border border-gray-300 py-2 rounded-md flex items-center justify-center gap-3 hover:bg-gray-100"
-              >
-                <img
-                  src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-                  alt="Google"
-                  className="w-5 h-5"
-                />
-                <span className="text-gray-700 text-sm">Google</span>
-              </button>
             </form>
-
-
-
-
-          </div>
+          </Form>
         </div>
-
-        <div className="w-1/3 flex items-center justify-center">
+        <div className="relative max-w-1/3 flex-1">
           <img
-            src={Background}
-            alt="Background"
-            className="w-full h-full object-cover"
+            src={signInBg}
+            alt="Sign in background"
+            className="absolute top-0 h-full w-full object-cover"
           />
         </div>
       </div>
-    </div>);
-}
+    </div>
+  );
+};
 
-export default SignInPage
+export default SignInPage;

@@ -1,152 +1,182 @@
-import React from 'react';
+import signUpBg from "@/assets/backgrounds/sign-up-bg.png";
+import { initialSignUp, signUpSchema, type SignUpSchema } from "@/types/auth/sign-up";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
-import SearchBar from './searchbar';
-import Background from "C:/Users/Admin/Desktop/lms/byway-lms-fe/src/assets/sign_in_pic.png"
+import { useForm } from "react-hook-form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+} from "@/components/ui/input-group";
+import { ArrowRight, Eye, EyeOff, Lock, Mail, User } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const SignUpPage = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const form = useForm({
+    resolver: zodResolver(signUpSchema),
+    defaultValues: initialSignUp,
+  });
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    console.log({ firstName, lastName, username, email, password, confirmPassword });
-  }
+  const onSubmit = (values: SignUpSchema) => {
+    console.log(values);
+  };
 
   return (
-    <div className="min-h-screen w-full bg-white">
-      <header>
-        <SearchBar />
-      </header>
-      <hr className="border-t border-gray-300" />
-
-      <div className="flex min-h-screen">
-
-        <div className="flex-1 flex flex-col items-center justify-center p-8">
-          <div className="w-full p-6 rounded-lg">
-
-            <h1 className="text-4xl font-bold mb-6 text-center">Create your account</h1>
-
-            <form onSubmit={handleSubmit} className="grid gap-4 justify-center">
-
-              <div className="flex gap-4">
-                <div className="grid gap-2 flex-1">
-                  <label htmlFor="firstName">First Name</label>
-                  <input
-                    id="firstName"
-                    type="text"
-                    className="border p-2 rounded-md w-full"
-                    placeholder="John"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                  />
-                </div>
-
-                <div className="grid gap-2 flex-1">
-                  <label htmlFor="lastName">Last Name</label>
-                  <input
-                    id="lastName"
-                    type="text"
-                    className="border p-2 rounded-md w-full"
-                    placeholder="Doe"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                  />
-                </div>
-              </div>
-
-              <div className="grid gap-2">
-                <label htmlFor="username">Username</label>
-                <input
-                  id="username"
-                  type="text"
-                  className="border p-2 rounded-md w-[690px]"
-                  placeholder="johndoe123"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-              </div>
-
-              <div className="grid gap-2">
-                <label htmlFor="email">Email</label>
-                <input
-                  id="email"
-                  type="email"
-                  className="border p-2 rounded-md w-[690px]"
-                  placeholder="you@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-
-              <div className="flex gap-4">
-                <div className="grid gap-2 flex-1">
-                  <label htmlFor="password">Password</label>
-                  <input
-                    id="password"
-                    type="password"
-                    className="border p-2 rounded-md w-full"
-                    placeholder="•••••••••"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </div>
-
-                <div className="grid gap-2 flex-1">
-                  <label htmlFor="confirmPassword">Confirm Password</label>
-                  <input
-                    id="confirmPassword"
-                    type="password"
-                    className="border p-2 rounded-md w-full"
-                    placeholder="•••••••••"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                  />
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                className="w-[124px] bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-500 text-sm"
-              >
-                Sign Up →
-              </button>
-
-              <div className="flex items-center my-6 w-[690px]">
-                <hr className="flex-grow border-gray-300" />
-                <span className="mx-4 text-gray-500 text-sm">Sign up with</span>
-                <hr className="flex-grow border-gray-300" />
-              </div>
-              <button
-                type="button"
-                className="w-[690px] border border-gray-300 py-2 rounded-md flex items-center justify-center gap-3 hover:bg-gray-100"
-                
-              >
-                <img
-                  src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-                  alt="Google"
-                  className="w-5 h-5"
-                />
-                <span className="text-gray-700 text-sm">Google</span>
-              </button>
-
-            </form>
-          </div>
-        </div>
-
-        <div className="w-1/3 flex items-center justify-center">
+    <div className="relative flex min-h-[calc(100vh-4rem)] flex-col">
+      <div className="container mx-auto flex flex-1">
+        <div className="relative max-w-1/3 flex-1">
           <img
-            src={Background}
-            alt="Background"
-            className="w-full h-full object-cover"
+            src={signUpBg}
+            alt="Sign in background"
+            className="absolute top-0 h-full w-full object-cover"
           />
         </div>
-
+        <div className="flex flex-1 items-center justify-center px-5">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-lg space-y-5">
+              <div className="text-center">
+                <label className="text-2xl font-medium">Create your account</label>
+              </div>
+              <div className="grid grid-cols-2 gap-3.5">
+                <div>
+                  <FormField
+                    control={form.control}
+                    name="firstName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>First name</FormLabel>
+                        <FormControl>
+                          <InputGroup>
+                            <InputGroupInput placeholder="Enter your first name" {...field} />
+                            <InputGroupAddon>
+                              <User />
+                            </InputGroupAddon>
+                          </InputGroup>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div>
+                  <FormField
+                    control={form.control}
+                    name="lastName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Last name</FormLabel>
+                        <FormControl>
+                          <InputGroup>
+                            <InputGroupInput placeholder="Enter your first name" {...field} />
+                            <InputGroupAddon>
+                              <User />
+                            </InputGroupAddon>
+                          </InputGroup>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </div>
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <InputGroup>
+                        <InputGroupInput placeholder="Enter your email" {...field} />
+                        <InputGroupAddon>
+                          <Mail />
+                        </InputGroupAddon>
+                      </InputGroup>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="grid grid-cols-2 gap-3.5">
+                <div>
+                  <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Password</FormLabel>
+                        <FormControl>
+                          <InputGroup>
+                            <InputGroupInput
+                              placeholder="Enter your password"
+                              type={showPassword ? "text" : "password"}
+                              {...field}
+                            />
+                            <InputGroupAddon>
+                              <Lock />
+                            </InputGroupAddon>
+                            <InputGroupAddon align="inline-end">
+                              <InputGroupButton
+                                variant="ghost"
+                                size="icon-xs"
+                                onClick={() => setShowPassword(!showPassword)}
+                              >
+                                {showPassword ? <EyeOff /> : <Eye />}
+                                <span className="sr-only">Toogle password type</span>
+                              </InputGroupButton>
+                            </InputGroupAddon>
+                          </InputGroup>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div>
+                  <FormField
+                    control={form.control}
+                    name="confirmPassword"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Confirm password</FormLabel>
+                        <FormControl>
+                          <InputGroup>
+                            <InputGroupInput
+                              type="password"
+                              placeholder="Enter your password again"
+                              {...field}
+                            />
+                            <InputGroupAddon>
+                              <Lock />
+                            </InputGroupAddon>
+                          </InputGroup>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </div>
+              <Button type="submit" className="group w-full">
+                Create account
+                <ArrowRight className="transition-transform group-hover:translate-x-1" />
+              </Button>
+            </form>
+          </Form>
+        </div>
       </div>
-    </div>);
-}
+    </div>
+  );
+};
 
-export default SignUpPage
+export default SignUpPage;
