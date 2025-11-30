@@ -5,8 +5,8 @@ import { Search, ShoppingCart } from "lucide-react";
 
 const Header = () => {
   return (
-    <header className="bg-background sticky top-0 z-50">
-      <nav className="container mx-auto flex h-16 items-center justify-between">
+    <header className="bg-background border-border sticky top-0 z-50 border-b">
+      <nav className="container mx-auto flex h-16 items-center justify-between px-5">
         <div className="flex items-center gap-8">
           <Link to="/" className="flex items-center gap-1">
             <img src="/favicon.svg" alt="Byway LMS" className="size-6" />

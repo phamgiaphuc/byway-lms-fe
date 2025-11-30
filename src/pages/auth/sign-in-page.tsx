@@ -21,6 +21,8 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import GoogleLogo from "@/assets/brands/google.svg";
 import FacebookLogo from "@/assets/brands/facebook.svg";
+import { Label } from "@/components/ui/label";
+import { Link } from "@tanstack/react-router";
 
 const SignInPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -101,7 +103,7 @@ const SignInPage = () => {
                   <span className="w-full border-t"></span>
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="bg-background text-muted-foreground px-2">Sign in with</span>
+                  <span className="bg-background text-muted-foreground px-2">Or continue with</span>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-3.5">
@@ -113,6 +115,14 @@ const SignInPage = () => {
                   <img src={FacebookLogo} alt="Google" className="size-4" />
                   Facebook
                 </Button>
+              </div>
+              <div className="flex items-center justify-center">
+                <span className="text-muted-foreground flex items-center gap-1 text-sm">
+                  Don't have an account?
+                  <Label asChild className="hover:text-primary text-foreground font-medium">
+                    <Link to="/sign-up">Sign up</Link>
+                  </Label>
+                </span>
               </div>
             </form>
           </Form>

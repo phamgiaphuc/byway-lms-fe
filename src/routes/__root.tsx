@@ -1,3 +1,5 @@
+import Footer from "@/components/footer";
+import Header from "@/components/header";
 import { createRootRoute, HeadContent, Outlet } from "@tanstack/react-router";
 import React from "react";
 
@@ -12,7 +14,11 @@ const TanStackRouterDevtools = import.meta.env.PROD
 const RootLayout = () => (
   <>
     <HeadContent />
-    <Outlet />
+    <Header />
+    <main>
+      <Outlet />
+    </main>
+    <Footer />
     <TanStackRouterDevtools />
   </>
 );

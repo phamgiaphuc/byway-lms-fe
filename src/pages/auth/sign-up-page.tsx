@@ -19,6 +19,8 @@ import {
 } from "@/components/ui/input-group";
 import { ArrowRight, Eye, EyeOff, Lock, Mail, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Link } from "@tanstack/react-router";
 
 const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -171,6 +173,14 @@ const SignUpPage = () => {
                 Create account
                 <ArrowRight className="transition-transform group-hover:translate-x-1" />
               </Button>
+              <div className="flex items-center justify-center">
+                <span className="text-muted-foreground flex items-center gap-1 text-sm">
+                  Already have an account?
+                  <Label asChild className="hover:text-primary text-foreground font-medium">
+                    <Link to="/sign-in">Sign in</Link>
+                  </Label>
+                </span>
+              </div>
             </form>
           </Form>
         </div>
