@@ -1,5 +1,17 @@
+import { AppSidebar } from "@/components/sidebar/app-sidebar";
+import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+
 const DashboardPage = () => {
-  return <div className="bg-blue-200">DashboardPage</div>;
+  return (
+    <SidebarProvider>
+      <AppSidebar />
+      <SidebarInset>
+        <header className="flex h-14 items-center px-4">
+          <SidebarTrigger />
+        </header>
+      </SidebarInset>
+    </SidebarProvider>
+  );
 };
 
 export default DashboardPage;

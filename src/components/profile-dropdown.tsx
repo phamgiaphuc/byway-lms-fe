@@ -10,6 +10,7 @@ import {
 import {
   Bell,
   DollarSign,
+  GitPullRequest,
   Kanban,
   LogOut,
   MessageSquare,
@@ -71,7 +72,7 @@ const menu: Record<Role, MenuSection[]> = {
         { label: "Dashboard", icon: <Kanban />, href: "/admin/dashboard" },
         { label: "Courses", icon: <Presentation />, href: "/admin/courses" },
         { label: "Users Management", icon: <Users />, href: "/admin/users" },
-        { label: "Notifications", icon: <Bell />, href: "/admin/notifications" },
+        { label: "Requests", icon: <GitPullRequest />, href: "/admin/requests" },
       ],
     },
   ],
