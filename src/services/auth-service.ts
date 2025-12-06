@@ -1,3 +1,4 @@
+import { ls } from "@/lib/helpers";
 import { api } from "@/lib/ky";
 import type { ApiResponse } from "@/types/api-response";
 import type { SignIn, SignInResponse } from "@/types/auth/sign-in";
@@ -40,4 +41,8 @@ export const verify = async (values: Verify) => {
       json: values,
     })
     .json<ApiResponse<VerifyResponse>>();
+};
+
+export const signOut = () => {
+  ls.clear();
 };

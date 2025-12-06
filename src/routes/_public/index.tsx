@@ -5,7 +5,7 @@ import StatsSection from "@/pages/home/stats-section";
 import SupportSection from "@/pages/home/support-section";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/_public/")({
   component: Index,
 });
 

@@ -1,3 +1,9 @@
+export type Role = "user" | "instructor" | "admin";
+
+export const USER_ROLE: Role = "user";
+export const INSTRUCTOR_ROLE: Role = "instructor";
+export const ADMIN_ROLE: Role = "admin";
+
 export type User = {
   id: string;
   name: string;
@@ -7,7 +13,7 @@ export type User = {
   createdAt: string;
   updatedAt: string;
   deletedAt: string | null;
-  role: string;
+  role: Role;
 };
 
 export const initialUser: User = {
@@ -19,5 +25,5 @@ export const initialUser: User = {
   createdAt: "",
   updatedAt: "",
   deletedAt: null,
-  role: "",
+  role: "user",
 };

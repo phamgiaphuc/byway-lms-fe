@@ -1,11 +1,10 @@
-import Header from "@/components/header";
 import { useUserStore } from "@/hooks/zustand/use-user-store";
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/_auth")({
+export const Route = createFileRoute("/_authenticated")({
   beforeLoad: () => {
     const { isAuthenticated } = useUserStore.getState();
-    if (isAuthenticated) {
+    if (!isAuthenticated) {
       return redirect({
         to: "/",
       });
@@ -15,12 +14,5 @@ export const Route = createFileRoute("/_auth")({
 });
 
 function RouteComponent() {
-  const { queryClient } = Route.useRouteContext();
-
-  return (
-    <>
-      <Header queryClient={queryClient} />
-      <Outlet />
-    </>
-  );
+  return <Outlet />;
 }

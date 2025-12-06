@@ -33,6 +33,10 @@ export const verifySearchSchema = z.object({
   expiredAt: z.number(),
 });
 
+export const thirdPartySearchSchema = z.object({
+  token: z.string(),
+});
+
 export type VerifyResponse = {
   user: User;
   token: string;

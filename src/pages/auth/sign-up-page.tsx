@@ -24,6 +24,9 @@ import { Link, useNavigate } from "@tanstack/react-router";
 import { useSignUp } from "@/hooks/tanstack-query/use-auth";
 import { useUserStore } from "@/hooks/zustand/use-user-store";
 import { convertToUnix } from "@/lib/helpers";
+import { HTTPError } from "ky";
+import type { ApiError } from "@/types/api-error";
+import { toast } from "sonner";
 
 const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -49,6 +52,13 @@ const SignUpPage = () => {
             expiredAt: convertToUnix(new Date(verification.expiredAt)),
           },
         });
+      },
+      onError: async (error) => {
+        if (error instanceof HTTPError) {
+          const { message } = await error.response.json<ApiError>();
+          return toast.error(message);
+        }
+        toast.error(error.message);
       },
     });
   };

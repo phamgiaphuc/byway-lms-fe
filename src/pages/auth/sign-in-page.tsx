@@ -25,8 +25,13 @@ import { Label } from "@/components/ui/label";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useSignIn } from "@/hooks/tanstack-query/use-auth";
 import { sendVerification } from "@/services/auth-service";
-import { convertToUnix } from "@/lib/helpers";
+import { convertToUnix, ls } from "@/lib/helpers";
 import { useUserStore } from "@/hooks/zustand/use-user-store";
+import { toast } from "sonner";
+import { HTTPError } from "ky";
+import type { ApiError } from "@/types/api-error";
+import { env } from "@/lib/env";
+import { ADMIN_ROLE } from "@/types/user";
 
 const SignInPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -56,12 +61,25 @@ const SignInPage = () => {
           });
         }
         if (token) {
+          ls.set("token", token);
           setProfile(user);
           setIsAuthenticated(true);
+          if (user.role === ADMIN_ROLE) {
+            return navigate({
+              to: "/admin/dashboard",
+            });
+          }
           return navigate({
             to: "/",
           });
         }
+      },
+      onError: async (error) => {
+        if (error instanceof HTTPError) {
+          const { message } = await error.response.json<ApiError>();
+          return toast.error(message);
+        }
+        toast.error(error.message);
       },
     });
   };
@@ -138,7 +156,16 @@ const SignInPage = () => {
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-3.5">
-                <Button type="button" variant="outline" className="w-full">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => {
+                    navigate({
+                      href: `${env.VITE_API_BASE_URL}/api/auth/google`,
+                    });
+                  }}
+                >
                   <img src={GoogleLogo} alt="Google" className="size-4" />
                   Google
                 </Button>

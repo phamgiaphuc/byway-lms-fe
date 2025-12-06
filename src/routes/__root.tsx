@@ -1,7 +1,7 @@
-import Footer from "@/components/footer";
-import Header from "@/components/header";
+import { Toaster } from "@/components/ui/sonner";
 import { useUserStore } from "@/hooks/zustand/use-user-store";
 import { getMe } from "@/services/user-service";
+import { initialUser } from "@/types/user";
 import type { QueryClient } from "@tanstack/react-query";
 import { createRootRouteWithContext, HeadContent, Outlet } from "@tanstack/react-router";
 import React from "react";
@@ -22,26 +22,35 @@ const ReactQueryDevtools = import.meta.env.PROD
       })),
     );
 
-const RootLayout = () => (
-  <>
-    <HeadContent />
-    <Header />
-    <main>
+const RootLayout = () => {
+  return (
+    <>
+      <HeadContent />
       <Outlet />
-    </main>
-    <Footer />
-    <TanStackRouterDevtools />
-    <ReactQueryDevtools />
-  </>
-);
+      <Toaster richColors position="top-center" theme="light" />
+      <TanStackRouterDevtools />
+      <ReactQueryDevtools />
+    </>
+  );
+};
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
-  beforeLoad: async () => {
-    const { data } = await getMe();
-    if (data) {
+  beforeLoad: async ({ context: { queryClient } }) => {
+    try {
+      const { data } = await queryClient.fetchQuery({
+        queryKey: ["me"],
+        queryFn: getMe,
+      });
+      if (data) {
+        useUserStore.setState({
+          profile: data,
+          isAuthenticated: true,
+        });
+      }
+    } catch (error) {
       useUserStore.setState({
-        profile: data,
-        isAuthenticated: true,
+        profile: initialUser,
+        isAuthenticated: false,
       });
     }
     return true;

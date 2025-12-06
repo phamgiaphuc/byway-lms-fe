@@ -1,10 +1,12 @@
+import ProfileDropdown from "@/components/profile-dropdown";
 import { Button } from "@/components/ui/button";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 import { useUserStore } from "@/hooks/zustand/use-user-store";
+import type { QueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { Bell, Heart, Search, ShoppingCart } from "lucide-react";
 
-const Header = () => {
+const Header = ({ queryClient }: { queryClient: QueryClient }) => {
   const { isAuthenticated, profile } = useUserStore();
 
   return (
@@ -43,9 +45,7 @@ const Header = () => {
                 <Bell />
               </Button>
             </div>
-            <div className="size-10 overflow-hidden rounded-full">
-              <img src={profile.image} alt={profile.name} className="object-cover object-center" />
-            </div>
+            <ProfileDropdown profile={profile} queryClient={queryClient} />
           </div>
         ) : (
           <div className="flex items-center gap-4">
