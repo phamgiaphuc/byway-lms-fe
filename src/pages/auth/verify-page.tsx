@@ -11,6 +11,9 @@ import { useForm } from "react-hook-form";
 import { differenceInSeconds } from "date-fns";
 import { formatCountdown, ls } from "@/lib/helpers";
 import { useVerify } from "@/hooks/tanstack-query/use-auth";
+import { HTTPError } from "ky";
+import type { ApiError } from "@/types/api-error";
+import { toast } from "sonner";
 
 const VerifyPage = () => {
   const { id, expiredAt } = useSearch({
@@ -42,6 +45,13 @@ const VerifyPage = () => {
         navigate({
           to: "/",
         });
+      },
+      onError: async (error) => {
+        if (error instanceof HTTPError) {
+          const { message } = await error.response.json<ApiError>();
+          return toast.error(message);
+        }
+        toast.error(error.message);
       },
     });
   };
