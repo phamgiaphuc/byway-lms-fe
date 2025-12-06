@@ -59,7 +59,7 @@ const menu: Record<Role, MenuSection[]> = {
       items: [
         { label: "Dashboard", icon: <Kanban />, href: "/instructor/dashboard" },
         { label: "Courses", icon: <Presentation />, href: "/instructor/courses" },
-        { label: "Communication", icon: <MessageSquare />, href: "/instructor/messages" },
+        { label: "Messages", icon: <MessageSquare />, href: "/instructor/messages" },
         { label: "Revenue", icon: <DollarSign />, href: "/instructor/revenue" },
         { label: "Notifications", icon: <Bell />, href: "/instructor/notifications" },
       ],

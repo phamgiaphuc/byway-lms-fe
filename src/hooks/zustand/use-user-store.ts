@@ -1,4 +1,3 @@
-import { ls } from "@/lib/helpers";
 import { initialUser, type User } from "@/types/user";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";

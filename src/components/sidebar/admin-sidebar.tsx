@@ -1,9 +1,7 @@
-"use client";
-
 import * as React from "react";
 import { GitPullRequest, Kanban, LogOut, Presentation, Users } from "lucide-react";
 
-import { NavMain } from "@/components/sidebar/nav-main";
+import { NavMain, type NavItem } from "@/components/sidebar/nav-main";
 import {
   Sidebar,
   SidebarContent,
@@ -17,19 +15,12 @@ import {
 } from "@/components/ui/sidebar";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { useUserStore } from "@/hooks/zustand/use-user-store";
 import { Label } from "@/components/ui/label";
 import { ls } from "@/lib/helpers";
 import { QueryClient } from "@tanstack/react-query";
-import { Button, buttonVariants } from "@/components/ui/button";
 
-const navigations = [
+const navItems: NavItem[] = [
   {
     title: "Dashboard",
     url: "/admin/dashboard",
@@ -52,7 +43,7 @@ const navigations = [
   },
 ];
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AdminSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { open } = useSidebar();
   const { profile, signOut } = useUserStore();
   const queryClient = new QueryClient();
@@ -67,7 +58,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </Link>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={navigations} />
+        <NavMain items={navItems} />
       </SidebarContent>
       <SidebarFooter>
         <SidebarMenu>

@@ -6,7 +6,7 @@ export const Route = createFileRoute("/_authenticated/admin/dashboard")({
   head: () => ({
     meta: [
       {
-        title: "Dasboard - Admin",
+        title: "Dashboard - Admin",
       },
     ],
   }),

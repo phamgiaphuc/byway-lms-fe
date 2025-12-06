@@ -13,25 +13,21 @@ import {
 } from "@/components/ui/sidebar";
 import { Link, useLocation } from "@tanstack/react-router";
 
-export function NavMain({
-  items,
-}: {
-  items: {
+export type NavItem = {
+  title: string;
+  url: string;
+  icon?: LucideIcon;
+  isActive?: boolean;
+  items?: {
     title: string;
     url: string;
-    icon?: LucideIcon;
-    isActive?: boolean;
-    items?: {
-      title: string;
-      url: string;
-    }[];
   }[];
-}) {
+};
+
+export function NavMain({ items }: { items: NavItem[] }) {
   const pathname = useLocation({
     select: (location) => location.pathname,
   });
-
-  console.log(pathname);
 
   return (
     <SidebarGroup>
