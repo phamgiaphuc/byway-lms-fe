@@ -28,7 +28,7 @@ const RootLayout = () => {
       <HeadContent />
       <Outlet />
       <Toaster richColors position="top-center" theme="light" />
-      {/* <TanStackRouterDevtools /> */}
+      <TanStackRouterDevtools />
       <ReactQueryDevtools />
     </>
   );

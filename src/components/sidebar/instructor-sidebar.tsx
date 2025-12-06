@@ -1,14 +1,5 @@
 import * as React from "react";
-import {
-  Bell,
-  DollarSign,
-  GitPullRequest,
-  Kanban,
-  LogOut,
-  MessageSquare,
-  Presentation,
-  Users,
-} from "lucide-react";
+import { Bell, DollarSign, Kanban, LogOut, MessageSquare, Presentation } from "lucide-react";
 
 import { NavMain, type NavItem } from "@/components/sidebar/nav-main";
 import {
