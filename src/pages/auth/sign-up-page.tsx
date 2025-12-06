@@ -20,7 +20,13 @@ import {
 import { ArrowRight, Eye, EyeOff, Lock, Mail, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { useSignUp } from "@/hooks/tanstack-query/use-auth";
+import { useUserStore } from "@/hooks/zustand/use-user-store";
+import { convertToUnix } from "@/lib/helpers";
+import { HTTPError } from "ky";
+import type { ApiError } from "@/types/api-error";
+import { toast } from "sonner";
 
 const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -28,9 +34,33 @@ const SignUpPage = () => {
     resolver: zodResolver(signUpSchema),
     defaultValues: initialSignUp,
   });
+  const { mutate } = useSignUp();
+  const navigate = useNavigate();
+  const { setProfile } = useUserStore();
 
   const onSubmit = (values: SignUpSchema) => {
-    console.log(values);
+    mutate(values, {
+      onSuccess: (response) => {
+        const {
+          data: { verification, user },
+        } = response;
+        setProfile(user);
+        return navigate({
+          to: "/verify",
+          search: {
+            id: verification.id,
+            expiredAt: convertToUnix(new Date(verification.expiredAt)),
+          },
+        });
+      },
+      onError: async (error) => {
+        if (error instanceof HTTPError) {
+          const { message } = await error.response.json<ApiError>();
+          return toast.error(message);
+        }
+        toast.error(error.message);
+      },
+    });
   };
 
   return (
@@ -45,7 +75,7 @@ const SignUpPage = () => {
         </div>
         <div className="flex flex-1 items-center justify-center px-5">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-lg space-y-5">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-lg space-y-6">
               <div className="text-center">
                 <label className="text-2xl font-medium">Create your account</label>
               </div>

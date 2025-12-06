@@ -1,11 +1,12 @@
 import { Link } from "@tanstack/react-router";
 import GoogleLogo from "@/assets/brands/google.svg";
 import FacebookLogo from "@/assets/brands/facebook.svg";
+import { cn } from "@/lib/utils";
 
 const Footer = () => {
   return (
-    <div className="bg-primary">
-      <div className="container mx-auto flex justify-between px-5 py-12 text-white">
+    <div className={cn("bg-primary")}>
+      <div className="container mx-auto flex h-64 items-center justify-between px-5 text-white">
         <div className="max-w-[450px]">
           <div className="flex items-center gap-1">
             <img src="/favicon.svg" alt="Byway LMS" className="size-10" />

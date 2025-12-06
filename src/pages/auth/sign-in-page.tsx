@@ -22,7 +22,16 @@ import { Button } from "@/components/ui/button";
 import GoogleLogo from "@/assets/brands/google.svg";
 import FacebookLogo from "@/assets/brands/facebook.svg";
 import { Label } from "@/components/ui/label";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { useSignIn } from "@/hooks/tanstack-query/use-auth";
+import { sendVerification } from "@/services/auth-service";
+import { convertToUnix, ls } from "@/lib/helpers";
+import { useUserStore } from "@/hooks/zustand/use-user-store";
+import { toast } from "sonner";
+import { HTTPError } from "ky";
+import type { ApiError } from "@/types/api-error";
+import { env } from "@/lib/env";
+import { ADMIN_ROLE } from "@/types/user";
 
 const SignInPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -30,9 +39,49 @@ const SignInPage = () => {
     resolver: zodResolver(signInSchema),
     defaultValues: initialSignIn,
   });
+  const { mutate } = useSignIn();
+  const navigate = useNavigate();
+  const { setProfile, setIsAuthenticated } = useUserStore();
 
   const onSubmit = (values: SignInSchema) => {
-    console.log(values);
+    mutate(values, {
+      onSuccess: async (response) => {
+        const {
+          data: { user, token },
+        } = response;
+        if (!user.emailVerified) {
+          const { data } = await sendVerification(user.id);
+          setProfile(user);
+          return navigate({
+            to: "/verify",
+            search: {
+              id: data.id,
+              expiredAt: convertToUnix(new Date(data.expiredAt)),
+            },
+          });
+        }
+        if (token) {
+          ls.set("token", token);
+          setProfile(user);
+          setIsAuthenticated(true);
+          if (user.role === ADMIN_ROLE) {
+            return navigate({
+              to: "/admin/dashboard",
+            });
+          }
+          return navigate({
+            to: "/",
+          });
+        }
+      },
+      onError: async (error) => {
+        if (error instanceof HTTPError) {
+          const { message } = await error.response.json<ApiError>();
+          return toast.error(message);
+        }
+        toast.error(error.message);
+      },
+    });
   };
 
   return (
@@ -40,7 +89,7 @@ const SignInPage = () => {
       <div className="container mx-auto flex flex-1">
         <div className="flex flex-1 items-center justify-center px-5">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-lg space-y-5">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-lg space-y-6">
               <div className="text-center">
                 <label className="text-2xl font-medium">Sign in to your account</label>
               </div>
@@ -107,7 +156,16 @@ const SignInPage = () => {
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-3.5">
-                <Button type="button" variant="outline" className="w-full">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => {
+                    navigate({
+                      href: `${env.VITE_API_BASE_URL}/api/auth/google`,
+                    });
+                  }}
+                >
                   <img src={GoogleLogo} alt="Google" className="size-4" />
                   Google
                 </Button>

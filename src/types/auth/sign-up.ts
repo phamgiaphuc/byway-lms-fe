@@ -1,3 +1,4 @@
+import type { User } from "@/types/user";
 import z from "zod";
 
 export interface SignUp {
@@ -6,7 +7,6 @@ export interface SignUp {
   lastName: string;
   password: string;
   confirmPassword: string;
-  terms: boolean;
 }
 
 export const initialSignUp: SignUp = {
@@ -15,7 +15,6 @@ export const initialSignUp: SignUp = {
   lastName: "",
   password: "",
   confirmPassword: "",
-  terms: false,
 };
 
 export const signUpSchema = z
@@ -31,9 +30,6 @@ export const signUpSchema = z
       message: "Last name is required",
     }),
     confirmPassword: z.string(),
-    terms: z.boolean().refine((data) => data === true, {
-      message: "Terms is required",
-    }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",
@@ -41,3 +37,11 @@ export const signUpSchema = z
   }) satisfies z.ZodType<SignUp>;
 
 export type SignUpSchema = z.infer<typeof signUpSchema>;
+
+export type SignUpResponse = {
+  user: User;
+  verification: {
+    id: string;
+    expiredAt: string;
+  };
+};

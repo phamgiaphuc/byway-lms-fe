@@ -9,25 +9,58 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as AboutRouteImport } from './routes/about'
+import { Route as PublicRouteImport } from './routes/_public'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as AuthRouteImport } from './routes/_auth'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as PublicIndexRouteImport } from './routes/_public/index'
+import { Route as PublicAboutRouteImport } from './routes/_public/about'
+import { Route as AuthVerifyRouteImport } from './routes/_auth/verify'
+import { Route as AuthThirdPartyRouteImport } from './routes/_auth/third-party'
 import { Route as AuthSignUpRouteImport } from './routes/_auth/sign-up'
 import { Route as AuthSignInRouteImport } from './routes/_auth/sign-in'
+import { Route as AuthenticatedInstructorRouteRouteImport } from './routes/_authenticated/instructor/route'
+import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/admin/route'
+import { Route as AuthenticatedInstructorRevenueRouteImport } from './routes/_authenticated/instructor/revenue'
+import { Route as AuthenticatedInstructorNotificationsRouteImport } from './routes/_authenticated/instructor/notifications'
+import { Route as AuthenticatedInstructorMessagesRouteImport } from './routes/_authenticated/instructor/messages'
+import { Route as AuthenticatedInstructorDashboardRouteImport } from './routes/_authenticated/instructor/dashboard'
+import { Route as AuthenticatedInstructorCoursesRouteImport } from './routes/_authenticated/instructor/courses'
+import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin/users'
+import { Route as AuthenticatedAdminRequestsRouteImport } from './routes/_authenticated/admin/requests'
+import { Route as AuthenticatedAdminDashboardRouteImport } from './routes/_authenticated/admin/dashboard'
+import { Route as AuthenticatedAdminCoursesRouteImport } from './routes/_authenticated/admin/courses'
 
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
+const PublicRoute = PublicRouteImport.update({
+  id: '/_public',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRoute = AuthenticatedRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/_auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
+const PublicIndexRoute = PublicIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicAboutRoute = PublicAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => PublicRoute,
+} as any)
+const AuthVerifyRoute = AuthVerifyRouteImport.update({
+  id: '/verify',
+  path: '/verify',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthThirdPartyRoute = AuthThirdPartyRouteImport.update({
+  id: '/third-party',
+  path: '/third-party',
+  getParentRoute: () => AuthRoute,
 } as any)
 const AuthSignUpRoute = AuthSignUpRouteImport.update({
   id: '/sign-up',
@@ -39,54 +72,215 @@ const AuthSignInRoute = AuthSignInRouteImport.update({
   path: '/sign-in',
   getParentRoute: () => AuthRoute,
 } as any)
+const AuthenticatedInstructorRouteRoute =
+  AuthenticatedInstructorRouteRouteImport.update({
+    id: '/instructor',
+    path: '/instructor',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedAdminRouteRoute = AuthenticatedAdminRouteRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedInstructorRevenueRoute =
+  AuthenticatedInstructorRevenueRouteImport.update({
+    id: '/revenue',
+    path: '/revenue',
+    getParentRoute: () => AuthenticatedInstructorRouteRoute,
+  } as any)
+const AuthenticatedInstructorNotificationsRoute =
+  AuthenticatedInstructorNotificationsRouteImport.update({
+    id: '/notifications',
+    path: '/notifications',
+    getParentRoute: () => AuthenticatedInstructorRouteRoute,
+  } as any)
+const AuthenticatedInstructorMessagesRoute =
+  AuthenticatedInstructorMessagesRouteImport.update({
+    id: '/messages',
+    path: '/messages',
+    getParentRoute: () => AuthenticatedInstructorRouteRoute,
+  } as any)
+const AuthenticatedInstructorDashboardRoute =
+  AuthenticatedInstructorDashboardRouteImport.update({
+    id: '/dashboard',
+    path: '/dashboard',
+    getParentRoute: () => AuthenticatedInstructorRouteRoute,
+  } as any)
+const AuthenticatedInstructorCoursesRoute =
+  AuthenticatedInstructorCoursesRouteImport.update({
+    id: '/courses',
+    path: '/courses',
+    getParentRoute: () => AuthenticatedInstructorRouteRoute,
+  } as any)
+const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AuthenticatedAdminRouteRoute,
+} as any)
+const AuthenticatedAdminRequestsRoute =
+  AuthenticatedAdminRequestsRouteImport.update({
+    id: '/requests',
+    path: '/requests',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
+const AuthenticatedAdminDashboardRoute =
+  AuthenticatedAdminDashboardRouteImport.update({
+    id: '/dashboard',
+    path: '/dashboard',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
+const AuthenticatedAdminCoursesRoute =
+  AuthenticatedAdminCoursesRouteImport.update({
+    id: '/courses',
+    path: '/courses',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
+  '/instructor': typeof AuthenticatedInstructorRouteRouteWithChildren
   '/sign-in': typeof AuthSignInRoute
   '/sign-up': typeof AuthSignUpRoute
+  '/third-party': typeof AuthThirdPartyRoute
+  '/verify': typeof AuthVerifyRoute
+  '/about': typeof PublicAboutRoute
+  '/': typeof PublicIndexRoute
+  '/admin/courses': typeof AuthenticatedAdminCoursesRoute
+  '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
+  '/admin/requests': typeof AuthenticatedAdminRequestsRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/instructor/courses': typeof AuthenticatedInstructorCoursesRoute
+  '/instructor/dashboard': typeof AuthenticatedInstructorDashboardRoute
+  '/instructor/messages': typeof AuthenticatedInstructorMessagesRoute
+  '/instructor/notifications': typeof AuthenticatedInstructorNotificationsRoute
+  '/instructor/revenue': typeof AuthenticatedInstructorRevenueRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
+  '/instructor': typeof AuthenticatedInstructorRouteRouteWithChildren
   '/sign-in': typeof AuthSignInRoute
   '/sign-up': typeof AuthSignUpRoute
+  '/third-party': typeof AuthThirdPartyRoute
+  '/verify': typeof AuthVerifyRoute
+  '/about': typeof PublicAboutRoute
+  '/': typeof PublicIndexRoute
+  '/admin/courses': typeof AuthenticatedAdminCoursesRoute
+  '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
+  '/admin/requests': typeof AuthenticatedAdminRequestsRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/instructor/courses': typeof AuthenticatedInstructorCoursesRoute
+  '/instructor/dashboard': typeof AuthenticatedInstructorDashboardRoute
+  '/instructor/messages': typeof AuthenticatedInstructorMessagesRoute
+  '/instructor/notifications': typeof AuthenticatedInstructorNotificationsRoute
+  '/instructor/revenue': typeof AuthenticatedInstructorRevenueRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
   '/_auth': typeof AuthRouteWithChildren
-  '/about': typeof AboutRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
+  '/_public': typeof PublicRouteWithChildren
+  '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
+  '/_authenticated/instructor': typeof AuthenticatedInstructorRouteRouteWithChildren
   '/_auth/sign-in': typeof AuthSignInRoute
   '/_auth/sign-up': typeof AuthSignUpRoute
+  '/_auth/third-party': typeof AuthThirdPartyRoute
+  '/_auth/verify': typeof AuthVerifyRoute
+  '/_public/about': typeof PublicAboutRoute
+  '/_public/': typeof PublicIndexRoute
+  '/_authenticated/admin/courses': typeof AuthenticatedAdminCoursesRoute
+  '/_authenticated/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
+  '/_authenticated/admin/requests': typeof AuthenticatedAdminRequestsRoute
+  '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/_authenticated/instructor/courses': typeof AuthenticatedInstructorCoursesRoute
+  '/_authenticated/instructor/dashboard': typeof AuthenticatedInstructorDashboardRoute
+  '/_authenticated/instructor/messages': typeof AuthenticatedInstructorMessagesRoute
+  '/_authenticated/instructor/notifications': typeof AuthenticatedInstructorNotificationsRoute
+  '/_authenticated/instructor/revenue': typeof AuthenticatedInstructorRevenueRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/sign-in' | '/sign-up'
+  fullPaths:
+    | '/admin'
+    | '/instructor'
+    | '/sign-in'
+    | '/sign-up'
+    | '/third-party'
+    | '/verify'
+    | '/about'
+    | '/'
+    | '/admin/courses'
+    | '/admin/dashboard'
+    | '/admin/requests'
+    | '/admin/users'
+    | '/instructor/courses'
+    | '/instructor/dashboard'
+    | '/instructor/messages'
+    | '/instructor/notifications'
+    | '/instructor/revenue'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/sign-in' | '/sign-up'
+  to:
+    | '/admin'
+    | '/instructor'
+    | '/sign-in'
+    | '/sign-up'
+    | '/third-party'
+    | '/verify'
+    | '/about'
+    | '/'
+    | '/admin/courses'
+    | '/admin/dashboard'
+    | '/admin/requests'
+    | '/admin/users'
+    | '/instructor/courses'
+    | '/instructor/dashboard'
+    | '/instructor/messages'
+    | '/instructor/notifications'
+    | '/instructor/revenue'
   id:
     | '__root__'
-    | '/'
     | '/_auth'
-    | '/about'
+    | '/_authenticated'
+    | '/_public'
+    | '/_authenticated/admin'
+    | '/_authenticated/instructor'
     | '/_auth/sign-in'
     | '/_auth/sign-up'
+    | '/_auth/third-party'
+    | '/_auth/verify'
+    | '/_public/about'
+    | '/_public/'
+    | '/_authenticated/admin/courses'
+    | '/_authenticated/admin/dashboard'
+    | '/_authenticated/admin/requests'
+    | '/_authenticated/admin/users'
+    | '/_authenticated/instructor/courses'
+    | '/_authenticated/instructor/dashboard'
+    | '/_authenticated/instructor/messages'
+    | '/_authenticated/instructor/notifications'
+    | '/_authenticated/instructor/revenue'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRouteWithChildren
-  AboutRoute: typeof AboutRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
+  PublicRoute: typeof PublicRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
+    '/_public': {
+      id: '/_public'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof PublicRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthenticatedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_auth': {
@@ -96,12 +290,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
+    '/_public/': {
+      id: '/_public/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof PublicIndexRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/about': {
+      id: '/_public/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof PublicAboutRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_auth/verify': {
+      id: '/_auth/verify'
+      path: '/verify'
+      fullPath: '/verify'
+      preLoaderRoute: typeof AuthVerifyRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/third-party': {
+      id: '/_auth/third-party'
+      path: '/third-party'
+      fullPath: '/third-party'
+      preLoaderRoute: typeof AuthThirdPartyRouteImport
+      parentRoute: typeof AuthRoute
     }
     '/_auth/sign-up': {
       id: '/_auth/sign-up'
@@ -117,25 +332,178 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignInRouteImport
       parentRoute: typeof AuthRoute
     }
+    '/_authenticated/instructor': {
+      id: '/_authenticated/instructor'
+      path: '/instructor'
+      fullPath: '/instructor'
+      preLoaderRoute: typeof AuthenticatedInstructorRouteRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/instructor/revenue': {
+      id: '/_authenticated/instructor/revenue'
+      path: '/revenue'
+      fullPath: '/instructor/revenue'
+      preLoaderRoute: typeof AuthenticatedInstructorRevenueRouteImport
+      parentRoute: typeof AuthenticatedInstructorRouteRoute
+    }
+    '/_authenticated/instructor/notifications': {
+      id: '/_authenticated/instructor/notifications'
+      path: '/notifications'
+      fullPath: '/instructor/notifications'
+      preLoaderRoute: typeof AuthenticatedInstructorNotificationsRouteImport
+      parentRoute: typeof AuthenticatedInstructorRouteRoute
+    }
+    '/_authenticated/instructor/messages': {
+      id: '/_authenticated/instructor/messages'
+      path: '/messages'
+      fullPath: '/instructor/messages'
+      preLoaderRoute: typeof AuthenticatedInstructorMessagesRouteImport
+      parentRoute: typeof AuthenticatedInstructorRouteRoute
+    }
+    '/_authenticated/instructor/dashboard': {
+      id: '/_authenticated/instructor/dashboard'
+      path: '/dashboard'
+      fullPath: '/instructor/dashboard'
+      preLoaderRoute: typeof AuthenticatedInstructorDashboardRouteImport
+      parentRoute: typeof AuthenticatedInstructorRouteRoute
+    }
+    '/_authenticated/instructor/courses': {
+      id: '/_authenticated/instructor/courses'
+      path: '/courses'
+      fullPath: '/instructor/courses'
+      preLoaderRoute: typeof AuthenticatedInstructorCoursesRouteImport
+      parentRoute: typeof AuthenticatedInstructorRouteRoute
+    }
+    '/_authenticated/admin/users': {
+      id: '/_authenticated/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/requests': {
+      id: '/_authenticated/admin/requests'
+      path: '/requests'
+      fullPath: '/admin/requests'
+      preLoaderRoute: typeof AuthenticatedAdminRequestsRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/dashboard': {
+      id: '/_authenticated/admin/dashboard'
+      path: '/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AuthenticatedAdminDashboardRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/courses': {
+      id: '/_authenticated/admin/courses'
+      path: '/courses'
+      fullPath: '/admin/courses'
+      preLoaderRoute: typeof AuthenticatedAdminCoursesRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
   }
 }
 
 interface AuthRouteChildren {
   AuthSignInRoute: typeof AuthSignInRoute
   AuthSignUpRoute: typeof AuthSignUpRoute
+  AuthThirdPartyRoute: typeof AuthThirdPartyRoute
+  AuthVerifyRoute: typeof AuthVerifyRoute
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
   AuthSignInRoute: AuthSignInRoute,
   AuthSignUpRoute: AuthSignUpRoute,
+  AuthThirdPartyRoute: AuthThirdPartyRoute,
+  AuthVerifyRoute: AuthVerifyRoute,
 }
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
+interface AuthenticatedAdminRouteRouteChildren {
+  AuthenticatedAdminCoursesRoute: typeof AuthenticatedAdminCoursesRoute
+  AuthenticatedAdminDashboardRoute: typeof AuthenticatedAdminDashboardRoute
+  AuthenticatedAdminRequestsRoute: typeof AuthenticatedAdminRequestsRoute
+  AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
+}
+
+const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren =
+  {
+    AuthenticatedAdminCoursesRoute: AuthenticatedAdminCoursesRoute,
+    AuthenticatedAdminDashboardRoute: AuthenticatedAdminDashboardRoute,
+    AuthenticatedAdminRequestsRoute: AuthenticatedAdminRequestsRoute,
+    AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
+  }
+
+const AuthenticatedAdminRouteRouteWithChildren =
+  AuthenticatedAdminRouteRoute._addFileChildren(
+    AuthenticatedAdminRouteRouteChildren,
+  )
+
+interface AuthenticatedInstructorRouteRouteChildren {
+  AuthenticatedInstructorCoursesRoute: typeof AuthenticatedInstructorCoursesRoute
+  AuthenticatedInstructorDashboardRoute: typeof AuthenticatedInstructorDashboardRoute
+  AuthenticatedInstructorMessagesRoute: typeof AuthenticatedInstructorMessagesRoute
+  AuthenticatedInstructorNotificationsRoute: typeof AuthenticatedInstructorNotificationsRoute
+  AuthenticatedInstructorRevenueRoute: typeof AuthenticatedInstructorRevenueRoute
+}
+
+const AuthenticatedInstructorRouteRouteChildren: AuthenticatedInstructorRouteRouteChildren =
+  {
+    AuthenticatedInstructorCoursesRoute: AuthenticatedInstructorCoursesRoute,
+    AuthenticatedInstructorDashboardRoute:
+      AuthenticatedInstructorDashboardRoute,
+    AuthenticatedInstructorMessagesRoute: AuthenticatedInstructorMessagesRoute,
+    AuthenticatedInstructorNotificationsRoute:
+      AuthenticatedInstructorNotificationsRoute,
+    AuthenticatedInstructorRevenueRoute: AuthenticatedInstructorRevenueRoute,
+  }
+
+const AuthenticatedInstructorRouteRouteWithChildren =
+  AuthenticatedInstructorRouteRoute._addFileChildren(
+    AuthenticatedInstructorRouteRouteChildren,
+  )
+
+interface AuthenticatedRouteChildren {
+  AuthenticatedAdminRouteRoute: typeof AuthenticatedAdminRouteRouteWithChildren
+  AuthenticatedInstructorRouteRoute: typeof AuthenticatedInstructorRouteRouteWithChildren
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedAdminRouteRoute: AuthenticatedAdminRouteRouteWithChildren,
+  AuthenticatedInstructorRouteRoute:
+    AuthenticatedInstructorRouteRouteWithChildren,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
+
+interface PublicRouteChildren {
+  PublicAboutRoute: typeof PublicAboutRoute
+  PublicIndexRoute: typeof PublicIndexRoute
+}
+
+const PublicRouteChildren: PublicRouteChildren = {
+  PublicAboutRoute: PublicAboutRoute,
+  PublicIndexRoute: PublicIndexRoute,
+}
+
+const PublicRouteWithChildren =
+  PublicRoute._addFileChildren(PublicRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
   AuthRoute: AuthRouteWithChildren,
-  AboutRoute: AboutRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
+  PublicRoute: PublicRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
