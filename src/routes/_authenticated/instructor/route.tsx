@@ -1,22 +1,20 @@
 import { InstructorSidebar } from "@/components/sidebar/instructor-sidebar";
+import NavBreadcrumbs from "@/components/sidebar/nav-breadcrumbs";
 import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-} from "@/components/ui/breadcrumb";
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { useSidebarStore } from "@/hooks/zustand/use-sidebar-store";
+  SidebarInset,
+  SidebarProvider,
+  SidebarSeparator,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
 import { useUserStore } from "@/hooks/zustand/use-user-store";
 import { INSTRUCTOR_ROLE } from "@/types/user";
-import { createFileRoute, Link, Outlet, redirect } from "@tanstack/react-router";
+import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_authenticated/instructor")({
   beforeLoad: () => {
     const { profile } = useUserStore.getState();
     if (profile.role !== INSTRUCTOR_ROLE) {
-      redirect({
+      throw redirect({
         to: "/",
       });
     }
@@ -28,36 +26,14 @@ export const Route = createFileRoute("/_authenticated/instructor")({
 });
 
 function RouteComponent() {
-  const { headers } = useSidebarStore();
-
   return (
     <SidebarProvider>
       <InstructorSidebar />
       <SidebarInset>
         <header className="bg-background border-border sticky top-0 flex h-14 items-center border-b px-2">
-          <SidebarTrigger />
-          <div className="ml-2">
-            <Breadcrumb>
-              <BreadcrumbList>
-                {headers.map((header) => {
-                  if (header.url) {
-                    return (
-                      <BreadcrumbItem key={header.title}>
-                        <BreadcrumbLink asChild>
-                          <Link to={header.url}>{header.title}</Link>
-                        </BreadcrumbLink>
-                      </BreadcrumbItem>
-                    );
-                  }
-                  return (
-                    <BreadcrumbItem key={header.title}>
-                      <BreadcrumbPage>{header.title}</BreadcrumbPage>
-                    </BreadcrumbItem>
-                  );
-                })}
-              </BreadcrumbList>
-            </Breadcrumb>
-          </div>
+          <SidebarTrigger className="size-8" />
+          <SidebarSeparator orientation="vertical" className="ml-2 max-h-4" />
+          <NavBreadcrumbs />
         </header>
         <Outlet />
       </SidebarInset>

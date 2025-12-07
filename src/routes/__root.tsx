@@ -1,5 +1,6 @@
 import { Toaster } from "@/components/ui/sonner";
 import { useUserStore } from "@/hooks/zustand/use-user-store";
+import { ls } from "@/lib/helpers";
 import { getMe } from "@/services/user-service";
 import { initialUser } from "@/types/user";
 import type { QueryClient } from "@tanstack/react-query";
@@ -37,6 +38,9 @@ const RootLayout = () => {
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   beforeLoad: async ({ context: { queryClient } }) => {
     try {
+      if (!ls.get("token", "")) {
+        return true;
+      }
       const { data } = await queryClient.fetchQuery({
         queryKey: ["me"],
         queryFn: getMe,

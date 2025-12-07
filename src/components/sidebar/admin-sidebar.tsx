@@ -1,5 +1,5 @@
 import * as React from "react";
-import { GitPullRequest, Kanban, LogOut, Presentation, Users } from "lucide-react";
+import { GitPullRequest, Kanban, LogOut, Presentation, Tags, Users } from "lucide-react";
 
 import { NavMain, type NavItem } from "@/components/sidebar/nav-main";
 import {
@@ -30,6 +30,11 @@ const navItems: NavItem[] = [
     title: "Courses",
     url: "/admin/courses",
     icon: Presentation,
+  },
+  {
+    title: "Categories",
+    url: "/admin/categories",
+    icon: Tags,
   },
   {
     title: "Users Management",

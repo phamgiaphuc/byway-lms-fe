@@ -1,3 +1,9 @@
+import { format } from "date-fns";
+
+export function formatDatetime(date: string | Date, pattern = "HH:mm:ss yyyy-MM-dd") {
+  return format(new Date(date), pattern);
+}
+
 export const convertToUnix = (date: Date) => {
   return Math.floor(date.getTime() / 1000);
 };

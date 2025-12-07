@@ -1,14 +1,14 @@
 import { useSidebarStore } from "@/hooks/zustand/use-sidebar-store";
-import DashboardPage from "@/pages/admin/dashboard-page";
+import CategoryPage from "@/pages/admin/category/category-page";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 
-export const Route = createFileRoute("/_authenticated/admin/dashboard")({
+export const Route = createFileRoute("/_authenticated/admin/categories")({
   component: RouteComponent,
   head: () => ({
     meta: [
       {
-        title: "Dashboard - Admin",
+        title: "Categories - Admin",
       },
     ],
   }),
@@ -20,10 +20,10 @@ function RouteComponent() {
   useEffect(() => {
     setHeaders([
       {
-        title: "Dashboard",
+        title: "Categories",
       },
     ]);
   }, []);
 
-  return <DashboardPage />;
+  return <CategoryPage />;
 }

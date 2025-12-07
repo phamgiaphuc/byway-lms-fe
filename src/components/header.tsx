@@ -21,7 +21,7 @@ const Header = ({ queryClient }: { queryClient: QueryClient }) => {
             Categories
           </Link>
           <div className="w-[24rem]">
-            <InputGroup className="h-10">
+            <InputGroup>
               <InputGroupInput placeholder="Search courses" />
               <InputGroupAddon>
                 <Search />
