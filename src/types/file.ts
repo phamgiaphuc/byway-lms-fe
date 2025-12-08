@@ -14,20 +14,6 @@ export const initialFile: File = {
   url: "",
 };
 
-export type UploadSingle = {
-  file: File;
-  folder?: string;
-};
-
-export type UploadMultiple = {
-  files: File[];
-  folder?: string;
-};
-
-export type UploadSingleResponse = Omit<File, "id">;
-
-export type UploadMultipleResponse = Omit<File, "id">[];
-
 export const fileSchema = z
   .object({
     id: z.string(),
@@ -35,8 +21,8 @@ export const fileSchema = z
     name: z.string(),
     url: z.url(),
   })
-  .partial()
-  .refine((val) => val.id && val.ext && val.name && val.url, {
+  .optional()
+  .refine((val) => val !== undefined, {
     message: "File is required",
   });
 

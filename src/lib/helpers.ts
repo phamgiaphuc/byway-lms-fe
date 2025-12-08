@@ -1,4 +1,7 @@
 import { format } from "date-fns";
+import JPGFileIcon from "@/assets/file-icons/jpg.svg";
+import PNGFileIcon from "@/assets/file-icons/png.svg";
+import SVGFileIcon from "@/assets/file-icons/svg.svg";
 
 export function formatDatetime(date: string | Date, pattern = "HH:mm:ss yyyy-MM-dd") {
   return format(new Date(date), pattern);
@@ -54,4 +57,17 @@ export const ls = {
       console.error("Unable to clear local storage:", error);
     }
   },
+};
+
+export const getExtFileIcon = (ext: string) => {
+  switch (ext) {
+    case "jpg":
+      return JPGFileIcon;
+    case "png":
+      return PNGFileIcon;
+    case "svg":
+      return SVGFileIcon;
+    default:
+      return JPGFileIcon;
+  }
 };

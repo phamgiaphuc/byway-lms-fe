@@ -5,7 +5,7 @@ import type {
   UploadMultipleResponse,
   UploadSingle,
   UploadSingleResponse,
-} from "@/types/file";
+} from "@/types/upload";
 
 export const uploadSingle = async ({ file, folder }: UploadSingle) => {
   const form = new FormData();

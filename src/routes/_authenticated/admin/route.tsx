@@ -13,7 +13,6 @@ import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 export const Route = createFileRoute("/_authenticated/admin")({
   beforeLoad: () => {
     const { profile } = useUserStore.getState();
-    console.log(profile);
     if (profile.role !== ADMIN_ROLE) {
       throw redirect({
         to: "/",

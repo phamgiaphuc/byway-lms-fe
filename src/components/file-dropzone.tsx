@@ -1,42 +1,60 @@
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { useUploadMultiple } from "@/hooks/tanstack-query/use-file";
-import type { UploadMultipleResponse } from "@/types/file";
-import { UploadCloud } from "lucide-react";
+import { getExtFileIcon } from "@/lib/helpers";
+import type { File } from "@/types/file";
+import { Link } from "@tanstack/react-router";
+import { UploadCloud, X } from "lucide-react";
 import { useState } from "react";
 import { useDropzone, type DropzoneOptions } from "react-dropzone";
 
 type FileDropzoneProps = {
+  files?: File[];
   dropzoneOptions?: DropzoneOptions;
   folder?: string;
-  onFilesChange: (files: UploadMultipleResponse) => void;
+  label?: string;
+  subLabel?: string;
+  onFilesChange: (files: File[]) => void;
 };
 
 export const defaultFileDropzoneOptions: DropzoneOptions = {
   accept: {
-    "image/*": [".jpg", ".jpeg", ".png"],
+    "image/*": [".jpg", ".svg", ".png"],
   },
   maxFiles: 1,
   maxSize: 10 * 1024 * 1024,
 };
 
 const FileDropzone = ({
+  files,
   dropzoneOptions = defaultFileDropzoneOptions,
   folder,
+  label = "Choose a file or drag & drop it here",
+  subLabel = "JPEG, PNG, and SVG formats, up to 10MB",
   onFilesChange,
 }: FileDropzoneProps) => {
-  const [files, setFiles] = useState<File[]>([]);
+  const [currentFiles, setCurrentFiles] = useState<File[]>(
+    Array.isArray(files) ? files.filter(Boolean) : [],
+  );
   const { mutate } = useUploadMultiple();
 
   const { getRootProps, getInputProps } = useDropzone({
     ...dropzoneOptions,
     onDrop: async (files) => {
-      setFiles(files);
       mutate(
         {
           files: files,
           folder: folder,
         },
         {
-          onSuccess: (response) => onFilesChange(response.data),
+          onSuccess: (response) => {
+            const data: File[] = response.data.map((file) => ({
+              id: file.name.replace(`.${file.ext}`, ""),
+              ...file,
+            }));
+            setCurrentFiles(data);
+            onFilesChange(data);
+          },
           onError: (err) => {
             console.error("Upload error:", err);
           },
@@ -45,16 +63,63 @@ const FileDropzone = ({
     },
   });
 
+  const onDeleteFile = (deletedFile: File) => {
+    const files = currentFiles.filter((file) => file.id !== deletedFile.id);
+    setCurrentFiles(files);
+    onFilesChange(files);
+  };
+
   return (
-    <div
-      {...getRootProps({ className: "dropzone" })}
-      className="border-input hover:bg-accent/50 flex h-24 cursor-pointer items-center rounded-md border bg-transparent px-3 py-1 text-sm shadow-xs"
-    >
-      <div className="text-muted-foreground flex w-full flex-col items-center gap-1 text-center">
-        <UploadCloud />
-        <p>Drag 'n' drop some files here, or click to select files.</p>
+    <div>
+      <div
+        {...getRootProps({ className: "dropzone" })}
+        className="border-input hover:bg-accent/50 flex h-32 cursor-pointer items-center rounded-md border border-dashed bg-transparent px-3 py-1 text-sm shadow-xs transition-colors"
+      >
+        <div className="flex w-full flex-col items-center text-center">
+          <UploadCloud />
+          <div className="mt-2 space-y-1">
+            <p>{label}</p>
+            <p className="text-muted-foreground">{subLabel}</p>
+          </div>
+        </div>
+        <input {...getInputProps()} />
       </div>
-      <input {...getInputProps()} />
+      <div className="mt-2 space-y-2">
+        {currentFiles.map((file) => (
+          <Link
+            to={file.url}
+            target="_blank"
+            key={file.id}
+            className="rouned-md relative flex items-center gap-2 rounded-md bg-gray-100 p-3 shadow-xs transition-colors"
+          >
+            <div className="flex items-center gap-2">
+              <div className="relative size-14 overflow-hidden">
+                <img
+                  src={getExtFileIcon(file.ext)}
+                  alt={file.name}
+                  className="h-full object-cover object-center"
+                />
+              </div>
+              <div>
+                <Label className="font-normal">{file.name}</Label>
+              </div>
+            </div>
+            <div className="ml-auto">
+              <Button
+                onClick={(e) => {
+                  e.preventDefault();
+                  onDeleteFile(file);
+                }}
+                size="icon-sm"
+                variant="ghost"
+                className="hover:bg-destructive/10"
+              >
+                <X className="text-destructive" />
+              </Button>
+            </div>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 };

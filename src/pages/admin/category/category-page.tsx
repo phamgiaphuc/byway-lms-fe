@@ -1,6 +1,5 @@
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 import { categoryTableColumns } from "@/pages/admin/category/category-table-column";
-import { categories } from "@/types/category";
 import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import { Search } from "lucide-react";
 import {
@@ -12,10 +11,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import CategoryCreateSheet from "@/pages/admin/category/category-create-sheet";
+import { useGetCategories } from "@/hooks/tanstack-query/use-category";
 
 const CategoryPage = () => {
+  const { data } = useGetCategories();
+
   const table = useReactTable({
-    data: categories,
+    data: data?.data || [],
     columns: categoryTableColumns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -42,7 +44,7 @@ const CategoryPage = () => {
           <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
+                <TableRow key={headerGroup.id} className="bg-gray-200 hover:bg-gray-200">
                   {headerGroup.headers.map((header) => {
                     return (
                       <TableHead key={header.id}>

@@ -32,7 +32,22 @@ export const categoryTableColumns: ColumnDef<Category>[] = [
     accessorKey: "name",
     header: "Category",
     cell: ({ row }) => {
-      return <Label className="font-medium">{row.getValue("name")}</Label>;
+      const category = row.original;
+      return (
+        <div className="flex items-center gap-4">
+          <div className="relative size-20 overflow-hidden rounded-md">
+            <img
+              src={category.image.url}
+              alt={category.image.name}
+              className="h-full object-cover object-center"
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <Label className="font-medium">{row.getValue("name")}</Label>
+            <span className="text-muted-foreground text-xs">#{category.slug}</span>
+          </div>
+        </div>
+      );
     },
   },
   {

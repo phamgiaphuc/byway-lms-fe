@@ -8,7 +8,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { categorySchema, type CategorySchema } from "@/types/category";
+import { createCategorySchema, type CreateCategorySchema } from "@/types/category";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus, Tags, X } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -23,17 +23,29 @@ import {
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 import FileDropzone from "@/components/file-dropzone";
 import { useState } from "react";
-import { initialFile } from "@/types/file";
+import { useCreateCategory } from "@/hooks/tanstack-query/use-category";
+import { toast } from "sonner";
 
 const CategoryCreateSheet = () => {
   const [open, setOpen] = useState(false);
+  const { mutate } = useCreateCategory();
 
   const form = useForm({
-    resolver: zodResolver(categorySchema),
+    resolver: zodResolver(createCategorySchema),
+    defaultValues: {
+      name: "",
+      image: undefined,
+    },
   });
 
-  const onSubmit = (values: CategorySchema) => {
-    console.log(values);
+  const onSubmit = (values: CreateCategorySchema) => {
+    mutate(values, {
+      onSuccess: (response) => {
+        toast.success(response.message);
+        setOpen(false);
+        form.reset();
+      },
+    });
   };
 
   return (
@@ -50,8 +62,11 @@ const CategoryCreateSheet = () => {
           Create category
         </Button>
       </SheetTrigger>
-      <SheetContent className="gap-0 [&>button:first-of-type]:hidden" style={{ maxWidth: 450 }}>
-        <div className="relative h-24 overflow-hidden">
+      <SheetContent
+        className="bg-background gap-0 [&>button:first-of-type]:hidden"
+        style={{ maxWidth: 450 }}
+      >
+        <div className="relative h-28 overflow-hidden">
           <img src="/cover.png" alt="Cover background" className="object-cover object-center" />
         </div>
         <SheetHeader className="relative">
@@ -86,17 +101,15 @@ const CategoryCreateSheet = () => {
             <FormField
               control={form.control}
               name="image"
-              render={() => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>Image</FormLabel>
                   <FormControl>
                     <FileDropzone
+                      files={field.value ? [field.value] : []}
+                      folder="categories"
                       onFilesChange={(files) => {
-                        console.log(files);
-                        form.setValue("image", {
-                          ...initialFile,
-                          ...files[0],
-                        });
+                        form.setValue("image", files[0]);
                       }}
                     />
                   </FormControl>
