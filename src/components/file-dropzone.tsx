@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { Spinner } from "@/components/ui/spinner";
 import { useUploadMultiple } from "@/hooks/tanstack-query/use-file";
 import { getExtFileIcon } from "@/lib/helpers";
 import type { File } from "@/types/file";
@@ -9,7 +10,7 @@ import { useState } from "react";
 import { useDropzone, type DropzoneOptions } from "react-dropzone";
 
 type FileDropzoneProps = {
-  files?: File[];
+  files: File[];
   dropzoneOptions?: DropzoneOptions;
   folder?: string;
   label?: string;
@@ -33,10 +34,8 @@ const FileDropzone = ({
   subLabel = "JPEG, PNG, and SVG formats, up to 10MB",
   onFilesChange,
 }: FileDropzoneProps) => {
-  const [currentFiles, setCurrentFiles] = useState<File[]>(
-    Array.isArray(files) ? files.filter(Boolean) : [],
-  );
-  const { mutate } = useUploadMultiple();
+  const [currentFiles, setCurrentFiles] = useState<File[]>(files);
+  const { mutate, isPending } = useUploadMultiple();
 
   const { getRootProps, getInputProps } = useDropzone({
     ...dropzoneOptions,
@@ -75,6 +74,12 @@ const FileDropzone = ({
         {...getRootProps({ className: "dropzone" })}
         className="border-input hover:bg-accent/50 flex h-32 cursor-pointer items-center rounded-md border border-dashed bg-transparent px-3 py-1 text-sm shadow-xs transition-colors"
       >
+        {isPending && (
+          <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-white/60 backdrop-blur-sm">
+            <Spinner className="size-6" />
+            <p className="mt-2 text-sm">Uploading files...</p>
+          </div>
+        )}
         <div className="flex w-full flex-col items-center text-center">
           <UploadCloud />
           <div className="mt-2 space-y-1">

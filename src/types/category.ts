@@ -10,6 +10,20 @@ export type Category = {
   updatedAt: string;
 };
 
+export const initialCategory: Category = {
+  id: "",
+  name: "",
+  slug: "",
+  image: {
+    id: "",
+    ext: "",
+    name: "",
+    url: "",
+  },
+  createdAt: "",
+  updatedAt: "",
+};
+
 export const createCategorySchema = z.object({
   name: z.string().min(1, {
     message: "Name is required",
@@ -18,3 +32,4 @@ export const createCategorySchema = z.object({
 });
 
 export type CreateCategorySchema = z.infer<typeof createCategorySchema>;
+export type UpdateCategorySchema = Category;

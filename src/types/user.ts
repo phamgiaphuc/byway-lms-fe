@@ -4,6 +4,12 @@ export const USER_ROLE: Role = "user";
 export const INSTRUCTOR_ROLE: Role = "instructor";
 export const ADMIN_ROLE: Role = "admin";
 
+export const redirectOnRole: Record<Role, string> = {
+  admin: "/admin/dashboard",
+  user: "/",
+  instructor: "/instructor/dashboard",
+};
+
 export type User = {
   id: string;
   name: string;

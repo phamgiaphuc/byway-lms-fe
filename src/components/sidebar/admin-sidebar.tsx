@@ -55,7 +55,7 @@ export function AdminSidebar({ ...props }: React.ComponentProps<typeof Sidebar>)
   const navigate = useNavigate();
 
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar collapsible="icon" className="z-50" {...props}>
       <SidebarHeader>
         <Link to="/" className={cn("flex items-center gap-1", !open && "justify-center")}>
           <img src="/favicon.svg" alt="Byway LMS" className="size-6" />

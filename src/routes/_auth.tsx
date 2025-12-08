@@ -4,12 +4,23 @@ import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_auth")({
   beforeLoad: () => {
-    const { isAuthenticated } = useUserStore.getState();
-    if (isAuthenticated) {
+    const { isAuthenticated, profile } = useUserStore.getState();
+    if (!isAuthenticated) {
+      return true;
+    }
+    if (profile.role === "admin") {
       return redirect({
-        to: "/",
+        to: "/admin/dashboard",
       });
     }
+    if (profile.role === "instructor") {
+      return redirect({
+        to: "/admin/users",
+      });
+    }
+    return redirect({
+      to: "/",
+    });
   },
   component: RouteComponent,
 });
