@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/sheet";
 import { createCategorySchema, type Category, type CreateCategorySchema } from "@/types/category";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Plus, Tags, X } from "lucide-react";
+import { Tags, X } from "lucide-react";
 import { useForm } from "react-hook-form";
 import {
   Form,

@@ -3,13 +3,12 @@ import { categoryTableColumns } from "@/pages/admin/category/category-table-colu
 import {
   flexRender,
   getCoreRowModel,
-  getFilteredRowModel,
   getSortedRowModel,
   useReactTable,
   type RowSelectionState,
   type SortingState,
 } from "@tanstack/react-table";
-import { ArrowUpDown, Plus, RefreshCw, Search, Trash } from "lucide-react";
+import { Plus, RefreshCw, Search, Trash } from "lucide-react";
 import {
   Table,
   TableBody,
