@@ -3,7 +3,7 @@ import CoursePage from "@/pages/admin/course-page";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 
-export const Route = createFileRoute("/_authenticated/admin/courses")({
+export const Route = createFileRoute("/_authenticated/admin/course")({
   component: RouteComponent,
   head: () => ({
     meta: [
@@ -20,7 +20,11 @@ function RouteComponent() {
   useEffect(() => {
     setHeaders([
       {
-        title: "Courses",
+        title: "Dashboard",
+        url: "/admin/dashboard",
+      },
+      {
+        title: "Course",
       },
     ]);
   }, []);

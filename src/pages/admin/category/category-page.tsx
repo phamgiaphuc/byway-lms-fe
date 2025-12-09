@@ -50,7 +50,7 @@ const CategoryPage = () => {
     <div className="space-y-6 p-4">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-semibold">Category Management</h1>
+          <h1 className="text-2xl font-semibold">Category Management</h1>
           <span className="text-muted-foreground">Create and manage categories here.</span>
         </div>
         <div className="flex items-center gap-2">

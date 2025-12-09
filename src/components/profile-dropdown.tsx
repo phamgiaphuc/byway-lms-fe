@@ -16,6 +16,7 @@ import {
   MessageSquare,
   Presentation,
   Settings,
+  Tags,
   UserIcon,
   Users,
 } from "lucide-react";
@@ -71,6 +72,7 @@ const menu: Record<Role, MenuSection[]> = {
       items: [
         { label: "Dashboard", icon: <Kanban />, href: "/admin/dashboard" },
         { label: "Courses", icon: <Presentation />, href: "/admin/courses" },
+        { label: "Categories", icon: <Tags />, href: "/admin/categories" },
         { label: "Users Management", icon: <Users />, href: "/admin/users" },
         { label: "Requests", icon: <GitPullRequest />, href: "/admin/requests" },
       ],

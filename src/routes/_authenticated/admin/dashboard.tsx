@@ -1,5 +1,5 @@
 import { useSidebarStore } from "@/hooks/zustand/use-sidebar-store";
-import DashboardPage from "@/pages/admin/dashboard-page";
+import DashboardPage from "@/pages/admin/dashboard/dashboard-page";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 

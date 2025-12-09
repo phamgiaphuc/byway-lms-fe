@@ -3,12 +3,12 @@ import CategoryPage from "@/pages/admin/category/category-page";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 
-export const Route = createFileRoute("/_authenticated/admin/categories")({
+export const Route = createFileRoute("/_authenticated/admin/category")({
   component: RouteComponent,
   head: () => ({
     meta: [
       {
-        title: "Categories - Admin",
+        title: "Category - Admin",
       },
     ],
   }),
@@ -20,7 +20,11 @@ function RouteComponent() {
   useEffect(() => {
     setHeaders([
       {
-        title: "Categories",
+        title: "Dashboard",
+        url: "/admin/dashboard",
+      },
+      {
+        title: "Category",
       },
     ]);
   }, []);

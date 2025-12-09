@@ -25,11 +25,11 @@ import { Route as AuthenticatedInstructorNotificationsRouteImport } from './rout
 import { Route as AuthenticatedInstructorMessagesRouteImport } from './routes/_authenticated/instructor/messages'
 import { Route as AuthenticatedInstructorDashboardRouteImport } from './routes/_authenticated/instructor/dashboard'
 import { Route as AuthenticatedInstructorCoursesRouteImport } from './routes/_authenticated/instructor/courses'
-import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin/users'
-import { Route as AuthenticatedAdminRequestsRouteImport } from './routes/_authenticated/admin/requests'
+import { Route as AuthenticatedAdminUserManagementRouteImport } from './routes/_authenticated/admin/user-management'
+import { Route as AuthenticatedAdminRequestRouteImport } from './routes/_authenticated/admin/request'
 import { Route as AuthenticatedAdminDashboardRouteImport } from './routes/_authenticated/admin/dashboard'
-import { Route as AuthenticatedAdminCoursesRouteImport } from './routes/_authenticated/admin/courses'
-import { Route as AuthenticatedAdminCategoriesRouteImport } from './routes/_authenticated/admin/categories'
+import { Route as AuthenticatedAdminCourseRouteImport } from './routes/_authenticated/admin/course'
+import { Route as AuthenticatedAdminCategoryRouteImport } from './routes/_authenticated/admin/category'
 
 const PublicRoute = PublicRouteImport.update({
   id: '/_public',
@@ -114,15 +114,16 @@ const AuthenticatedInstructorCoursesRoute =
     path: '/courses',
     getParentRoute: () => AuthenticatedInstructorRouteRoute,
   } as any)
-const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
-  id: '/users',
-  path: '/users',
-  getParentRoute: () => AuthenticatedAdminRouteRoute,
-} as any)
-const AuthenticatedAdminRequestsRoute =
-  AuthenticatedAdminRequestsRouteImport.update({
-    id: '/requests',
-    path: '/requests',
+const AuthenticatedAdminUserManagementRoute =
+  AuthenticatedAdminUserManagementRouteImport.update({
+    id: '/user-management',
+    path: '/user-management',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
+const AuthenticatedAdminRequestRoute =
+  AuthenticatedAdminRequestRouteImport.update({
+    id: '/request',
+    path: '/request',
     getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
 const AuthenticatedAdminDashboardRoute =
@@ -131,16 +132,16 @@ const AuthenticatedAdminDashboardRoute =
     path: '/dashboard',
     getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
-const AuthenticatedAdminCoursesRoute =
-  AuthenticatedAdminCoursesRouteImport.update({
-    id: '/courses',
-    path: '/courses',
+const AuthenticatedAdminCourseRoute =
+  AuthenticatedAdminCourseRouteImport.update({
+    id: '/course',
+    path: '/course',
     getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
-const AuthenticatedAdminCategoriesRoute =
-  AuthenticatedAdminCategoriesRouteImport.update({
-    id: '/categories',
-    path: '/categories',
+const AuthenticatedAdminCategoryRoute =
+  AuthenticatedAdminCategoryRouteImport.update({
+    id: '/category',
+    path: '/category',
     getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
 
@@ -153,11 +154,11 @@ export interface FileRoutesByFullPath {
   '/verify': typeof AuthVerifyRoute
   '/about': typeof PublicAboutRoute
   '/': typeof PublicIndexRoute
-  '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
-  '/admin/courses': typeof AuthenticatedAdminCoursesRoute
+  '/admin/category': typeof AuthenticatedAdminCategoryRoute
+  '/admin/course': typeof AuthenticatedAdminCourseRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
-  '/admin/requests': typeof AuthenticatedAdminRequestsRoute
-  '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/admin/request': typeof AuthenticatedAdminRequestRoute
+  '/admin/user-management': typeof AuthenticatedAdminUserManagementRoute
   '/instructor/courses': typeof AuthenticatedInstructorCoursesRoute
   '/instructor/dashboard': typeof AuthenticatedInstructorDashboardRoute
   '/instructor/messages': typeof AuthenticatedInstructorMessagesRoute
@@ -173,11 +174,11 @@ export interface FileRoutesByTo {
   '/verify': typeof AuthVerifyRoute
   '/about': typeof PublicAboutRoute
   '/': typeof PublicIndexRoute
-  '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
-  '/admin/courses': typeof AuthenticatedAdminCoursesRoute
+  '/admin/category': typeof AuthenticatedAdminCategoryRoute
+  '/admin/course': typeof AuthenticatedAdminCourseRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
-  '/admin/requests': typeof AuthenticatedAdminRequestsRoute
-  '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/admin/request': typeof AuthenticatedAdminRequestRoute
+  '/admin/user-management': typeof AuthenticatedAdminUserManagementRoute
   '/instructor/courses': typeof AuthenticatedInstructorCoursesRoute
   '/instructor/dashboard': typeof AuthenticatedInstructorDashboardRoute
   '/instructor/messages': typeof AuthenticatedInstructorMessagesRoute
@@ -197,11 +198,11 @@ export interface FileRoutesById {
   '/_auth/verify': typeof AuthVerifyRoute
   '/_public/about': typeof PublicAboutRoute
   '/_public/': typeof PublicIndexRoute
-  '/_authenticated/admin/categories': typeof AuthenticatedAdminCategoriesRoute
-  '/_authenticated/admin/courses': typeof AuthenticatedAdminCoursesRoute
+  '/_authenticated/admin/category': typeof AuthenticatedAdminCategoryRoute
+  '/_authenticated/admin/course': typeof AuthenticatedAdminCourseRoute
   '/_authenticated/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
-  '/_authenticated/admin/requests': typeof AuthenticatedAdminRequestsRoute
-  '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/_authenticated/admin/request': typeof AuthenticatedAdminRequestRoute
+  '/_authenticated/admin/user-management': typeof AuthenticatedAdminUserManagementRoute
   '/_authenticated/instructor/courses': typeof AuthenticatedInstructorCoursesRoute
   '/_authenticated/instructor/dashboard': typeof AuthenticatedInstructorDashboardRoute
   '/_authenticated/instructor/messages': typeof AuthenticatedInstructorMessagesRoute
@@ -219,11 +220,11 @@ export interface FileRouteTypes {
     | '/verify'
     | '/about'
     | '/'
-    | '/admin/categories'
-    | '/admin/courses'
+    | '/admin/category'
+    | '/admin/course'
     | '/admin/dashboard'
-    | '/admin/requests'
-    | '/admin/users'
+    | '/admin/request'
+    | '/admin/user-management'
     | '/instructor/courses'
     | '/instructor/dashboard'
     | '/instructor/messages'
@@ -239,11 +240,11 @@ export interface FileRouteTypes {
     | '/verify'
     | '/about'
     | '/'
-    | '/admin/categories'
-    | '/admin/courses'
+    | '/admin/category'
+    | '/admin/course'
     | '/admin/dashboard'
-    | '/admin/requests'
-    | '/admin/users'
+    | '/admin/request'
+    | '/admin/user-management'
     | '/instructor/courses'
     | '/instructor/dashboard'
     | '/instructor/messages'
@@ -262,11 +263,11 @@ export interface FileRouteTypes {
     | '/_auth/verify'
     | '/_public/about'
     | '/_public/'
-    | '/_authenticated/admin/categories'
-    | '/_authenticated/admin/courses'
+    | '/_authenticated/admin/category'
+    | '/_authenticated/admin/course'
     | '/_authenticated/admin/dashboard'
-    | '/_authenticated/admin/requests'
-    | '/_authenticated/admin/users'
+    | '/_authenticated/admin/request'
+    | '/_authenticated/admin/user-management'
     | '/_authenticated/instructor/courses'
     | '/_authenticated/instructor/dashboard'
     | '/_authenticated/instructor/messages'
@@ -394,18 +395,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedInstructorCoursesRouteImport
       parentRoute: typeof AuthenticatedInstructorRouteRoute
     }
-    '/_authenticated/admin/users': {
-      id: '/_authenticated/admin/users'
-      path: '/users'
-      fullPath: '/admin/users'
-      preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
+    '/_authenticated/admin/user-management': {
+      id: '/_authenticated/admin/user-management'
+      path: '/user-management'
+      fullPath: '/admin/user-management'
+      preLoaderRoute: typeof AuthenticatedAdminUserManagementRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
-    '/_authenticated/admin/requests': {
-      id: '/_authenticated/admin/requests'
-      path: '/requests'
-      fullPath: '/admin/requests'
-      preLoaderRoute: typeof AuthenticatedAdminRequestsRouteImport
+    '/_authenticated/admin/request': {
+      id: '/_authenticated/admin/request'
+      path: '/request'
+      fullPath: '/admin/request'
+      preLoaderRoute: typeof AuthenticatedAdminRequestRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
     '/_authenticated/admin/dashboard': {
@@ -415,18 +416,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminDashboardRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
-    '/_authenticated/admin/courses': {
-      id: '/_authenticated/admin/courses'
-      path: '/courses'
-      fullPath: '/admin/courses'
-      preLoaderRoute: typeof AuthenticatedAdminCoursesRouteImport
+    '/_authenticated/admin/course': {
+      id: '/_authenticated/admin/course'
+      path: '/course'
+      fullPath: '/admin/course'
+      preLoaderRoute: typeof AuthenticatedAdminCourseRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
-    '/_authenticated/admin/categories': {
-      id: '/_authenticated/admin/categories'
-      path: '/categories'
-      fullPath: '/admin/categories'
-      preLoaderRoute: typeof AuthenticatedAdminCategoriesRouteImport
+    '/_authenticated/admin/category': {
+      id: '/_authenticated/admin/category'
+      path: '/category'
+      fullPath: '/admin/category'
+      preLoaderRoute: typeof AuthenticatedAdminCategoryRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
   }
@@ -449,20 +450,21 @@ const AuthRouteChildren: AuthRouteChildren = {
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 interface AuthenticatedAdminRouteRouteChildren {
-  AuthenticatedAdminCategoriesRoute: typeof AuthenticatedAdminCategoriesRoute
-  AuthenticatedAdminCoursesRoute: typeof AuthenticatedAdminCoursesRoute
+  AuthenticatedAdminCategoryRoute: typeof AuthenticatedAdminCategoryRoute
+  AuthenticatedAdminCourseRoute: typeof AuthenticatedAdminCourseRoute
   AuthenticatedAdminDashboardRoute: typeof AuthenticatedAdminDashboardRoute
-  AuthenticatedAdminRequestsRoute: typeof AuthenticatedAdminRequestsRoute
-  AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
+  AuthenticatedAdminRequestRoute: typeof AuthenticatedAdminRequestRoute
+  AuthenticatedAdminUserManagementRoute: typeof AuthenticatedAdminUserManagementRoute
 }
 
 const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren =
   {
-    AuthenticatedAdminCategoriesRoute: AuthenticatedAdminCategoriesRoute,
-    AuthenticatedAdminCoursesRoute: AuthenticatedAdminCoursesRoute,
+    AuthenticatedAdminCategoryRoute: AuthenticatedAdminCategoryRoute,
+    AuthenticatedAdminCourseRoute: AuthenticatedAdminCourseRoute,
     AuthenticatedAdminDashboardRoute: AuthenticatedAdminDashboardRoute,
-    AuthenticatedAdminRequestsRoute: AuthenticatedAdminRequestsRoute,
-    AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
+    AuthenticatedAdminRequestRoute: AuthenticatedAdminRequestRoute,
+    AuthenticatedAdminUserManagementRoute:
+      AuthenticatedAdminUserManagementRoute,
   }
 
 const AuthenticatedAdminRouteRouteWithChildren =
