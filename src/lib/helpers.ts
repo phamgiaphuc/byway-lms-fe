@@ -3,7 +3,11 @@ import JPGFileIcon from "@/assets/file-icons/jpg.svg";
 import PNGFileIcon from "@/assets/file-icons/png.svg";
 import SVGFileIcon from "@/assets/file-icons/svg.svg";
 
-export function formatDatetime(date: string | Date, pattern = "HH:mm:ss yyyy-MM-dd") {
+export function formatDatetime(date: string | Date, pattern = "HH:mm dd MMM yyyy") {
+  return format(new Date(date), pattern);
+}
+
+export function formatDate(date: string | Date, pattern = "dd MMM yyyy") {
   return format(new Date(date), pattern);
 }
 

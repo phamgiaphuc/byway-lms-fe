@@ -23,11 +23,15 @@ import { Button } from "@/components/ui/button";
 import CategorySheet from "@/pages/admin/category/category-sheet";
 import { initialCategory } from "@/types/category";
 import { useState } from "react";
+import { useDebounce } from "rooks";
+import CategoryDialog from "@/pages/admin/category/category-dialog";
 
 const CategoryPage = () => {
-  const { data, isLoading, refetch } = useGetCategories();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+  const [keyword, setKeyword] = useState("");
+  const setDebouncedKeyword = useDebounce(setKeyword, 500);
+  const { data, isLoading, refetch } = useGetCategories(keyword);
 
   const table = useReactTable({
     data: data?.data || [],
@@ -60,16 +64,28 @@ const CategoryPage = () => {
               </Button>
             }
           />
-          <Button variant="destructive" disabled={table.getSelectedRowModel().rows.length === 0}>
-            <Trash />
-            Delete ({table.getSelectedRowModel().rows.length})
-          </Button>
+          <CategoryDialog
+            categories={table.getSelectedRowModel().rows.map((row) => row.original)}
+            triggerBtn={
+              <Button
+                variant="destructive"
+                disabled={table.getSelectedRowModel().rows.length === 0}
+              >
+                <Trash />
+                Delete ({table.getSelectedRowModel().rows.length})
+              </Button>
+            }
+            onCancel={() => table.toggleAllRowsSelected(false)}
+          />
         </div>
       </div>
       <div className="space-y-4">
         <div className="flex items-center gap-2">
           <InputGroup className="max-w-sm">
-            <InputGroupInput placeholder="Filter by ID or name" />
+            <InputGroupInput
+              placeholder="Filter by ID or name"
+              onChange={(e) => setDebouncedKeyword(e.target.value)}
+            />
             <InputGroupAddon>
               <Search />
             </InputGroupAddon>

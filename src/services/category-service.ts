@@ -2,8 +2,9 @@ import { api } from "@/lib/ky";
 import type { ApiResponse } from "@/types/api-response";
 import type { Category, CreateCategorySchema, UpdateCategorySchema } from "@/types/category";
 
-export const getCategories = () => {
-  return api.get("categories").json<ApiResponse<Category[]>>();
+export const getCategories = (keyword?: string) => {
+  const params = keyword ? { keyword: keyword } : {};
+  return api.get("categories", { searchParams: params }).json<ApiResponse<Category[]>>();
 };
 
 export const createCategory = (category: CreateCategorySchema) => {
@@ -18,6 +19,14 @@ export const updateCategory = (category: UpdateCategorySchema) => {
   return api
     .put(`categories/${category.id}`, {
       json: category,
+    })
+    .json<ApiResponse<Category>>();
+};
+
+export const deleteCategory = (body: { ids: string[] }) => {
+  return api
+    .delete("categories", {
+      json: body,
     })
     .json<ApiResponse<Category>>();
 };

@@ -5,6 +5,7 @@ import {
   SheetClose,
   SheetContent,
   SheetDescription,
+  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -140,23 +141,25 @@ const CategorySheet = ({ mode = "create", category, triggerBtn }: CategorySheetP
                     <FileDropzone
                       files={field.value ? [field.value] : []}
                       folder="categories"
-                      onFilesChange={(files) => form.setValue("image", files[0])}
+                      onFilesChange={(files) => {
+                        form.clearErrors("image");
+                        form.setValue("image", files[0]);
+                      }}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-
             <div className="flex gap-2">
-              <Button type="submit" className="w-32">
-                {mode === "create" ? "Create" : "Update"}
-              </Button>
               <SheetClose asChild>
-                <Button type="button" variant="outline" className="w-32">
+                <Button type="button" variant="destructive-outline" className="w-32">
                   Cancel
                 </Button>
               </SheetClose>
+              <Button type="submit" className="w-32">
+                {mode === "create" ? "Create" : "Update"}
+              </Button>
             </div>
           </form>
         </Form>

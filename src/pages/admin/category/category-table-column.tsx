@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { formatDatetime } from "@/lib/helpers";
+import { formatDate } from "@/lib/helpers";
+import CategoryDialog from "@/pages/admin/category/category-dialog";
 import CategorySheet from "@/pages/admin/category/category-sheet";
 import type { Category } from "@/types/category";
 import { Link } from "@tanstack/react-router";
@@ -14,20 +15,27 @@ export const categoryTableColumns: ColumnDef<Category>[] = [
     enableSorting: false,
     enableHiding: false,
     header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
+      <div className="flex items-center gap-2">
+        <Checkbox
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && "indeterminate")
+          }
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+        />
+        <span>#</span>
+      </div>
     ),
     cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
+      <div className="flex items-center gap-2">
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => row.toggleSelected(!!value)}
+          aria-label="Select row"
+        />
+        <span>{row.index + 1}</span>
+      </div>
     ),
   },
   {
@@ -74,14 +82,14 @@ export const categoryTableColumns: ColumnDef<Category>[] = [
     accessorKey: "createdAt",
     header: "Created at",
     cell: ({ row }) => {
-      return <Label className="font-normal">{formatDatetime(row.getValue("createdAt"))}</Label>;
+      return <Label className="font-normal">{formatDate(row.getValue("createdAt"))}</Label>;
     },
   },
   {
     accessorKey: "updatedAt",
     header: "Updated at",
     cell: ({ row }) => {
-      return <Label className="font-normal">{formatDatetime(row.getValue("updatedAt"))}</Label>;
+      return <Label className="font-normal">{formatDate(row.getValue("updatedAt"))}</Label>;
     },
   },
   {
@@ -99,9 +107,14 @@ export const categoryTableColumns: ColumnDef<Category>[] = [
               </Button>
             }
           />
-          <Button size="icon-sm" variant="ghost">
-            <Trash />
-          </Button>
+          <CategoryDialog
+            categories={[row.original]}
+            triggerBtn={
+              <Button size="icon-sm" variant="ghost" className="hover:text-destructive">
+                <Trash />
+              </Button>
+            }
+          />
           <Button size="icon-sm" variant="ghost">
             <ExternalLink />
           </Button>
