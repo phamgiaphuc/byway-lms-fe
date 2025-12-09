@@ -7,11 +7,9 @@ export const Route = createFileRoute("/_public")({
 });
 
 function RouteComponent() {
-  const { queryClient } = Route.useRouteContext();
-
   return (
     <>
-      <Header queryClient={queryClient} />
+      <Header />
       <Outlet />
       <Footer />
     </>

@@ -26,11 +26,9 @@ export const Route = createFileRoute("/_auth")({
 });
 
 function RouteComponent() {
-  const { queryClient } = Route.useRouteContext();
-
   return (
     <>
-      <Header queryClient={queryClient} />
+      <Header />
       <Outlet />
     </>
   );

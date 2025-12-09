@@ -1,12 +1,14 @@
 import ProfileDropdown from "@/components/profile-dropdown";
+import TechRequestLink from "@/components/tech-request-link";
 import { Button } from "@/components/ui/button";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 import { useUserStore } from "@/hooks/zustand/use-user-store";
-import type { QueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { Bell, Heart, Search, ShoppingCart } from "lucide-react";
 
-const Header = ({ queryClient }: { queryClient: QueryClient }) => {
+const Header = () => {
+  const queryClient = useQueryClient();
   const { isAuthenticated, profile } = useUserStore();
 
   return (
@@ -28,9 +30,7 @@ const Header = ({ queryClient }: { queryClient: QueryClient }) => {
               </InputGroupAddon>
             </InputGroup>
           </div>
-          <Link to="/" className="text-sm">
-            Tech on Byway
-          </Link>
+          <TechRequestLink />
         </div>
         {isAuthenticated ? (
           <div className="flex items-center gap-2">

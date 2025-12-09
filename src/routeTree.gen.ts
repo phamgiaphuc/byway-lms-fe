@@ -13,6 +13,7 @@ import { Route as PublicRouteImport } from './routes/_public'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as PublicIndexRouteImport } from './routes/_public/index'
+import { Route as PublicRequestTeachingRouteImport } from './routes/_public/request-teaching'
 import { Route as PublicAboutRouteImport } from './routes/_public/about'
 import { Route as AuthVerifyRouteImport } from './routes/_auth/verify'
 import { Route as AuthThirdPartyRouteImport } from './routes/_auth/third-party'
@@ -46,6 +47,11 @@ const AuthRoute = AuthRouteImport.update({
 const PublicIndexRoute = PublicIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicRequestTeachingRoute = PublicRequestTeachingRouteImport.update({
+  id: '/request-teaching',
+  path: '/request-teaching',
   getParentRoute: () => PublicRoute,
 } as any)
 const PublicAboutRoute = PublicAboutRouteImport.update({
@@ -153,6 +159,7 @@ export interface FileRoutesByFullPath {
   '/third-party': typeof AuthThirdPartyRoute
   '/verify': typeof AuthVerifyRoute
   '/about': typeof PublicAboutRoute
+  '/request-teaching': typeof PublicRequestTeachingRoute
   '/': typeof PublicIndexRoute
   '/admin/category': typeof AuthenticatedAdminCategoryRoute
   '/admin/course': typeof AuthenticatedAdminCourseRoute
@@ -173,6 +180,7 @@ export interface FileRoutesByTo {
   '/third-party': typeof AuthThirdPartyRoute
   '/verify': typeof AuthVerifyRoute
   '/about': typeof PublicAboutRoute
+  '/request-teaching': typeof PublicRequestTeachingRoute
   '/': typeof PublicIndexRoute
   '/admin/category': typeof AuthenticatedAdminCategoryRoute
   '/admin/course': typeof AuthenticatedAdminCourseRoute
@@ -197,6 +205,7 @@ export interface FileRoutesById {
   '/_auth/third-party': typeof AuthThirdPartyRoute
   '/_auth/verify': typeof AuthVerifyRoute
   '/_public/about': typeof PublicAboutRoute
+  '/_public/request-teaching': typeof PublicRequestTeachingRoute
   '/_public/': typeof PublicIndexRoute
   '/_authenticated/admin/category': typeof AuthenticatedAdminCategoryRoute
   '/_authenticated/admin/course': typeof AuthenticatedAdminCourseRoute
@@ -219,6 +228,7 @@ export interface FileRouteTypes {
     | '/third-party'
     | '/verify'
     | '/about'
+    | '/request-teaching'
     | '/'
     | '/admin/category'
     | '/admin/course'
@@ -239,6 +249,7 @@ export interface FileRouteTypes {
     | '/third-party'
     | '/verify'
     | '/about'
+    | '/request-teaching'
     | '/'
     | '/admin/category'
     | '/admin/course'
@@ -262,6 +273,7 @@ export interface FileRouteTypes {
     | '/_auth/third-party'
     | '/_auth/verify'
     | '/_public/about'
+    | '/_public/request-teaching'
     | '/_public/'
     | '/_authenticated/admin/category'
     | '/_authenticated/admin/course'
@@ -309,6 +321,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof PublicIndexRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/request-teaching': {
+      id: '/_public/request-teaching'
+      path: '/request-teaching'
+      fullPath: '/request-teaching'
+      preLoaderRoute: typeof PublicRequestTeachingRouteImport
       parentRoute: typeof PublicRoute
     }
     '/_public/about': {
@@ -513,11 +532,13 @@ const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
 
 interface PublicRouteChildren {
   PublicAboutRoute: typeof PublicAboutRoute
+  PublicRequestTeachingRoute: typeof PublicRequestTeachingRoute
   PublicIndexRoute: typeof PublicIndexRoute
 }
 
 const PublicRouteChildren: PublicRouteChildren = {
   PublicAboutRoute: PublicAboutRoute,
+  PublicRequestTeachingRoute: PublicRequestTeachingRoute,
   PublicIndexRoute: PublicIndexRoute,
 }
 
