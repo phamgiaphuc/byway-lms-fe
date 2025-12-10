@@ -13,8 +13,8 @@ import { Route as PublicRouteImport } from './routes/_public'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as PublicIndexRouteImport } from './routes/_public/index'
-import { Route as PublicRequestTeachingRouteImport } from './routes/_public/request-teaching'
 import { Route as PublicAboutRouteImport } from './routes/_public/about'
+import { Route as AuthenticatedUserRouteImport } from './routes/_authenticated/_user'
 import { Route as AuthVerifyRouteImport } from './routes/_auth/verify'
 import { Route as AuthThirdPartyRouteImport } from './routes/_auth/third-party'
 import { Route as AuthSignUpRouteImport } from './routes/_auth/sign-up'
@@ -31,6 +31,11 @@ import { Route as AuthenticatedAdminRequestRouteImport } from './routes/_authent
 import { Route as AuthenticatedAdminDashboardRouteImport } from './routes/_authenticated/admin/dashboard'
 import { Route as AuthenticatedAdminCourseRouteImport } from './routes/_authenticated/admin/course'
 import { Route as AuthenticatedAdminCategoryRouteImport } from './routes/_authenticated/admin/category'
+import { Route as AuthenticatedUserSettingsRouteImport } from './routes/_authenticated/_user/settings'
+import { Route as AuthenticatedUserRequestTeachingRouteImport } from './routes/_authenticated/_user/request-teaching'
+import { Route as AuthenticatedUserRequestRouteImport } from './routes/_authenticated/_user/request'
+import { Route as AuthenticatedUserProfileRouteImport } from './routes/_authenticated/_user/profile'
+import { Route as AuthenticatedUserCourseRouteImport } from './routes/_authenticated/_user/course'
 
 const PublicRoute = PublicRouteImport.update({
   id: '/_public',
@@ -49,15 +54,14 @@ const PublicIndexRoute = PublicIndexRouteImport.update({
   path: '/',
   getParentRoute: () => PublicRoute,
 } as any)
-const PublicRequestTeachingRoute = PublicRequestTeachingRouteImport.update({
-  id: '/request-teaching',
-  path: '/request-teaching',
-  getParentRoute: () => PublicRoute,
-} as any)
 const PublicAboutRoute = PublicAboutRouteImport.update({
   id: '/about',
   path: '/about',
   getParentRoute: () => PublicRoute,
+} as any)
+const AuthenticatedUserRoute = AuthenticatedUserRouteImport.update({
+  id: '/_user',
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 const AuthVerifyRoute = AuthVerifyRouteImport.update({
   id: '/verify',
@@ -150,6 +154,35 @@ const AuthenticatedAdminCategoryRoute =
     path: '/category',
     getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
+const AuthenticatedUserSettingsRoute =
+  AuthenticatedUserSettingsRouteImport.update({
+    id: '/settings',
+    path: '/settings',
+    getParentRoute: () => AuthenticatedUserRoute,
+  } as any)
+const AuthenticatedUserRequestTeachingRoute =
+  AuthenticatedUserRequestTeachingRouteImport.update({
+    id: '/request-teaching',
+    path: '/request-teaching',
+    getParentRoute: () => AuthenticatedUserRoute,
+  } as any)
+const AuthenticatedUserRequestRoute =
+  AuthenticatedUserRequestRouteImport.update({
+    id: '/request',
+    path: '/request',
+    getParentRoute: () => AuthenticatedUserRoute,
+  } as any)
+const AuthenticatedUserProfileRoute =
+  AuthenticatedUserProfileRouteImport.update({
+    id: '/profile',
+    path: '/profile',
+    getParentRoute: () => AuthenticatedUserRoute,
+  } as any)
+const AuthenticatedUserCourseRoute = AuthenticatedUserCourseRouteImport.update({
+  id: '/course',
+  path: '/course',
+  getParentRoute: () => AuthenticatedUserRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
@@ -159,8 +192,12 @@ export interface FileRoutesByFullPath {
   '/third-party': typeof AuthThirdPartyRoute
   '/verify': typeof AuthVerifyRoute
   '/about': typeof PublicAboutRoute
-  '/request-teaching': typeof PublicRequestTeachingRoute
   '/': typeof PublicIndexRoute
+  '/course': typeof AuthenticatedUserCourseRoute
+  '/profile': typeof AuthenticatedUserProfileRoute
+  '/request': typeof AuthenticatedUserRequestRoute
+  '/request-teaching': typeof AuthenticatedUserRequestTeachingRoute
+  '/settings': typeof AuthenticatedUserSettingsRoute
   '/admin/category': typeof AuthenticatedAdminCategoryRoute
   '/admin/course': typeof AuthenticatedAdminCourseRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
@@ -180,8 +217,12 @@ export interface FileRoutesByTo {
   '/third-party': typeof AuthThirdPartyRoute
   '/verify': typeof AuthVerifyRoute
   '/about': typeof PublicAboutRoute
-  '/request-teaching': typeof PublicRequestTeachingRoute
   '/': typeof PublicIndexRoute
+  '/course': typeof AuthenticatedUserCourseRoute
+  '/profile': typeof AuthenticatedUserProfileRoute
+  '/request': typeof AuthenticatedUserRequestRoute
+  '/request-teaching': typeof AuthenticatedUserRequestTeachingRoute
+  '/settings': typeof AuthenticatedUserSettingsRoute
   '/admin/category': typeof AuthenticatedAdminCategoryRoute
   '/admin/course': typeof AuthenticatedAdminCourseRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
@@ -204,9 +245,14 @@ export interface FileRoutesById {
   '/_auth/sign-up': typeof AuthSignUpRoute
   '/_auth/third-party': typeof AuthThirdPartyRoute
   '/_auth/verify': typeof AuthVerifyRoute
+  '/_authenticated/_user': typeof AuthenticatedUserRouteWithChildren
   '/_public/about': typeof PublicAboutRoute
-  '/_public/request-teaching': typeof PublicRequestTeachingRoute
   '/_public/': typeof PublicIndexRoute
+  '/_authenticated/_user/course': typeof AuthenticatedUserCourseRoute
+  '/_authenticated/_user/profile': typeof AuthenticatedUserProfileRoute
+  '/_authenticated/_user/request': typeof AuthenticatedUserRequestRoute
+  '/_authenticated/_user/request-teaching': typeof AuthenticatedUserRequestTeachingRoute
+  '/_authenticated/_user/settings': typeof AuthenticatedUserSettingsRoute
   '/_authenticated/admin/category': typeof AuthenticatedAdminCategoryRoute
   '/_authenticated/admin/course': typeof AuthenticatedAdminCourseRoute
   '/_authenticated/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
@@ -228,8 +274,12 @@ export interface FileRouteTypes {
     | '/third-party'
     | '/verify'
     | '/about'
-    | '/request-teaching'
     | '/'
+    | '/course'
+    | '/profile'
+    | '/request'
+    | '/request-teaching'
+    | '/settings'
     | '/admin/category'
     | '/admin/course'
     | '/admin/dashboard'
@@ -249,8 +299,12 @@ export interface FileRouteTypes {
     | '/third-party'
     | '/verify'
     | '/about'
-    | '/request-teaching'
     | '/'
+    | '/course'
+    | '/profile'
+    | '/request'
+    | '/request-teaching'
+    | '/settings'
     | '/admin/category'
     | '/admin/course'
     | '/admin/dashboard'
@@ -272,9 +326,14 @@ export interface FileRouteTypes {
     | '/_auth/sign-up'
     | '/_auth/third-party'
     | '/_auth/verify'
+    | '/_authenticated/_user'
     | '/_public/about'
-    | '/_public/request-teaching'
     | '/_public/'
+    | '/_authenticated/_user/course'
+    | '/_authenticated/_user/profile'
+    | '/_authenticated/_user/request'
+    | '/_authenticated/_user/request-teaching'
+    | '/_authenticated/_user/settings'
     | '/_authenticated/admin/category'
     | '/_authenticated/admin/course'
     | '/_authenticated/admin/dashboard'
@@ -323,19 +382,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicIndexRouteImport
       parentRoute: typeof PublicRoute
     }
-    '/_public/request-teaching': {
-      id: '/_public/request-teaching'
-      path: '/request-teaching'
-      fullPath: '/request-teaching'
-      preLoaderRoute: typeof PublicRequestTeachingRouteImport
-      parentRoute: typeof PublicRoute
-    }
     '/_public/about': {
       id: '/_public/about'
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof PublicAboutRouteImport
       parentRoute: typeof PublicRoute
+    }
+    '/_authenticated/_user': {
+      id: '/_authenticated/_user'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthenticatedUserRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
     '/_auth/verify': {
       id: '/_auth/verify'
@@ -449,6 +508,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminCategoryRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
+    '/_authenticated/_user/settings': {
+      id: '/_authenticated/_user/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthenticatedUserSettingsRouteImport
+      parentRoute: typeof AuthenticatedUserRoute
+    }
+    '/_authenticated/_user/request-teaching': {
+      id: '/_authenticated/_user/request-teaching'
+      path: '/request-teaching'
+      fullPath: '/request-teaching'
+      preLoaderRoute: typeof AuthenticatedUserRequestTeachingRouteImport
+      parentRoute: typeof AuthenticatedUserRoute
+    }
+    '/_authenticated/_user/request': {
+      id: '/_authenticated/_user/request'
+      path: '/request'
+      fullPath: '/request'
+      preLoaderRoute: typeof AuthenticatedUserRequestRouteImport
+      parentRoute: typeof AuthenticatedUserRoute
+    }
+    '/_authenticated/_user/profile': {
+      id: '/_authenticated/_user/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthenticatedUserProfileRouteImport
+      parentRoute: typeof AuthenticatedUserRoute
+    }
+    '/_authenticated/_user/course': {
+      id: '/_authenticated/_user/course'
+      path: '/course'
+      fullPath: '/course'
+      preLoaderRoute: typeof AuthenticatedUserCourseRouteImport
+      parentRoute: typeof AuthenticatedUserRoute
+    }
   }
 }
 
@@ -515,15 +609,36 @@ const AuthenticatedInstructorRouteRouteWithChildren =
     AuthenticatedInstructorRouteRouteChildren,
   )
 
+interface AuthenticatedUserRouteChildren {
+  AuthenticatedUserCourseRoute: typeof AuthenticatedUserCourseRoute
+  AuthenticatedUserProfileRoute: typeof AuthenticatedUserProfileRoute
+  AuthenticatedUserRequestRoute: typeof AuthenticatedUserRequestRoute
+  AuthenticatedUserRequestTeachingRoute: typeof AuthenticatedUserRequestTeachingRoute
+  AuthenticatedUserSettingsRoute: typeof AuthenticatedUserSettingsRoute
+}
+
+const AuthenticatedUserRouteChildren: AuthenticatedUserRouteChildren = {
+  AuthenticatedUserCourseRoute: AuthenticatedUserCourseRoute,
+  AuthenticatedUserProfileRoute: AuthenticatedUserProfileRoute,
+  AuthenticatedUserRequestRoute: AuthenticatedUserRequestRoute,
+  AuthenticatedUserRequestTeachingRoute: AuthenticatedUserRequestTeachingRoute,
+  AuthenticatedUserSettingsRoute: AuthenticatedUserSettingsRoute,
+}
+
+const AuthenticatedUserRouteWithChildren =
+  AuthenticatedUserRoute._addFileChildren(AuthenticatedUserRouteChildren)
+
 interface AuthenticatedRouteChildren {
   AuthenticatedAdminRouteRoute: typeof AuthenticatedAdminRouteRouteWithChildren
   AuthenticatedInstructorRouteRoute: typeof AuthenticatedInstructorRouteRouteWithChildren
+  AuthenticatedUserRoute: typeof AuthenticatedUserRouteWithChildren
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedAdminRouteRoute: AuthenticatedAdminRouteRouteWithChildren,
   AuthenticatedInstructorRouteRoute:
     AuthenticatedInstructorRouteRouteWithChildren,
+  AuthenticatedUserRoute: AuthenticatedUserRouteWithChildren,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
@@ -532,13 +647,11 @@ const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
 
 interface PublicRouteChildren {
   PublicAboutRoute: typeof PublicAboutRoute
-  PublicRequestTeachingRoute: typeof PublicRequestTeachingRoute
   PublicIndexRoute: typeof PublicIndexRoute
 }
 
 const PublicRouteChildren: PublicRouteChildren = {
   PublicAboutRoute: PublicAboutRoute,
-  PublicRequestTeachingRoute: PublicRequestTeachingRoute,
   PublicIndexRoute: PublicIndexRoute,
 }
 

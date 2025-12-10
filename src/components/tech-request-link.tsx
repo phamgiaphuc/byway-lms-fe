@@ -5,10 +5,8 @@ import { Link } from "@tanstack/react-router";
 const TechRequestLink = () => {
   const { isAuthenticated, profile } = useUserStore();
 
-  console.log(isAuthenticated);
-
   if (profile.role !== "user") {
-    return <></>;
+    return;
   }
 
   if (isAuthenticated) {

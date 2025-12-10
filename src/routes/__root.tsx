@@ -44,6 +44,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       const { data } = await queryClient.fetchQuery({
         queryKey: ["me"],
         queryFn: getMe,
+        staleTime: Infinity,
       });
       if (data) {
         useUserStore.setState({

@@ -1,7 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
-import { ArrowRight } from "lucide-react";
+import { useCreateTeachRequest, useGetRequests } from "@/hooks/tanstack-query/use-request";
+import type { ApiError } from "@/types/api-error";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "@tanstack/react-router";
+import { HTTPError } from "ky";
+import { ArrowRight, CheckCircle, Loader2 } from "lucide-react";
+import { useMemo } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import z from "zod";
 
 const IntroductionSection = () => {
   return (
@@ -88,7 +98,65 @@ const TeachingSection = () => {
   );
 };
 
+const requestTeachingSchema = z
+  .object({
+    agree: z.boolean(),
+  })
+  .refine((val) => val.agree === true, {
+    message: "You must agree before submitting.",
+    path: ["agree"],
+  });
+
 const RequestTeachingPage = () => {
+  const form = useForm({
+    resolver: zodResolver(requestTeachingSchema),
+    defaultValues: {
+      agree: false,
+    },
+  });
+  const { mutate } = useCreateTeachRequest();
+  const navigate = useNavigate();
+  const { data, isLoading } = useGetRequests();
+
+  const isTeachingRequestSubmitted = useMemo(
+    () => data?.data.find((r) => r.status === "pending" && r.type === "teaching"),
+    [data],
+  );
+
+  const onSubmit = (values: z.infer<typeof requestTeachingSchema>) => {
+    mutate(
+      {
+        agree: values.agree,
+      },
+      {
+        onSuccess: (response) => {
+          toast.success(response.message);
+          return navigate({
+            to: "/request",
+          });
+        },
+        onError: async (error) => {
+          if (error instanceof HTTPError) {
+            const { message } = await error.response.json<ApiError>();
+            return toast.error(message);
+          }
+          toast.error(error.message);
+        },
+      },
+    );
+  };
+
+  if (isLoading) {
+    return (
+      <div className="relative flex min-h-[calc(100vh-20rem)] flex-col items-center justify-center">
+        <div className="flex items-center gap-2">
+          <Loader2 className="size-8 animate-spin" />
+          <p>Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="relative flex min-h-[calc(100vh-20rem)] flex-col">
       <div className="container mx-auto space-y-6 p-5">
@@ -100,16 +168,45 @@ const RequestTeachingPage = () => {
           <IntroductionSection />
           <TeachingSection />
         </div>
-        <div className="flex items-center gap-3">
-          <Checkbox id="terms" />
-          <Label htmlFor="terms">
-            I have read the policy and agree to become the Byway LMS's instructor.
-          </Label>
-        </div>
-        <Button>
-          Send request
-          <ArrowRight />
-        </Button>
+        {isTeachingRequestSubmitted ? (
+          <div className="mx-auto w-fit rounded-md border border-green-600 bg-green-50 p-4">
+            <Label className="text-green-600">
+              <CheckCircle className="size-4" />
+              You've already submitted the request. Please wait for the admin to process your
+              request.
+            </Label>
+          </div>
+        ) : (
+          <Form {...form}>
+            <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
+              <FormField
+                control={form.control}
+                name="agree"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <div className="flex items-center gap-3">
+                        <Checkbox
+                          id="terms"
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                        <Label htmlFor="terms">
+                          I have read the policy and agree to become the Byway LMS's instructor.
+                        </Label>
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit" disabled={!form.formState.isValid}>
+                Send request
+                <ArrowRight />
+              </Button>
+            </form>
+          </Form>
+        )}
       </div>
     </div>
   );

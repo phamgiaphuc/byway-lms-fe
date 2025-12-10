@@ -15,7 +15,7 @@ export const categoryTableColumns: ColumnDef<Category>[] = [
     enableSorting: false,
     enableHiding: false,
     header: ({ table }) => (
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 pl-2">
         <Checkbox
           checked={
             table.getIsAllPageRowsSelected() ||
@@ -28,7 +28,7 @@ export const categoryTableColumns: ColumnDef<Category>[] = [
       </div>
     ),
     cell: ({ row }) => (
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 pl-2">
         <Checkbox
           checked={row.getIsSelected()}
           onCheckedChange={(value) => row.toggleSelected(!!value)}
@@ -63,6 +63,7 @@ export const categoryTableColumns: ColumnDef<Category>[] = [
             <img
               src={category.image.url}
               alt={category.image.name}
+              loading="lazy"
               className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
