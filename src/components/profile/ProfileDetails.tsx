@@ -1,6 +1,6 @@
 // components/profile/ProfileDetails.tsx
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { ProfileInput } from "./profileInput"
+import { ProfileInput } from "./ProfileInput"
 
 export function ProfileDetails() {
   return (
