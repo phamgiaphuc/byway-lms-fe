@@ -22,10 +22,9 @@ import { Route as AuthSignInRouteImport } from './routes/_auth/sign-in'
 import { Route as AuthenticatedInstructorRouteRouteImport } from './routes/_authenticated/instructor/route'
 import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/admin/route'
 import { Route as AuthenticatedInstructorRevenueRouteImport } from './routes/_authenticated/instructor/revenue'
-import { Route as AuthenticatedInstructorNotificationsRouteImport } from './routes/_authenticated/instructor/notifications'
-import { Route as AuthenticatedInstructorMessagesRouteImport } from './routes/_authenticated/instructor/messages'
+import { Route as AuthenticatedInstructorNotificationRouteImport } from './routes/_authenticated/instructor/notification'
+import { Route as AuthenticatedInstructorMessageRouteImport } from './routes/_authenticated/instructor/message'
 import { Route as AuthenticatedInstructorDashboardRouteImport } from './routes/_authenticated/instructor/dashboard'
-import { Route as AuthenticatedInstructorCoursesRouteImport } from './routes/_authenticated/instructor/courses'
 import { Route as AuthenticatedAdminUserManagementRouteImport } from './routes/_authenticated/admin/user-management'
 import { Route as AuthenticatedAdminRequestRouteImport } from './routes/_authenticated/admin/request'
 import { Route as AuthenticatedAdminDashboardRouteImport } from './routes/_authenticated/admin/dashboard'
@@ -36,6 +35,8 @@ import { Route as AuthenticatedUserRequestTeachingRouteImport } from './routes/_
 import { Route as AuthenticatedUserRequestRouteImport } from './routes/_authenticated/_user/request'
 import { Route as AuthenticatedUserProfileRouteImport } from './routes/_authenticated/_user/profile'
 import { Route as AuthenticatedUserCourseRouteImport } from './routes/_authenticated/_user/course'
+import { Route as AuthenticatedInstructorCourseIndexRouteImport } from './routes/_authenticated/instructor/course/index'
+import { Route as AuthenticatedInstructorCourseAddNewRouteImport } from './routes/_authenticated/instructor/course/add-new'
 
 const PublicRoute = PublicRouteImport.update({
   id: '/_public',
@@ -100,28 +101,22 @@ const AuthenticatedInstructorRevenueRoute =
     path: '/revenue',
     getParentRoute: () => AuthenticatedInstructorRouteRoute,
   } as any)
-const AuthenticatedInstructorNotificationsRoute =
-  AuthenticatedInstructorNotificationsRouteImport.update({
-    id: '/notifications',
-    path: '/notifications',
+const AuthenticatedInstructorNotificationRoute =
+  AuthenticatedInstructorNotificationRouteImport.update({
+    id: '/notification',
+    path: '/notification',
     getParentRoute: () => AuthenticatedInstructorRouteRoute,
   } as any)
-const AuthenticatedInstructorMessagesRoute =
-  AuthenticatedInstructorMessagesRouteImport.update({
-    id: '/messages',
-    path: '/messages',
+const AuthenticatedInstructorMessageRoute =
+  AuthenticatedInstructorMessageRouteImport.update({
+    id: '/message',
+    path: '/message',
     getParentRoute: () => AuthenticatedInstructorRouteRoute,
   } as any)
 const AuthenticatedInstructorDashboardRoute =
   AuthenticatedInstructorDashboardRouteImport.update({
     id: '/dashboard',
     path: '/dashboard',
-    getParentRoute: () => AuthenticatedInstructorRouteRoute,
-  } as any)
-const AuthenticatedInstructorCoursesRoute =
-  AuthenticatedInstructorCoursesRouteImport.update({
-    id: '/courses',
-    path: '/courses',
     getParentRoute: () => AuthenticatedInstructorRouteRoute,
   } as any)
 const AuthenticatedAdminUserManagementRoute =
@@ -183,6 +178,18 @@ const AuthenticatedUserCourseRoute = AuthenticatedUserCourseRouteImport.update({
   path: '/course',
   getParentRoute: () => AuthenticatedUserRoute,
 } as any)
+const AuthenticatedInstructorCourseIndexRoute =
+  AuthenticatedInstructorCourseIndexRouteImport.update({
+    id: '/course/',
+    path: '/course/',
+    getParentRoute: () => AuthenticatedInstructorRouteRoute,
+  } as any)
+const AuthenticatedInstructorCourseAddNewRoute =
+  AuthenticatedInstructorCourseAddNewRouteImport.update({
+    id: '/course/add-new',
+    path: '/course/add-new',
+    getParentRoute: () => AuthenticatedInstructorRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
@@ -203,11 +210,12 @@ export interface FileRoutesByFullPath {
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/admin/request': typeof AuthenticatedAdminRequestRoute
   '/admin/user-management': typeof AuthenticatedAdminUserManagementRoute
-  '/instructor/courses': typeof AuthenticatedInstructorCoursesRoute
   '/instructor/dashboard': typeof AuthenticatedInstructorDashboardRoute
-  '/instructor/messages': typeof AuthenticatedInstructorMessagesRoute
-  '/instructor/notifications': typeof AuthenticatedInstructorNotificationsRoute
+  '/instructor/message': typeof AuthenticatedInstructorMessageRoute
+  '/instructor/notification': typeof AuthenticatedInstructorNotificationRoute
   '/instructor/revenue': typeof AuthenticatedInstructorRevenueRoute
+  '/instructor/course/add-new': typeof AuthenticatedInstructorCourseAddNewRoute
+  '/instructor/course': typeof AuthenticatedInstructorCourseIndexRoute
 }
 export interface FileRoutesByTo {
   '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
@@ -228,11 +236,12 @@ export interface FileRoutesByTo {
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/admin/request': typeof AuthenticatedAdminRequestRoute
   '/admin/user-management': typeof AuthenticatedAdminUserManagementRoute
-  '/instructor/courses': typeof AuthenticatedInstructorCoursesRoute
   '/instructor/dashboard': typeof AuthenticatedInstructorDashboardRoute
-  '/instructor/messages': typeof AuthenticatedInstructorMessagesRoute
-  '/instructor/notifications': typeof AuthenticatedInstructorNotificationsRoute
+  '/instructor/message': typeof AuthenticatedInstructorMessageRoute
+  '/instructor/notification': typeof AuthenticatedInstructorNotificationRoute
   '/instructor/revenue': typeof AuthenticatedInstructorRevenueRoute
+  '/instructor/course/add-new': typeof AuthenticatedInstructorCourseAddNewRoute
+  '/instructor/course': typeof AuthenticatedInstructorCourseIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -258,11 +267,12 @@ export interface FileRoutesById {
   '/_authenticated/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/_authenticated/admin/request': typeof AuthenticatedAdminRequestRoute
   '/_authenticated/admin/user-management': typeof AuthenticatedAdminUserManagementRoute
-  '/_authenticated/instructor/courses': typeof AuthenticatedInstructorCoursesRoute
   '/_authenticated/instructor/dashboard': typeof AuthenticatedInstructorDashboardRoute
-  '/_authenticated/instructor/messages': typeof AuthenticatedInstructorMessagesRoute
-  '/_authenticated/instructor/notifications': typeof AuthenticatedInstructorNotificationsRoute
+  '/_authenticated/instructor/message': typeof AuthenticatedInstructorMessageRoute
+  '/_authenticated/instructor/notification': typeof AuthenticatedInstructorNotificationRoute
   '/_authenticated/instructor/revenue': typeof AuthenticatedInstructorRevenueRoute
+  '/_authenticated/instructor/course/add-new': typeof AuthenticatedInstructorCourseAddNewRoute
+  '/_authenticated/instructor/course/': typeof AuthenticatedInstructorCourseIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -285,11 +295,12 @@ export interface FileRouteTypes {
     | '/admin/dashboard'
     | '/admin/request'
     | '/admin/user-management'
-    | '/instructor/courses'
     | '/instructor/dashboard'
-    | '/instructor/messages'
-    | '/instructor/notifications'
+    | '/instructor/message'
+    | '/instructor/notification'
     | '/instructor/revenue'
+    | '/instructor/course/add-new'
+    | '/instructor/course'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/admin'
@@ -310,11 +321,12 @@ export interface FileRouteTypes {
     | '/admin/dashboard'
     | '/admin/request'
     | '/admin/user-management'
-    | '/instructor/courses'
     | '/instructor/dashboard'
-    | '/instructor/messages'
-    | '/instructor/notifications'
+    | '/instructor/message'
+    | '/instructor/notification'
     | '/instructor/revenue'
+    | '/instructor/course/add-new'
+    | '/instructor/course'
   id:
     | '__root__'
     | '/_auth'
@@ -339,11 +351,12 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/dashboard'
     | '/_authenticated/admin/request'
     | '/_authenticated/admin/user-management'
-    | '/_authenticated/instructor/courses'
     | '/_authenticated/instructor/dashboard'
-    | '/_authenticated/instructor/messages'
-    | '/_authenticated/instructor/notifications'
+    | '/_authenticated/instructor/message'
+    | '/_authenticated/instructor/notification'
     | '/_authenticated/instructor/revenue'
+    | '/_authenticated/instructor/course/add-new'
+    | '/_authenticated/instructor/course/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -445,18 +458,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedInstructorRevenueRouteImport
       parentRoute: typeof AuthenticatedInstructorRouteRoute
     }
-    '/_authenticated/instructor/notifications': {
-      id: '/_authenticated/instructor/notifications'
-      path: '/notifications'
-      fullPath: '/instructor/notifications'
-      preLoaderRoute: typeof AuthenticatedInstructorNotificationsRouteImport
+    '/_authenticated/instructor/notification': {
+      id: '/_authenticated/instructor/notification'
+      path: '/notification'
+      fullPath: '/instructor/notification'
+      preLoaderRoute: typeof AuthenticatedInstructorNotificationRouteImport
       parentRoute: typeof AuthenticatedInstructorRouteRoute
     }
-    '/_authenticated/instructor/messages': {
-      id: '/_authenticated/instructor/messages'
-      path: '/messages'
-      fullPath: '/instructor/messages'
-      preLoaderRoute: typeof AuthenticatedInstructorMessagesRouteImport
+    '/_authenticated/instructor/message': {
+      id: '/_authenticated/instructor/message'
+      path: '/message'
+      fullPath: '/instructor/message'
+      preLoaderRoute: typeof AuthenticatedInstructorMessageRouteImport
       parentRoute: typeof AuthenticatedInstructorRouteRoute
     }
     '/_authenticated/instructor/dashboard': {
@@ -464,13 +477,6 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/instructor/dashboard'
       preLoaderRoute: typeof AuthenticatedInstructorDashboardRouteImport
-      parentRoute: typeof AuthenticatedInstructorRouteRoute
-    }
-    '/_authenticated/instructor/courses': {
-      id: '/_authenticated/instructor/courses'
-      path: '/courses'
-      fullPath: '/instructor/courses'
-      preLoaderRoute: typeof AuthenticatedInstructorCoursesRouteImport
       parentRoute: typeof AuthenticatedInstructorRouteRoute
     }
     '/_authenticated/admin/user-management': {
@@ -543,6 +549,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedUserCourseRouteImport
       parentRoute: typeof AuthenticatedUserRoute
     }
+    '/_authenticated/instructor/course/': {
+      id: '/_authenticated/instructor/course/'
+      path: '/course'
+      fullPath: '/instructor/course'
+      preLoaderRoute: typeof AuthenticatedInstructorCourseIndexRouteImport
+      parentRoute: typeof AuthenticatedInstructorRouteRoute
+    }
+    '/_authenticated/instructor/course/add-new': {
+      id: '/_authenticated/instructor/course/add-new'
+      path: '/course/add-new'
+      fullPath: '/instructor/course/add-new'
+      preLoaderRoute: typeof AuthenticatedInstructorCourseAddNewRouteImport
+      parentRoute: typeof AuthenticatedInstructorRouteRoute
+    }
   }
 }
 
@@ -586,22 +606,26 @@ const AuthenticatedAdminRouteRouteWithChildren =
   )
 
 interface AuthenticatedInstructorRouteRouteChildren {
-  AuthenticatedInstructorCoursesRoute: typeof AuthenticatedInstructorCoursesRoute
   AuthenticatedInstructorDashboardRoute: typeof AuthenticatedInstructorDashboardRoute
-  AuthenticatedInstructorMessagesRoute: typeof AuthenticatedInstructorMessagesRoute
-  AuthenticatedInstructorNotificationsRoute: typeof AuthenticatedInstructorNotificationsRoute
+  AuthenticatedInstructorMessageRoute: typeof AuthenticatedInstructorMessageRoute
+  AuthenticatedInstructorNotificationRoute: typeof AuthenticatedInstructorNotificationRoute
   AuthenticatedInstructorRevenueRoute: typeof AuthenticatedInstructorRevenueRoute
+  AuthenticatedInstructorCourseAddNewRoute: typeof AuthenticatedInstructorCourseAddNewRoute
+  AuthenticatedInstructorCourseIndexRoute: typeof AuthenticatedInstructorCourseIndexRoute
 }
 
 const AuthenticatedInstructorRouteRouteChildren: AuthenticatedInstructorRouteRouteChildren =
   {
-    AuthenticatedInstructorCoursesRoute: AuthenticatedInstructorCoursesRoute,
     AuthenticatedInstructorDashboardRoute:
       AuthenticatedInstructorDashboardRoute,
-    AuthenticatedInstructorMessagesRoute: AuthenticatedInstructorMessagesRoute,
-    AuthenticatedInstructorNotificationsRoute:
-      AuthenticatedInstructorNotificationsRoute,
+    AuthenticatedInstructorMessageRoute: AuthenticatedInstructorMessageRoute,
+    AuthenticatedInstructorNotificationRoute:
+      AuthenticatedInstructorNotificationRoute,
     AuthenticatedInstructorRevenueRoute: AuthenticatedInstructorRevenueRoute,
+    AuthenticatedInstructorCourseAddNewRoute:
+      AuthenticatedInstructorCourseAddNewRoute,
+    AuthenticatedInstructorCourseIndexRoute:
+      AuthenticatedInstructorCourseIndexRoute,
   }
 
 const AuthenticatedInstructorRouteRouteWithChildren =

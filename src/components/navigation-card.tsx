@@ -13,10 +13,10 @@ export type ContentCardProps = Pick<NavigationCardProps, "title" | "icon" | "des
 const ContentCard = (props: ContentCardProps) => {
   const { title, icon, description } = props;
   return (
-    <Card className="border-input hover:border-primary border p-6 transition-colors hover:shadow-[4px_4px_0px_0px_rgb(2,6,23)]">
+    <Card className="border-input hover:border-primary h-full border p-6 transition-colors hover:shadow-[4px_4px_0px_0px_rgb(2,6,23)]">
       <CardHeader className="gap-0 p-0">
         <div className="text-primary [&_svg]:size-6">{icon}</div>
-        <CardTitle className="mt-2 text-xl">{title}</CardTitle>
+        <CardTitle className="mt-2 mb-1 text-xl">{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
     </Card>

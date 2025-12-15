@@ -19,7 +19,6 @@ import {
 import CategoryDialog from "@/pages/admin/category/category-dialog";
 import CategoryPagination from "@/pages/admin/category/category-pagination";
 import { useSidebarStore } from "@/hooks/zustand/use-sidebar-store";
-import { useFilterStore } from "@/hooks/zustand/use-filter-store";
 
 const CategoryPage = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -30,10 +29,9 @@ const CategoryPage = () => {
   });
   const { data, isLoading } = useGetCategories();
   const { setHeaders } = useSidebarStore();
-  const {} = useFilterStore();
 
   const table = useReactTable({
-    data: data || [],
+    data: data ?? [],
     columns: categoryTableColumns,
     state: {
       sorting,

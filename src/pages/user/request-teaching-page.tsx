@@ -119,7 +119,7 @@ const RequestTeachingPage = () => {
   const { data, isLoading } = useGetRequests();
 
   const isTeachingRequestSubmitted = useMemo(
-    () => data?.data.find((r) => r.status === "pending" && r.type === "teaching"),
+    () => data?.find((r) => r.status === "pending" && r.type === "teaching"),
     [data],
   );
 

@@ -2,7 +2,7 @@ import { useSidebarStore } from "@/hooks/zustand/use-sidebar-store";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 
-export const Route = createFileRoute("/_authenticated/instructor/notifications")({
+export const Route = createFileRoute("/_authenticated/instructor/notification")({
   component: RouteComponent,
 });
 
