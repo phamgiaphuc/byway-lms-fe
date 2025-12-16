@@ -1,8 +1,12 @@
 import type { CategoryFilter } from "@/types/category";
+import type { ChapterFilter } from "@/types/chapter";
+import type { CourseFilter } from "@/types/course";
 import { create } from "zustand";
 
 type FilterState = {
   category: CategoryFilter;
+  course: CourseFilter;
+  chapter: ChapterFilter;
 };
 
 type FilterAction = {
@@ -14,9 +18,15 @@ type FilterStore = FilterAction & {
   filter: FilterState;
 };
 
-const initFilterState: FilterState = {
+export const initFilterState: FilterState = {
   category: {
     keyword: "",
+  },
+  course: {
+    id: "",
+  },
+  chapter: {
+    courseId: "",
   },
 };
 

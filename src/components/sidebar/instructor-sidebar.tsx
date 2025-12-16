@@ -81,7 +81,7 @@ export function InstructorSidebar({ ...props }: React.ComponentProps<typeof Side
                 />
               </div>
               <div className={cn("flex flex-col gap-1", !open && "hidden")}>
-                <Label>Hi, {profile.name}</Label>
+                <Label>{profile.name}</Label>
                 <span className="text-background/75 text-xs capitalize">{profile.role}</span>
               </div>
             </div>

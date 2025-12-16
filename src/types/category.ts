@@ -2,7 +2,7 @@ import { fileSchema, type File } from "@/types/file";
 import z from "zod";
 
 export type CategoryFilter = {
-  keyword?: string;
+  keyword: string;
 };
 
 export type Category = {

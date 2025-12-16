@@ -13,7 +13,7 @@
 
 /* Editor container */
 .quill > .ql-container {
-  @apply min-h-64 rounded-b-lg text-sm text-inherit;
+  @apply max-h-96 min-h-64 overflow-scroll rounded-b-lg text-sm text-inherit;
 }
 
 /* Picker label (font size dropdown, etc.) */

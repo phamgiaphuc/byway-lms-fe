@@ -1,22 +1,39 @@
-import { fileSchema } from "@/types/file";
+import type { Category } from "@/types/category";
+import type { Chapter } from "@/types/chapter";
+import { fileSchema, type File } from "@/types/file";
 import z from "zod";
+
+export type CourseFilter = {
+  id: string;
+};
+
+export type Course = {
+  id: string;
+  level: string;
+  instructorId: string;
+  title: string;
+  description: string;
+  imageId: string;
+  price: number;
+  isFree: boolean;
+  isPublished: boolean;
+  createdAt: string;
+  updatedAt: string;
+  image: File;
+  categories: Category[];
+  chapters: Chapter[];
+};
 
 export const createCourseSchema = z
   .object({
-    title: z.string(),
-    description: z.string(),
+    title: z.string().min(1, "Title is required"),
+    description: z.string().min(1, "Description is required"),
     image: fileSchema,
     isFree: z.boolean(),
-    price: z.number().min(0),
+    price: z.number(),
     isPublished: z.boolean(),
-    categoryIds: z
-      .array(
-        z.object({
-          value: z.uuid(),
-          label: z.string(),
-        }),
-      )
-      .min(1, "Select at least one category"),
+    level: z.enum(["beginner", "intermediate", "expert"]),
+    categoryIds: z.array(z.uuid()).min(1, "Select at least one category"),
   })
   .superRefine((data, ctx) => {
     if (!data.isFree && data.price <= 0) {
@@ -26,7 +43,6 @@ export const createCourseSchema = z
         code: "custom",
       });
     }
-
     if (data.isFree && data.price !== 0) {
       ctx.addIssue({
         path: ["price"],
