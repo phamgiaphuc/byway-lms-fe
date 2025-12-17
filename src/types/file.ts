@@ -26,6 +26,15 @@ export const fileSchema = z
     message: "File is required",
   });
 
+export const optionalFileSchema = z
+  .object({
+    id: z.string(),
+    ext: z.string(),
+    name: z.string(),
+    url: z.url(),
+  })
+  .optional();
+
 export type FileSchema = z.infer<typeof fileSchema>;
 
 export const filesSchema = z.array(fileSchema);

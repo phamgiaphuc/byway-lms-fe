@@ -50,13 +50,13 @@ const CourseDetailHeader = () => {
       {data && (
         <div className="mt-4 flex gap-2 pl-10">
           <Link
-            to="/instructor/course/$id"
-            params={{ id: data.id }}
+            to="/instructor/course/$courseId"
+            params={{ courseId: data.id }}
             className={cn(
               "px-4 py-2 font-medium transition-colors",
               matchRoute({
-                to: "/instructor/course/$id",
-                params: { id: data.id },
+                to: "/instructor/course/$courseId",
+                params: { courseId: data.id },
               })
                 ? "border-primary text-primary border-b-2"
                 : "text-muted-foreground hover:text-primary",
@@ -65,13 +65,13 @@ const CourseDetailHeader = () => {
             Overview
           </Link>
           <Link
-            to="/instructor/course/$id/chapter"
-            params={{ id: data.id }}
+            to="/instructor/course/$courseId/chapter"
+            params={{ courseId: data.id }}
             className={cn(
               "px-4 py-2 font-medium transition-colors",
               matchRoute({
-                to: "/instructor/course/$id/chapter",
-                params: { id: data.id },
+                to: "/instructor/course/$courseId/chapter",
+                params: { courseId: data.id },
               })
                 ? "border-primary text-primary border-b-2"
                 : "text-muted-foreground hover:text-primary",
@@ -80,13 +80,13 @@ const CourseDetailHeader = () => {
             Chapters
           </Link>
           <Link
-            to="/instructor/course/$id/student"
-            params={{ id: data.id }}
+            to="/instructor/course/$courseId/student"
+            params={{ courseId: data.id }}
             className={cn(
               "px-4 py-2 font-medium transition-colors",
               matchRoute({
-                to: "/instructor/course/$id/student",
-                params: { id: data.id },
+                to: "/instructor/course/$courseId/student",
+                params: { courseId: data.id },
               })
                 ? "border-primary text-primary border-b-2"
                 : "text-muted-foreground hover:text-primary",
@@ -95,13 +95,13 @@ const CourseDetailHeader = () => {
             Students
           </Link>
           <Link
-            to="/instructor/course/$id/review"
-            params={{ id: data.id }}
+            to="/instructor/course/$courseId/review"
+            params={{ courseId: data.id }}
             className={cn(
               "px-4 py-2 font-medium transition-colors",
               matchRoute({
-                to: "/instructor/course/$id/review",
-                params: { id: data.id },
+                to: "/instructor/course/$courseId/review",
+                params: { courseId: data.id },
               })
                 ? "border-primary text-primary border-b-2"
                 : "text-muted-foreground hover:text-primary",
@@ -110,13 +110,13 @@ const CourseDetailHeader = () => {
             Reviews
           </Link>
           <Link
-            to="/instructor/course/$id/detail"
-            params={{ id: data.id }}
+            to="/instructor/course/$courseId/detail"
+            params={{ courseId: data.id }}
             className={cn(
               "px-4 py-2 font-medium transition-colors",
               matchRoute({
-                to: "/instructor/course/$id/detail",
-                params: { id: data.id },
+                to: "/instructor/course/$courseId/detail",
+                params: { courseId: data.id },
               })
                 ? "border-primary text-primary border-b-2"
                 : "text-muted-foreground hover:text-primary",
@@ -125,13 +125,13 @@ const CourseDetailHeader = () => {
             Detail
           </Link>
           <Link
-            to="/instructor/course/$id/settings"
-            params={{ id: data.id }}
+            to="/instructor/course/$courseId/settings"
+            params={{ courseId: data.id }}
             className={cn(
               "px-4 py-2 font-medium transition-colors",
               matchRoute({
-                to: "/instructor/course/$id/settings",
-                params: { id: data.id },
+                to: "/instructor/course/$courseId/settings",
+                params: { courseId: data.id },
               })
                 ? "border-primary text-primary border-b-2"
                 : "text-muted-foreground hover:text-primary",

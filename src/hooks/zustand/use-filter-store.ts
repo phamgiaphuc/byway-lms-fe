@@ -26,6 +26,7 @@ export const initFilterState: FilterState = {
     id: "",
   },
   chapter: {
+    id: "",
     courseId: "",
   },
 };

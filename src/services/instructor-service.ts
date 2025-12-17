@@ -3,6 +3,7 @@ import { generateSearchParams } from "@/services/category-service";
 import type { ApiResponse } from "@/types/api-response";
 import type { Chapter, CreateChapterSchema, UpdateChapterSchema } from "@/types/chapter";
 import type { Course } from "@/types/course";
+import type { CreateLessonSchema, Lesson } from "@/types/lesson";
 
 export const getCourses = async () => {
   const { data } = await api.get("instructor/courses").json<ApiResponse<Course[]>>();
@@ -35,6 +36,11 @@ export const getChapters = async (courseId: string) => {
   return data;
 };
 
+export const getChapterById = async (chapterId: string) => {
+  const { data } = await api.get(`instructor/chapters/${chapterId}`).json<ApiResponse<Chapter>>();
+  return data;
+};
+
 export const updateChapterById = async (chapter: UpdateChapterSchema) => {
   return await api
     .put(`instructor/chapters/${chapter.id}`, {
@@ -44,4 +50,12 @@ export const updateChapterById = async (chapter: UpdateChapterSchema) => {
       },
     })
     .json<ApiResponse<Chapter>>();
+};
+
+export const createLesson = async (lesson: CreateLessonSchema) => {
+  return api
+    .post("instructor/lessons", {
+      json: lesson,
+    })
+    .json<ApiResponse<Lesson>>();
 };

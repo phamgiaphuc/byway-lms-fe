@@ -90,6 +90,7 @@ const CourseAddNewPage = () => {
       form.clearErrors("price");
     }
   }, [isFree, form]);
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="relative space-y-6 py-4">
@@ -98,7 +99,7 @@ const CourseAddNewPage = () => {
             <h1 className="text-2xl font-semibold">Add new course</h1>
             <span className="text-muted-foreground">Fill in the course information.</span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-4">
             <Button variant="destructive-outline" asChild className="w-32">
               <Link to="/instructor/course">
                 Cancel
@@ -112,7 +113,7 @@ const CourseAddNewPage = () => {
           </div>
         </div>
         <div className="flex items-start justify-between gap-12 px-4">
-          <div className="col-span-3 flex flex-1 flex-col space-y-6">
+          <div className="flex max-w-5xl flex-1 flex-col space-y-6">
             <FormField
               name="title"
               control={form.control}

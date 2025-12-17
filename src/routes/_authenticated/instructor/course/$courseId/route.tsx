@@ -5,7 +5,7 @@ import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { useWillUnmount } from "rooks";
 
-export const Route = createFileRoute("/_authenticated/instructor/course/$id")({
+export const Route = createFileRoute("/_authenticated/instructor/course/$courseId")({
   component: RouteComponent,
   head: () => ({
     meta: [
@@ -17,13 +17,13 @@ export const Route = createFileRoute("/_authenticated/instructor/course/$id")({
 });
 
 function RouteComponent() {
-  const { id } = Route.useParams();
+  const { courseId } = Route.useParams();
   const { setIsHeaderHidden } = useSidebarStore();
   const { updateFilter } = useFilterStore();
 
   useEffect(() => {
     setIsHeaderHidden(true);
-    updateFilter("course", { id: id });
+    updateFilter("course", { id: courseId });
   }, []);
 
   useWillUnmount(() => setIsHeaderHidden(false));

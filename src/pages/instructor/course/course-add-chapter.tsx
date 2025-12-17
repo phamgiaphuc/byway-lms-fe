@@ -15,7 +15,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { Plus, X } from "lucide-react";
@@ -114,15 +113,10 @@ const CourseAddChapter = ({ courseId }: CourseAddChapterProps) => {
       </Form>
     </div>
   ) : (
-    <div
-      onClick={() => setIsFormOpen(true)}
-      className="border-input hover:border-primary hover:bg-accent/25 flex h-16 cursor-pointer items-center justify-center rounded-md border border-dashed bg-transparent p-4 transition-all duration-200"
-    >
-      <Label>
-        <Plus className="size-4" />
-        Click here to add new chapter
-      </Label>
-    </div>
+    <Button onClick={() => setIsFormOpen(true)}>
+      <Plus className="size-4" />
+      Add Chapter
+    </Button>
   );
 };
 

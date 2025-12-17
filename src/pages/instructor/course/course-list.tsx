@@ -24,9 +24,9 @@ const CourseList = ({ courses }: CourseListProps) => {
             className="cursor-pointer gap-0 pt-0 shadow-xs transition-shadow duration-200 hover:shadow-md"
             onClick={() =>
               navigate({
-                to: "/instructor/course/$id",
+                to: "/instructor/course/$courseId",
                 params: {
-                  id: course.id,
+                  courseId: course.id,
                 },
               })
             }

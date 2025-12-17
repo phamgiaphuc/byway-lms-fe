@@ -1,6 +1,8 @@
 import { useFilterStore } from "@/hooks/zustand/use-filter-store";
 import {
   createChapter,
+  createLesson,
+  getChapterById,
   getChapters,
   getCourseById,
   getCourses,
@@ -51,6 +53,27 @@ export const useUpdateChapter = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: updateChapterById,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["chapters"] });
+    },
+  });
+};
+
+export const useGetChapterById = () => {
+  const {
+    filter: { chapter },
+  } = useFilterStore();
+  return useQuery({
+    queryKey: ["chapter", chapter],
+    queryFn: () => getChapterById(chapter.id),
+    enabled: !!chapter.id,
+  });
+};
+
+export const useCreateLesson = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: createLesson,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["chapters"] });
     },

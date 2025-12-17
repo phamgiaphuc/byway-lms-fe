@@ -2,6 +2,8 @@ import { format } from "date-fns";
 import JPGFileIcon from "@/assets/file-icons/jpg.svg";
 import PNGFileIcon from "@/assets/file-icons/png.svg";
 import SVGFileIcon from "@/assets/file-icons/svg.svg";
+import MP4FileIcon from "@/assets/file-icons/mp4.svg";
+import MOVFileIcon from "@/assets/file-icons/mov.svg";
 
 export function formatDatetime(date: string | Date, pattern = "HH:mm dd MMM yyyy") {
   return format(new Date(date), pattern);
@@ -71,6 +73,10 @@ export const getExtFileIcon = (ext: string) => {
       return PNGFileIcon;
     case "svg":
       return SVGFileIcon;
+    case "mov":
+      return MOVFileIcon;
+    case "mp4":
+      return MP4FileIcon;
     default:
       return JPGFileIcon;
   }

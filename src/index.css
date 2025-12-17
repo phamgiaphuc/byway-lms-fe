@@ -42,6 +42,9 @@
   --color-sidebar-ring: var(--sidebar-ring);
 
   --font-inter: "Inter", sans-serif;
+
+  --color-tree-connector: hsl(var(--tree-connector));
+  --color-tree-hover: hsl(var(--tree-hover));
 }
 
 :root {
@@ -77,6 +80,9 @@
   --sidebar-accent-foreground: oklch(0.2 0.03 264.7);
   --sidebar-border: oklch(0.75 0.015 264.7);
   --sidebar-ring: oklch(0.7 0.02 264.7);
+
+  --tree-connector: 220 20% 80%;
+  --tree-hover: 220 60% 97%;
 }
 
 .dark {
