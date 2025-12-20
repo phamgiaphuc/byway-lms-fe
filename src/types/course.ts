@@ -1,10 +1,13 @@
 import type { Category } from "@/types/category";
 import type { Chapter } from "@/types/chapter";
 import { fileSchema, type File } from "@/types/file";
+import type { User } from "@/types/user";
 import z from "zod";
 
 export type CourseFilter = {
   id: string;
+  categoryIds: string[];
+  prices: string[];
 };
 
 export type Course = {
@@ -12,6 +15,7 @@ export type Course = {
   level: string;
   instructorId: string;
   title: string;
+  subtitle: string;
   description: string;
   imageId: string;
   price: number;
@@ -22,11 +26,16 @@ export type Course = {
   image: File;
   categories: Category[];
   chapters: Chapter[];
+  instructor: User;
 };
 
 export const createCourseSchema = z
   .object({
     title: z.string().min(1, "Title is required"),
+    subtitle: z
+      .string()
+      .min(1, "Subtitle is required")
+      .max(200, "Subtitle must be at most 200 characters"),
     description: z.string().min(1, "Description is required"),
     image: fileSchema,
     isFree: z.boolean(),

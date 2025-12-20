@@ -132,7 +132,7 @@ const RequestTeachingPage = () => {
         onSuccess: (response) => {
           toast.success(response.message);
           return navigate({
-            to: "/request",
+            to: "/my-request",
           });
         },
         onError: async (error) => {

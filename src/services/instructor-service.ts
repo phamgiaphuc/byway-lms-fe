@@ -1,5 +1,5 @@
 import { api } from "@/lib/ky";
-import { generateSearchParams } from "@/services/category-service";
+import { generateSearchParams } from "@/lib/helpers";
 import type { ApiResponse } from "@/types/api-response";
 import type { Chapter, CreateChapterSchema, UpdateChapterSchema } from "@/types/chapter";
 import type { Course } from "@/types/course";
@@ -52,10 +52,18 @@ export const updateChapterById = async (chapter: UpdateChapterSchema) => {
     .json<ApiResponse<Chapter>>();
 };
 
+export const deleteChapterById = async (chapterId: string) => {
+  return await api.delete(`instructor/chapters/${chapterId}`).json<ApiResponse<{}>>();
+};
+
 export const createLesson = async (lesson: CreateLessonSchema) => {
   return api
     .post("instructor/lessons", {
       json: lesson,
     })
     .json<ApiResponse<Lesson>>();
+};
+
+export const deleteLessonById = async (lessonId: string) => {
+  return await api.delete(`instructor/lessons/${lessonId}`).json<ApiResponse<{}>>();
 };

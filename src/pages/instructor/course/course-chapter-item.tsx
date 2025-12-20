@@ -3,10 +3,12 @@ import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { ChevronDown, ChevronRight, FilePlay, FileText, Pencil, Plus, Trash2 } from "lucide-react";
+import { ChevronDown, ChevronRight, FilePlay, FileText, Pencil, Plus } from "lucide-react";
 import CourseUpdateChapter from "@/pages/instructor/course/course-update-chapter";
 import { cn } from "@/lib/utils";
 import { Link } from "@tanstack/react-router";
+import CourseDeleteChapter from "@/pages/instructor/course/course-delete-chapter";
+import LessonDeleteChapter from "@/pages/instructor/course/lesson/lesson-delete-chapter";
 
 type CourseChapterItemProps = {
   chapter: Chapter;
@@ -28,13 +30,7 @@ const CourseChapterItem = ({ chapter }: CourseChapterItemProps) => {
           <div className="flex items-center gap-4">
             <div className="flex gap-1 opacity-0 transition-opacity group-hover:opacity-100">
               <CourseUpdateChapter chapter={chapter} />
-              <Button
-                variant="ghost"
-                size="icon-sm"
-                className="text-destructive hover:text-destructive"
-              >
-                <Trash2 className="size-4" />
-              </Button>
+              <CourseDeleteChapter chapter={chapter} />
             </div>
             <Badge className={cn(chapter.isPublished ? "bg-blue-600" : "bg-yellow-500")}>
               {chapter.isPublished ? "Published" : "Draft"}
@@ -48,15 +44,10 @@ const CourseChapterItem = ({ chapter }: CourseChapterItemProps) => {
           isExpanded ? "max-h-[2000px] pt-2 opacity-100" : "max-h-0 pt-0 opacity-0",
         )}
       >
-        {chapter.lessons.map((lesson, index) => (
+        {chapter.lessons.map((lesson) => (
           <div key={lesson.id} className="group relative flex items-center">
             <div className="relative h-12 w-6 shrink-0">
-              <div
-                className={cn(
-                  "bg-tree-connector absolute top-0 left-0 w-0.5",
-                  index === chapter.lessons.length - 1 ? "h-6" : "h-full",
-                )}
-              />
+              <div className="bg-tree-connector absolute -top-6 left-0 h-full w-0.5" />
               <div className="bg-tree-connector absolute top-6 left-0 h-0.5 w-6" />
             </div>
             <div className="bg-card/50 hover:border-input hover:bg-card flex h-12 flex-1 items-center gap-3 rounded-lg border border-transparent px-4 transition-all duration-200 ease-out hover:shadow-xs">
@@ -76,13 +67,7 @@ const CourseChapterItem = ({ chapter }: CourseChapterItemProps) => {
                     <Button variant="ghost" size="icon-sm">
                       <Pencil />
                     </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon-sm"
-                      className="text-destructive hover:text-destructive hover:bg-destructive/10"
-                    >
-                      <Trash2 />
-                    </Button>
+                    <LessonDeleteChapter lesson={lesson} />
                   </div>
                   <Badge
                     className={cn(

@@ -1,3 +1,6 @@
+import { fileSchema } from "@/types/file";
+import z from "zod";
+
 export type Role = "user" | "instructor" | "admin";
 
 export const USER_ROLE: Role = "user";
@@ -33,3 +36,11 @@ export const initialUser: User = {
   deletedAt: null,
   role: "user",
 };
+
+export const updateUserSchema = z.object({
+  email: z.string(),
+  name: z.string().min(1, "Name is required"),
+  image: fileSchema,
+});
+
+export type UpdateUserSchema = z.infer<typeof updateUserSchema>;

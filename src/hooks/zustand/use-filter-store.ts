@@ -24,6 +24,8 @@ export const initFilterState: FilterState = {
   },
   course: {
     id: "",
+    categoryIds: [],
+    prices: [],
   },
   chapter: {
     id: "",

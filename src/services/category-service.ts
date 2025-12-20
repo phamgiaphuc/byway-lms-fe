@@ -33,25 +33,3 @@ export const deleteCategory = (body: { ids: string[] }) => {
     })
     .json<ApiResponse<Category>>();
 };
-
-export const generateSearchParams = (
-  data: Record<string, string | string[] | number | number[] | boolean | Date | undefined>,
-) => {
-  const params = new URLSearchParams();
-  for (const [key, value] of Object.entries(data)) {
-    if (value !== undefined && value !== "") {
-      if (Array.isArray(value)) {
-        value.forEach((val) => {
-          if (val !== "") {
-            params.append(key, val.toString());
-          }
-        });
-      } else if (value instanceof Date) {
-        params.append(key, value.toISOString());
-      } else {
-        params.append(key, value.toString());
-      }
-    }
-  }
-  return params.toString();
-};

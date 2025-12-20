@@ -31,7 +31,7 @@ const CourseChapterPage = () => {
       </div>
       <div className="max-w-5xl space-y-4 px-4">
         <CourseAddChapter courseId={courseId} />
-        {data && data.map((chapter) => <CourseChapterItem chapter={chapter} />)}
+        {data && data.map((chapter) => <CourseChapterItem key={chapter.id} chapter={chapter} />)}
       </div>
     </div>
   );

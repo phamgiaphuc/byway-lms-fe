@@ -39,8 +39,6 @@ const CourseUpdateChapter = ({ chapter }: CourseUpdateChapterProps) => {
     values: chapter,
   });
 
-  console.log(form.formState.errors);
-
   const onSubmit = (values: UpdateChapterSchema) => {
     mutate(values, {
       onSuccess: (resposne) => {

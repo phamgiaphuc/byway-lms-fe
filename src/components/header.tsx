@@ -19,8 +19,8 @@ const Header = () => {
             <img src="/favicon.svg" alt="Byway LMS" className="size-6" />
             <span className="text-sm font-medium">Byway</span>
           </Link>
-          <Link to="/" className="text-sm">
-            Categories
+          <Link to="/course" className="text-sm">
+            Courses
           </Link>
           <div className="w-[24rem]">
             <InputGroup>

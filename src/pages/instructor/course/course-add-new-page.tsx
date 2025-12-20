@@ -10,7 +10,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+  InputGroupText,
+  InputGroupTextarea,
+} from "@/components/ui/input-group";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Switch } from "@/components/ui/switch";
 import { useGetCategories } from "@/hooks/tanstack-query/use-category";
@@ -55,6 +61,7 @@ const CourseAddNewPage = () => {
     mode: "onChange",
     defaultValues: {
       title: "",
+      subtitle: "",
       description: "",
       isFree: true,
       price: 0,
@@ -122,9 +129,33 @@ const CourseAddNewPage = () => {
                   <FormLabel>Course Title</FormLabel>
                   <FormControl>
                     <InputGroup>
-                      <InputGroupInput placeholder="Enter your title" {...field} />
+                      <InputGroupInput placeholder="Enter title" {...field} />
                       <InputGroupAddon>
                         <Presentation />
+                      </InputGroupAddon>
+                    </InputGroup>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name="subtitle"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Course Subtitle</FormLabel>
+                  <FormControl>
+                    <InputGroup>
+                      <InputGroupTextarea
+                        placeholder="Enter subtitle"
+                        className="max-h-24 min-h-24"
+                        {...field}
+                      />
+                      <InputGroupAddon align="block-end">
+                        <InputGroupText className="tabular-nums">
+                          {field.value.length}/200 characters
+                        </InputGroupText>
                       </InputGroupAddon>
                     </InputGroup>
                   </FormControl>

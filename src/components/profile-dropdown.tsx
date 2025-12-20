@@ -47,9 +47,9 @@ const menu: Record<Role, MenuSection[]> = {
     {
       label: "My Account",
       items: [
-        { label: "View Profile", icon: <UserIcon />, href: "/profile" },
-        { label: "My Courses", icon: <Presentation />, href: "/course" },
-        { label: "My Requests", icon: <GitPullRequest />, href: "/request" },
+        { label: "View Profile", icon: <UserIcon />, href: "/my-profile" },
+        { label: "My Courses", icon: <Presentation />, href: "/my-course" },
+        { label: "My Requests", icon: <GitPullRequest />, href: "/my-request" },
         { label: "Settings", icon: <Settings />, href: "/settings" },
       ],
     },
