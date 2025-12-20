@@ -1,4 +1,4 @@
-import ProfilePage from "@/pages/admin/profile-page";
+import ProfilePage from "@/pages/auth/profile-page";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_public/about")({
@@ -6,5 +6,5 @@ export const Route = createFileRoute("/_public/about")({
 });
 
 function About() {
-  return <ProfilePage/>;
+  return <p>Welcome to /about</p>;
 }

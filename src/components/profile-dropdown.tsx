@@ -69,6 +69,7 @@ const menu: Record<Role, MenuSection[]> = {
     {
       label: "Admin",
       items: [
+        { label: "View Profile", icon: <UserIcon />, href: "/admin/profile" },
         { label: "Dashboard", icon: <Kanban />, href: "/admin/dashboard" },
         { label: "Courses", icon: <Presentation />, href: "/admin/courses" },
         { label: "Users Management", icon: <Users />, href: "/admin/users" },
