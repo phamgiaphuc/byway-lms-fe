@@ -1,0 +1,51 @@
+@reference "tailwindcss";
+
+/* Base Quill wrapper */
+.quill > * {
+  border-color: #e2e8f0 !important;
+  @apply text-inherit shadow-xs;
+}
+
+/* Toolbar */
+.quill > .ql-toolbar {
+  @apply rounded-t-lg;
+}
+
+/* Editor container */
+.quill > .ql-container {
+  @apply max-h-96 min-h-64 overflow-scroll rounded-b-lg text-sm text-inherit;
+}
+
+/* Picker label (font size dropdown, etc.) */
+.ql-toolbar.ql-snow .ql-picker-label {
+  @apply text-inherit opacity-75;
+}
+
+/* Picker items */
+.ql-snow .ql-picker {
+  @apply text-inherit;
+}
+
+/* Placeholder text */
+.quill > .ql-container > .ql-editor.ql-blank::before {
+  @apply text-[#737373] not-italic;
+}
+
+/* Toolbar icons */
+.ql-snow.ql-toolbar button svg {
+  @apply text-current opacity-75;
+}
+
+/* SVG strokes & fills */
+.ql-snow .ql-stroke {
+  stroke: currentColor !important;
+}
+
+.ql-snow .ql-fill {
+  fill: currentColor !important;
+}
+
+/* Dropdown items (Quill forces inline styles) */
+.ql-picker-item {
+  @apply text-neutral-700;
+}

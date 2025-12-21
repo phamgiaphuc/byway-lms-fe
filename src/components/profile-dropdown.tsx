@@ -16,6 +16,7 @@ import {
   MessageSquare,
   Presentation,
   Settings,
+  Tags,
   UserIcon,
   Users,
 } from "lucide-react";
@@ -46,8 +47,9 @@ const menu: Record<Role, MenuSection[]> = {
     {
       label: "My Account",
       items: [
-        { label: "View Profile", icon: <UserIcon />, href: "/profile" },
-        { label: "My Courses", icon: <Presentation />, href: "/courses" },
+        { label: "View Profile", icon: <UserIcon />, href: "/my-profile" },
+        { label: "My Courses", icon: <Presentation />, href: "/my-course" },
+        { label: "My Requests", icon: <GitPullRequest />, href: "/my-request" },
         { label: "Settings", icon: <Settings />, href: "/settings" },
       ],
     },
@@ -58,10 +60,10 @@ const menu: Record<Role, MenuSection[]> = {
       label: "Instructor",
       items: [
         { label: "Dashboard", icon: <Kanban />, href: "/instructor/dashboard" },
-        { label: "Courses", icon: <Presentation />, href: "/instructor/courses" },
-        { label: "Messages", icon: <MessageSquare />, href: "/instructor/messages" },
+        { label: "Course", icon: <Presentation />, href: "/instructor/course" },
+        { label: "Message", icon: <MessageSquare />, href: "/instructor/message" },
         { label: "Revenue", icon: <DollarSign />, href: "/instructor/revenue" },
-        { label: "Notifications", icon: <Bell />, href: "/instructor/notifications" },
+        { label: "Notification", icon: <Bell />, href: "/instructor/notification" },
       ],
     },
   ],
@@ -70,9 +72,10 @@ const menu: Record<Role, MenuSection[]> = {
       label: "Admin",
       items: [
         { label: "Dashboard", icon: <Kanban />, href: "/admin/dashboard" },
-        { label: "Courses", icon: <Presentation />, href: "/admin/courses" },
-        { label: "Users Management", icon: <Users />, href: "/admin/users" },
-        { label: "Requests", icon: <GitPullRequest />, href: "/admin/requests" },
+        { label: "Course", icon: <Presentation />, href: "/admin/course" },
+        { label: "Category", icon: <Tags />, href: "/admin/category" },
+        { label: "User Management", icon: <Users />, href: "/admin/user" },
+        { label: "Request", icon: <GitPullRequest />, href: "/admin/request" },
       ],
     },
   ],

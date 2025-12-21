@@ -1,3 +1,4 @@
+import { useFilterStore } from "@/hooks/zustand/use-filter-store";
 import {
   createCategory,
   deleteCategory,
@@ -6,10 +7,13 @@ import {
 } from "@/services/category-service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-export const useGetCategories = (keyword?: string) => {
+export const useGetCategories = () => {
+  const {
+    filter: { category },
+  } = useFilterStore();
   return useQuery({
-    queryKey: ["categories", keyword],
-    queryFn: () => getCategories(keyword),
+    queryKey: ["categories", category.keyword],
+    queryFn: () => getCategories(category.keyword),
   });
 };
 

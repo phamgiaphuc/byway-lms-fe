@@ -6,6 +6,7 @@ import {
   SidebarSeparator,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { useSidebarStore } from "@/hooks/zustand/use-sidebar-store";
 import { useUserStore } from "@/hooks/zustand/use-user-store";
 import { INSTRUCTOR_ROLE } from "@/types/user";
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
@@ -26,15 +27,19 @@ export const Route = createFileRoute("/_authenticated/instructor")({
 });
 
 function RouteComponent() {
+  const { isHeaderHidden } = useSidebarStore();
+
   return (
     <SidebarProvider>
       <InstructorSidebar />
       <SidebarInset>
-        <header className="bg-background border-border sticky top-0 flex h-14 items-center border-b px-2">
-          <SidebarTrigger className="size-8" />
-          <SidebarSeparator orientation="vertical" className="ml-2 max-h-4" />
-          <NavBreadcrumbs />
-        </header>
+        {!isHeaderHidden && (
+          <header className="bg-background border-border sticky top-0 flex h-14 items-center border-b px-2">
+            <SidebarTrigger className="size-8" />
+            <SidebarSeparator orientation="vertical" className="ml-2 max-h-4" />
+            <NavBreadcrumbs />
+          </header>
+        )}
         <Outlet />
       </SidebarInset>
     </SidebarProvider>

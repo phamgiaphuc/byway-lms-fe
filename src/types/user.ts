@@ -1,3 +1,7 @@
+import type { Course } from "@/types/course";
+import { fileSchema } from "@/types/file";
+import z from "zod";
+
 export type Role = "user" | "instructor" | "admin";
 
 export const USER_ROLE: Role = "user";
@@ -22,6 +26,17 @@ export type User = {
   role: Role;
 };
 
+export type UserCourse = {
+  id: string;
+  courseId: string;
+  status: string;
+  progress: number;
+  enrolledAt: Date;
+  completedAt: Date | null;
+  userId: string;
+  course: Course;
+};
+
 export const initialUser: User = {
   id: "",
   name: "",
@@ -33,3 +48,11 @@ export const initialUser: User = {
   deletedAt: null,
   role: "user",
 };
+
+export const updateUserSchema = z.object({
+  email: z.string(),
+  name: z.string().min(1, "Name is required"),
+  image: fileSchema,
+});
+
+export type UpdateUserSchema = z.infer<typeof updateUserSchema>;

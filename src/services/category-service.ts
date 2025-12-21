@@ -2,9 +2,12 @@ import { api } from "@/lib/ky";
 import type { ApiResponse } from "@/types/api-response";
 import type { Category, CreateCategorySchema, UpdateCategorySchema } from "@/types/category";
 
-export const getCategories = (keyword?: string) => {
+export const getCategories = async (keyword?: string) => {
   const params = keyword ? { keyword: keyword } : {};
-  return api.get("categories", { searchParams: params }).json<ApiResponse<Category[]>>();
+  const { data } = await api
+    .get("categories", { searchParams: params })
+    .json<ApiResponse<Category[]>>();
+  return data;
 };
 
 export const createCategory = (category: CreateCategorySchema) => {

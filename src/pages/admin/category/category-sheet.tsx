@@ -1,4 +1,3 @@
-// Combined Create/Update Category Sheet Component
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -26,6 +25,7 @@ import FileDropzone from "@/components/file-dropzone";
 import { useState, useEffect } from "react";
 import { useCreateCategory, useUpdateCategory } from "@/hooks/tanstack-query/use-category";
 import { toast } from "sonner";
+import CoverBackground from "@/assets/backgrounds/cover.png";
 
 type CategorySheetProps = {
   mode: "create" | "update";
@@ -93,7 +93,11 @@ const CategorySheet = ({ mode = "create", category, triggerBtn }: CategorySheetP
         style={{ maxWidth: 450 }}
       >
         <div className="relative h-28 overflow-hidden">
-          <img src="/cover.png" alt="Cover background" className="object-cover object-center" />
+          <img
+            src={CoverBackground}
+            alt="Cover background"
+            className="object-cover object-center"
+          />
         </div>
 
         <SheetHeader className="relative">

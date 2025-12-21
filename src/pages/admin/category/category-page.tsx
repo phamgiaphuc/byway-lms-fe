@@ -1,56 +1,68 @@
-import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
-import { categoryTableColumns } from "@/pages/admin/category/category-table-column";
-import {
-  flexRender,
-  getCoreRowModel,
-  getSortedRowModel,
-  useReactTable,
-  type RowSelectionState,
-  type SortingState,
-} from "@tanstack/react-table";
-import { Plus, RefreshCw, Search, Trash } from "lucide-react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { useGetCategories } from "@/hooks/tanstack-query/use-category";
-import { Spinner } from "@/components/ui/spinner";
+import { Plus, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CategorySheet from "@/pages/admin/category/category-sheet";
 import { initialCategory } from "@/types/category";
-import { useState } from "react";
-import { useDebounce } from "rooks";
+import { CategoryFilter } from "@/pages/admin/category/category-filter";
+import CategoryTable from "@/pages/admin/category/category-table";
+import { useGetCategories } from "@/hooks/tanstack-query/use-category";
+import { categoryTableColumns } from "@/pages/admin/category/category-table-column";
+import { useEffect, useState } from "react";
+import {
+  getCoreRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+  type PaginationState,
+  type RowSelectionState,
+  type SortingState,
+} from "@tanstack/react-table";
 import CategoryDialog from "@/pages/admin/category/category-dialog";
+import CategoryPagination from "@/pages/admin/category/category-pagination";
+import { useSidebarStore } from "@/hooks/zustand/use-sidebar-store";
 
 const CategoryPage = () => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
-  const [keyword, setKeyword] = useState("");
-  const setDebouncedKeyword = useDebounce(setKeyword, 500);
-  const { data, isLoading, refetch } = useGetCategories(keyword);
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  });
+  const { data, isLoading } = useGetCategories();
+  const { setHeaders } = useSidebarStore();
 
   const table = useReactTable({
-    data: data?.data || [],
+    data: data ?? [],
     columns: categoryTableColumns,
     state: {
       sorting,
       rowSelection,
+      pagination,
     },
     onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
+    onPaginationChange: setPagination,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
   });
 
+  useEffect(() => {
+    setHeaders([
+      {
+        title: "Dashboard",
+        url: "/admin/dashboard",
+      },
+      {
+        title: `Category (${(data ?? []).length})`,
+      },
+    ]);
+  }, [data]);
+
   return (
-    <div className="space-y-6 p-4">
-      <div className="flex items-center justify-between">
+    <div className="relative space-y-6 py-4">
+      <div className="flex items-center justify-between px-4">
         <div>
-          <h1 className="text-xl font-semibold">Category Management</h1>
+          <h1 className="text-2xl font-semibold">Category Management</h1>
           <span className="text-muted-foreground">Create and manage categories here.</span>
         </div>
         <div className="flex items-center gap-2">
@@ -68,7 +80,7 @@ const CategoryPage = () => {
             categories={table.getSelectedRowModel().rows.map((row) => row.original)}
             triggerBtn={
               <Button
-                variant="destructive"
+                variant="destructive-outline"
                 disabled={table.getSelectedRowModel().rows.length === 0}
               >
                 <Trash />
@@ -79,75 +91,10 @@ const CategoryPage = () => {
           />
         </div>
       </div>
-      <div className="space-y-4">
-        <div className="flex items-center gap-2">
-          <InputGroup className="max-w-sm">
-            <InputGroupInput
-              placeholder="Filter by ID or name"
-              onChange={(e) => setDebouncedKeyword(e.target.value)}
-            />
-            <InputGroupAddon>
-              <Search />
-            </InputGroupAddon>
-          </InputGroup>
-          <Button size="icon" variant="outline" onClick={() => refetch()}>
-            <RefreshCw />
-          </Button>
-        </div>
-        <div className="overflow-hidden rounded-md border">
-          <Table>
-            <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id} className="bg-gray-200 hover:bg-gray-200">
-                  {headerGroup.headers.map((header) => {
-                    return (
-                      <TableHead key={header.id}>
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(header.column.columnDef.header, header.getContext())}
-                      </TableHead>
-                    );
-                  })}
-                </TableRow>
-              ))}
-            </TableHeader>
-            {isLoading ? (
-              <TableBody>
-                <TableRow className="h-24 w-full">
-                  <TableCell
-                    colSpan={categoryTableColumns.length}
-                    className="items-center text-center"
-                  >
-                    <div className="flex flex-col items-center justify-center gap-4 py-4">
-                      <Spinner className="size-8" />
-                      <span className="text-sm">Data is loading, please wait a little bit...</span>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            ) : (
-              <TableBody>
-                {table.getRowModel().rows?.length ? (
-                  table.getRowModel().rows.map((row) => (
-                    <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
-                      {row.getVisibleCells().map((cell) => (
-                        <TableCell key={cell.id}>
-                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell colSpan={categoryTableColumns.length} className="h-24 text-center">
-                      No results.
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            )}
-          </Table>
-        </div>
+      <div className="relative space-y-4">
+        <CategoryFilter />
+        <CategoryTable table={table} isLoading={isLoading} />
+        <CategoryPagination table={table} />
       </div>
     </div>
   );

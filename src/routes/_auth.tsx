@@ -15,7 +15,7 @@ export const Route = createFileRoute("/_auth")({
     }
     if (profile.role === "instructor") {
       return redirect({
-        to: "/admin/users",
+        to: "/instructor/dashboard",
       });
     }
     return redirect({
@@ -26,11 +26,9 @@ export const Route = createFileRoute("/_auth")({
 });
 
 function RouteComponent() {
-  const { queryClient } = Route.useRouteContext();
-
   return (
     <>
-      <Header queryClient={queryClient} />
+      <Header />
       <Outlet />
     </>
   );

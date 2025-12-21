@@ -22,7 +22,7 @@ import { Button } from "@/components/ui/button";
 import GoogleLogo from "@/assets/brands/google.svg";
 import FacebookLogo from "@/assets/brands/facebook.svg";
 import { Label } from "@/components/ui/label";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate, useSearch } from "@tanstack/react-router";
 import { useSignIn } from "@/hooks/tanstack-query/use-auth";
 import { sendVerification } from "@/services/auth-service";
 import { convertToUnix, ls } from "@/lib/helpers";
@@ -34,6 +34,9 @@ import { env } from "@/lib/env";
 import { ADMIN_ROLE } from "@/types/user";
 
 const SignInPage = () => {
+  const { redirectUrl } = useSearch({
+    from: "/_auth/sign-in",
+  });
   const [showPassword, setShowPassword] = useState(false);
   const form = useForm({
     resolver: zodResolver(signInSchema),
@@ -67,6 +70,11 @@ const SignInPage = () => {
           if (user.role === ADMIN_ROLE) {
             return navigate({
               to: "/admin/dashboard",
+            });
+          }
+          if (redirectUrl) {
+            return navigate({
+              href: redirectUrl,
             });
           }
           return navigate({

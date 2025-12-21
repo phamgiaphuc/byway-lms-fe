@@ -4,14 +4,19 @@ import { createFileRoute, Outlet } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_public")({
   component: RouteComponent,
+  head: () => ({
+    meta: [
+      {
+        title: "Byway",
+      },
+    ],
+  }),
 });
 
 function RouteComponent() {
-  const { queryClient } = Route.useRouteContext();
-
   return (
     <>
-      <Header queryClient={queryClient} />
+      <Header />
       <Outlet />
       <Footer />
     </>

@@ -24,3 +24,7 @@ export type SignInResponse = {
   user: User;
   token?: string;
 };
+
+export const signInSearchSchema = z.object({
+  redirectUrl: z.string().optional(),
+});

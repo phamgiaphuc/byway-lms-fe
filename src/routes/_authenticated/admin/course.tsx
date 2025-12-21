@@ -1,9 +1,17 @@
 import { useSidebarStore } from "@/hooks/zustand/use-sidebar-store";
+import CoursePage from "@/pages/admin/course-page";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 
-export const Route = createFileRoute("/_authenticated/instructor/notifications")({
+export const Route = createFileRoute("/_authenticated/admin/course")({
   component: RouteComponent,
+  head: () => ({
+    meta: [
+      {
+        title: "Courses - Admin",
+      },
+    ],
+  }),
 });
 
 function RouteComponent() {
@@ -12,10 +20,14 @@ function RouteComponent() {
   useEffect(() => {
     setHeaders([
       {
-        title: "Notifications",
+        title: "Dashboard",
+        url: "/admin/dashboard",
+      },
+      {
+        title: "Course",
       },
     ]);
   }, []);
 
-  return <div className="px-5">Hello "/_authenticated/instructor/notifications"!</div>;
+  return <CoursePage />;
 }

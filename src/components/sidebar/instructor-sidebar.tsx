@@ -28,13 +28,13 @@ const navItems: NavItem[] = [
     icon: Kanban,
   },
   {
-    title: "Courses",
-    url: "/instructor/courses",
+    title: "Course",
+    url: "/instructor/course",
     icon: Presentation,
   },
   {
-    title: "Messages",
-    url: "/instructor/messages",
+    title: "Message",
+    url: "/instructor/message",
     icon: MessageSquare,
   },
   {
@@ -43,8 +43,8 @@ const navItems: NavItem[] = [
     icon: DollarSign,
   },
   {
-    title: "Notifications",
-    url: "/instructor/notifications",
+    title: "Notification",
+    url: "/instructor/notification",
     icon: Bell,
   },
 ];
@@ -81,7 +81,7 @@ export function InstructorSidebar({ ...props }: React.ComponentProps<typeof Side
                 />
               </div>
               <div className={cn("flex flex-col gap-1", !open && "hidden")}>
-                <Label>Hi, {profile.name}</Label>
+                <Label>{profile.name}</Label>
                 <span className="text-background/75 text-xs capitalize">{profile.role}</span>
               </div>
             </div>

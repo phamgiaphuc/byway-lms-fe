@@ -27,23 +27,23 @@ const navItems: NavItem[] = [
     icon: Kanban,
   },
   {
-    title: "Courses",
-    url: "/admin/courses",
+    title: "Course",
+    url: "/admin/course",
     icon: Presentation,
   },
   {
-    title: "Categories",
-    url: "/admin/categories",
+    title: "Category",
+    url: "/admin/category",
     icon: Tags,
   },
   {
-    title: "Users Management",
-    url: "/admin/users",
+    title: "User Management",
+    url: "/admin/user-management",
     icon: Users,
   },
   {
-    title: "Requests",
-    url: "/admin/requests",
+    title: "Request",
+    url: "/admin/request",
     icon: GitPullRequest,
   },
 ];

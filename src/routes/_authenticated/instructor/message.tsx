@@ -2,7 +2,7 @@ import { useSidebarStore } from "@/hooks/zustand/use-sidebar-store";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 
-export const Route = createFileRoute("/_authenticated/instructor/courses")({
+export const Route = createFileRoute("/_authenticated/instructor/message")({
   component: RouteComponent,
 });
 
@@ -12,10 +12,10 @@ function RouteComponent() {
   useEffect(() => {
     setHeaders([
       {
-        title: "Courses",
+        title: "Messages",
       },
     ]);
   }, []);
 
-  return <div className="px-5">Hello "/_authenticated/instructor/courses"!</div>;
+  return <div className="px-5">Hello "/_authenticated/instructor/messages"!</div>;
 }

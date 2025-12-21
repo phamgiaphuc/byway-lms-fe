@@ -1,4 +1,5 @@
 import { useSidebarStore } from "@/hooks/zustand/use-sidebar-store";
+import DashboardPage from "@/pages/instructor/dashboard/dashboard-page";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 
@@ -24,5 +25,5 @@ function RouteComponent() {
     ]);
   }, []);
 
-  return <div className="px-5">Hello "/_authenticated/instructor/dashboard"!</div>;
+  return <DashboardPage />;
 }
