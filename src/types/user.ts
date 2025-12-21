@@ -1,3 +1,4 @@
+import type { Course } from "@/types/course";
 import { fileSchema } from "@/types/file";
 import z from "zod";
 
@@ -23,6 +24,17 @@ export type User = {
   updatedAt: string;
   deletedAt: string | null;
   role: Role;
+};
+
+export type UserCourse = {
+  id: string;
+  courseId: string;
+  status: string;
+  progress: number;
+  enrolledAt: Date;
+  completedAt: Date | null;
+  userId: string;
+  course: Course;
 };
 
 export const initialUser: User = {

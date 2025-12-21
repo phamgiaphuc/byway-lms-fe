@@ -15,6 +15,7 @@ import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as PublicIndexRouteImport } from './routes/_public/index'
 import { Route as PublicAboutRouteImport } from './routes/_public/about'
 import { Route as AuthenticatedUserRouteImport } from './routes/_authenticated/_user'
+import { Route as AuthenticatedLearnRouteImport } from './routes/_authenticated/_learn'
 import { Route as AuthVerifyRouteImport } from './routes/_auth/verify'
 import { Route as AuthThirdPartyRouteImport } from './routes/_auth/third-party'
 import { Route as AuthSignUpRouteImport } from './routes/_auth/sign-up'
@@ -43,6 +44,7 @@ import { Route as AuthenticatedUserProfileSettingsRouteImport } from './routes/_
 import { Route as AuthenticatedUserProfileMyRequestRouteImport } from './routes/_authenticated/_user/_profile/my-request'
 import { Route as AuthenticatedUserProfileMyProfileRouteImport } from './routes/_authenticated/_user/_profile/my-profile'
 import { Route as AuthenticatedUserProfileMyCourseRouteImport } from './routes/_authenticated/_user/_profile/my-course'
+import { Route as AuthenticatedLearnLearnCourseIdRouteImport } from './routes/_authenticated/_learn/learn/$courseId'
 import { Route as AuthenticatedInstructorCourseCourseIdRouteRouteImport } from './routes/_authenticated/instructor/course/$courseId/route'
 import { Route as AuthenticatedInstructorCourseCourseIdIndexRouteImport } from './routes/_authenticated/instructor/course/$courseId/index'
 import { Route as AuthenticatedInstructorCourseCourseIdStudentRouteImport } from './routes/_authenticated/instructor/course/$courseId/student'
@@ -75,6 +77,10 @@ const PublicAboutRoute = PublicAboutRouteImport.update({
 } as any)
 const AuthenticatedUserRoute = AuthenticatedUserRouteImport.update({
   id: '/_user',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedLearnRoute = AuthenticatedLearnRouteImport.update({
+  id: '/_learn',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
 const AuthVerifyRoute = AuthVerifyRouteImport.update({
@@ -237,6 +243,12 @@ const AuthenticatedUserProfileMyCourseRoute =
     path: '/my-course',
     getParentRoute: () => AuthenticatedUserProfileRoute,
   } as any)
+const AuthenticatedLearnLearnCourseIdRoute =
+  AuthenticatedLearnLearnCourseIdRouteImport.update({
+    id: '/learn/$courseId',
+    path: '/learn/$courseId',
+    getParentRoute: () => AuthenticatedLearnRoute,
+  } as any)
 const AuthenticatedInstructorCourseCourseIdRouteRoute =
   AuthenticatedInstructorCourseCourseIdRouteRouteImport.update({
     id: '/course/$courseId',
@@ -303,6 +315,7 @@ export interface FileRoutesByFullPath {
   '/course/$id': typeof PublicCourseIdRoute
   '/course': typeof PublicCourseIndexRoute
   '/instructor/course/$courseId': typeof AuthenticatedInstructorCourseCourseIdRouteRouteWithChildren
+  '/learn/$courseId': typeof AuthenticatedLearnLearnCourseIdRoute
   '/my-course': typeof AuthenticatedUserProfileMyCourseRoute
   '/my-profile': typeof AuthenticatedUserProfileMyProfileRoute
   '/my-request': typeof AuthenticatedUserProfileMyRequestRoute
@@ -340,6 +353,7 @@ export interface FileRoutesByTo {
   '/instructor/revenue': typeof AuthenticatedInstructorRevenueRoute
   '/course/$id': typeof PublicCourseIdRoute
   '/course': typeof PublicCourseIndexRoute
+  '/learn/$courseId': typeof AuthenticatedLearnLearnCourseIdRoute
   '/my-course': typeof AuthenticatedUserProfileMyCourseRoute
   '/my-profile': typeof AuthenticatedUserProfileMyProfileRoute
   '/my-request': typeof AuthenticatedUserProfileMyRequestRoute
@@ -366,6 +380,7 @@ export interface FileRoutesById {
   '/_auth/sign-up': typeof AuthSignUpRoute
   '/_auth/third-party': typeof AuthThirdPartyRoute
   '/_auth/verify': typeof AuthVerifyRoute
+  '/_authenticated/_learn': typeof AuthenticatedLearnRouteWithChildren
   '/_authenticated/_user': typeof AuthenticatedUserRouteWithChildren
   '/_public/about': typeof PublicAboutRoute
   '/_public/': typeof PublicIndexRoute
@@ -384,6 +399,7 @@ export interface FileRoutesById {
   '/_public/course/$id': typeof PublicCourseIdRoute
   '/_public/course/': typeof PublicCourseIndexRoute
   '/_authenticated/instructor/course/$courseId': typeof AuthenticatedInstructorCourseCourseIdRouteRouteWithChildren
+  '/_authenticated/_learn/learn/$courseId': typeof AuthenticatedLearnLearnCourseIdRoute
   '/_authenticated/_user/_profile/my-course': typeof AuthenticatedUserProfileMyCourseRoute
   '/_authenticated/_user/_profile/my-profile': typeof AuthenticatedUserProfileMyProfileRoute
   '/_authenticated/_user/_profile/my-request': typeof AuthenticatedUserProfileMyRequestRoute
@@ -424,6 +440,7 @@ export interface FileRouteTypes {
     | '/course/$id'
     | '/course'
     | '/instructor/course/$courseId'
+    | '/learn/$courseId'
     | '/my-course'
     | '/my-profile'
     | '/my-request'
@@ -461,6 +478,7 @@ export interface FileRouteTypes {
     | '/instructor/revenue'
     | '/course/$id'
     | '/course'
+    | '/learn/$courseId'
     | '/my-course'
     | '/my-profile'
     | '/my-request'
@@ -486,6 +504,7 @@ export interface FileRouteTypes {
     | '/_auth/sign-up'
     | '/_auth/third-party'
     | '/_auth/verify'
+    | '/_authenticated/_learn'
     | '/_authenticated/_user'
     | '/_public/about'
     | '/_public/'
@@ -504,6 +523,7 @@ export interface FileRouteTypes {
     | '/_public/course/$id'
     | '/_public/course/'
     | '/_authenticated/instructor/course/$courseId'
+    | '/_authenticated/_learn/learn/$courseId'
     | '/_authenticated/_user/_profile/my-course'
     | '/_authenticated/_user/_profile/my-profile'
     | '/_authenticated/_user/_profile/my-request'
@@ -568,6 +588,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: ''
       preLoaderRoute: typeof AuthenticatedUserRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/_learn': {
+      id: '/_authenticated/_learn'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthenticatedLearnRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_auth/verify': {
@@ -766,6 +793,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedUserProfileMyCourseRouteImport
       parentRoute: typeof AuthenticatedUserProfileRoute
     }
+    '/_authenticated/_learn/learn/$courseId': {
+      id: '/_authenticated/_learn/learn/$courseId'
+      path: '/learn/$courseId'
+      fullPath: '/learn/$courseId'
+      preLoaderRoute: typeof AuthenticatedLearnLearnCourseIdRouteImport
+      parentRoute: typeof AuthenticatedLearnRoute
+    }
     '/_authenticated/instructor/course/$courseId': {
       id: '/_authenticated/instructor/course/$courseId'
       path: '/course/$courseId'
@@ -939,6 +973,17 @@ const AuthenticatedInstructorRouteRouteWithChildren =
     AuthenticatedInstructorRouteRouteChildren,
   )
 
+interface AuthenticatedLearnRouteChildren {
+  AuthenticatedLearnLearnCourseIdRoute: typeof AuthenticatedLearnLearnCourseIdRoute
+}
+
+const AuthenticatedLearnRouteChildren: AuthenticatedLearnRouteChildren = {
+  AuthenticatedLearnLearnCourseIdRoute: AuthenticatedLearnLearnCourseIdRoute,
+}
+
+const AuthenticatedLearnRouteWithChildren =
+  AuthenticatedLearnRoute._addFileChildren(AuthenticatedLearnRouteChildren)
+
 interface AuthenticatedUserProfileRouteChildren {
   AuthenticatedUserProfileMyCourseRoute: typeof AuthenticatedUserProfileMyCourseRoute
   AuthenticatedUserProfileMyProfileRoute: typeof AuthenticatedUserProfileMyProfileRoute
@@ -979,6 +1024,7 @@ const AuthenticatedUserRouteWithChildren =
 interface AuthenticatedRouteChildren {
   AuthenticatedAdminRouteRoute: typeof AuthenticatedAdminRouteRouteWithChildren
   AuthenticatedInstructorRouteRoute: typeof AuthenticatedInstructorRouteRouteWithChildren
+  AuthenticatedLearnRoute: typeof AuthenticatedLearnRouteWithChildren
   AuthenticatedUserRoute: typeof AuthenticatedUserRouteWithChildren
 }
 
@@ -986,6 +1032,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedAdminRouteRoute: AuthenticatedAdminRouteRouteWithChildren,
   AuthenticatedInstructorRouteRoute:
     AuthenticatedInstructorRouteRouteWithChildren,
+  AuthenticatedLearnRoute: AuthenticatedLearnRouteWithChildren,
   AuthenticatedUserRoute: AuthenticatedUserRouteWithChildren,
 }
 

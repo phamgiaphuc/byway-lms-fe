@@ -17,13 +17,23 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { useGetCourseById } from "@/hooks/tanstack-query/use-course";
-import { Link } from "@tanstack/react-router";
-import { FilePlay, FileText, Star } from "lucide-react";
+import { useGetMyCourses, userUserEnrollCourse } from "@/hooks/tanstack-query/use-user";
+import { useUserStore } from "@/hooks/zustand/use-user-store";
+import { env } from "@/lib/env";
+import type { ApiError } from "@/types/api-error";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { HTTPError } from "ky";
+import { FilePlay, FileText, Loader2, Star } from "lucide-react";
 import { useMemo } from "react";
 import { useDocumentTitle } from "rooks";
+import { toast } from "sonner";
 
 const CourseDetailPage = () => {
-  const { data } = useGetCourseById();
+  const navigate = useNavigate();
+  const { isAuthenticated } = useUserStore();
+  const { data, isLoading } = useGetCourseById();
+  const { mutate } = userUserEnrollCourse();
+  const { data: courses } = useGetMyCourses();
 
   const totalChapters = useMemo(() => data?.chapters.length, [data]);
   const totalLessons = useMemo(
@@ -31,7 +41,64 @@ const CourseDetailPage = () => {
     [data],
   );
 
+  const isAlreadyEnrolled = useMemo(() => {
+    if (!courses) {
+      return false;
+    }
+    return courses.find((course) => course.courseId === data?.id);
+  }, [courses, data]);
+
   useDocumentTitle(data?.title || "Course - Byway");
+
+  const onEnroll = () => {
+    if (!isAuthenticated) {
+      navigate({
+        to: "/sign-in",
+        search: {
+          redirectUrl: `${env.VITE_APP_URL}/course/${data?.id}`,
+        },
+      });
+      return;
+    }
+    if (isAlreadyEnrolled) {
+      navigate({
+        to: "/learn/$courseId",
+        params: {
+          courseId: data?.id || "",
+        },
+      });
+      return;
+    }
+    mutate(data?.id || "", {
+      onSuccess: (response) => {
+        toast.success(response.message);
+        navigate({
+          to: "/learn/$courseId",
+          params: {
+            courseId: data?.id || "",
+          },
+        });
+      },
+      onError: async (error) => {
+        if (error instanceof HTTPError) {
+          const { message } = await error.response.json<ApiError>();
+          return toast.error(message);
+        }
+        toast.error(error.message);
+      },
+    });
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex min-h-[calc(100vh-20rem)] items-center justify-center">
+        <div className="flex items-center gap-4 py-4">
+          <Loader2 className="size-8 animate-spin" />
+          <span className="text-sm">Course is loading, please wait a little bit...</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-[calc(100vh-20rem)]">
@@ -98,7 +165,7 @@ const CourseDetailPage = () => {
                   {data?.price === 0 ? "Free" : `$${data?.price}`}
                 </span>
               </div>
-              <Button>Enroll Now</Button>
+              <Button onClick={onEnroll}>{isAlreadyEnrolled ? "Learn now" : "Enroll now"}</Button>
               <Separator />
               <div className="text-muted-foreground space-y-2 text-sm">
                 <div className="flex justify-between">
