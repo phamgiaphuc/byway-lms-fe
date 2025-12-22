@@ -31,7 +31,7 @@ import { toast } from "sonner";
 import { HTTPError } from "ky";
 import type { ApiError } from "@/types/api-error";
 import { env } from "@/lib/env";
-import { ADMIN_ROLE } from "@/types/user";
+import { ADMIN_ROLE, INSTRUCTOR_ROLE } from "@/types/user";
 
 const SignInPage = () => {
   const { redirectUrl } = useSearch({
@@ -67,14 +67,19 @@ const SignInPage = () => {
           ls.set("token", token);
           setProfile(user);
           setIsAuthenticated(true);
+          if (redirectUrl) {
+            return navigate({
+              href: redirectUrl,
+            });
+          }
           if (user.role === ADMIN_ROLE) {
             return navigate({
               to: "/admin/dashboard",
             });
           }
-          if (redirectUrl) {
+          if (user.role === INSTRUCTOR_ROLE) {
             return navigate({
-              href: redirectUrl,
+              to: "/instructor/dashboard",
             });
           }
           return navigate({

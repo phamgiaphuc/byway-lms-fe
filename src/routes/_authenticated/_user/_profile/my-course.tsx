@@ -1,3 +1,4 @@
+import MyCoursePage from "@/pages/user/my-course-page";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_authenticated/_user/_profile/my-course")({
@@ -12,5 +13,5 @@ export const Route = createFileRoute("/_authenticated/_user/_profile/my-course")
 });
 
 function RouteComponent() {
-  return <div>Hello "/_authenticated/_user/course"!</div>;
+  return <MyCoursePage />;
 }

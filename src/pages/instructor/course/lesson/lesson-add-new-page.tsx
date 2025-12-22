@@ -136,13 +136,18 @@ const LessonAddNewPage = () => {
               render={({ field }) => (
                 <FormItem className="border-input flex items-center justify-between rounded-lg border p-4">
                   <div className="space-y-0.5">
-                    <FormLabel>Publish course</FormLabel>
+                    <FormLabel>Publish lesson</FormLabel>
                     <p className="text-muted-foreground text-sm">
-                      Make this course visible to students
+                      Make this lesson visible to students
                     </p>
                   </div>
                   <FormControl>
-                    <Switch checked={field.value} onCheckedChange={field.onChange} />
+                    <Switch
+                      checked={!!field.value}
+                      onCheckedChange={(checked) => {
+                        field.onChange(checked);
+                      }}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -203,7 +208,6 @@ const LessonAddNewPage = () => {
                   <Editor
                     value={field.value}
                     onChangeValue={(value) => {
-                      console.log(value);
                       field.onChange(value);
                     }}
                     placeholder="Enter your content"

@@ -37,6 +37,17 @@ export type UserCourse = {
   course: Course;
 };
 
+export type UserLesson = {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  progress: number;
+  lessonId: string;
+  userCourseId: string;
+  isCompleted: boolean;
+  lastPosition: number | null;
+};
+
 export const initialUser: User = {
   id: "",
   name: "",

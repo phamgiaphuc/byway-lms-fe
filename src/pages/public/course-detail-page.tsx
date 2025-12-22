@@ -30,7 +30,7 @@ import { toast } from "sonner";
 
 const CourseDetailPage = () => {
   const navigate = useNavigate();
-  const { isAuthenticated } = useUserStore();
+  const { isAuthenticated, profile } = useUserStore();
   const { data, isLoading } = useGetCourseById();
   const { mutate } = userUserEnrollCourse();
   const { data: courses } = useGetMyCourses();
@@ -62,9 +62,10 @@ const CourseDetailPage = () => {
     }
     if (isAlreadyEnrolled) {
       navigate({
-        to: "/learn/$courseId",
+        to: "/learn/$courseId/lesson/$lessonId",
         params: {
           courseId: data?.id || "",
+          lessonId: data?.chapters[0].lessons[0].id || "",
         },
       });
       return;
@@ -73,9 +74,10 @@ const CourseDetailPage = () => {
       onSuccess: (response) => {
         toast.success(response.message);
         navigate({
-          to: "/learn/$courseId",
+          to: "/learn/$courseId/lesson/$lessonId",
           params: {
             courseId: data?.id || "",
+            lessonId: data?.chapters[0].lessons[0].id || "",
           },
         });
       },
@@ -165,7 +167,9 @@ const CourseDetailPage = () => {
                   {data?.price === 0 ? "Free" : `$${data?.price}`}
                 </span>
               </div>
-              <Button onClick={onEnroll}>{isAlreadyEnrolled ? "Learn now" : "Enroll now"}</Button>
+              <Button onClick={onEnroll} disabled={profile.role !== "user"}>
+                {isAlreadyEnrolled ? "Learn now" : "Enroll now"}
+              </Button>
               <Separator />
               <div className="text-muted-foreground space-y-2 text-sm">
                 <div className="flex justify-between">
@@ -208,43 +212,41 @@ const CourseDetailPage = () => {
           <Separator />
           <div>
             <h2 className="mb-4 text-xl font-semibold">Syllabus</h2>
-            <Accordion
-              type="multiple"
-              className="overflow-hidden rounded-lg border"
-              defaultValue={["1"]}
-            >
-              {data?.chapters.map((chapter) => {
-                return (
-                  <AccordionItem value="1" key={chapter.id}>
-                    <AccordionTrigger className="bg-primary/10 cursor-pointer rounded-b-none px-5 transition-colors hover:bg-blue-50 data-[state=open]:border-b">
-                      <div className="flex w-full items-center justify-between gap-4">
-                        <Label> {chapter.title}</Label>
-                        <span className="text-muted-foreground text-sm font-normal">
-                          {chapter.lessons.length} Lessons
-                        </span>
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="p-0">
-                      {chapter.lessons.map((lesson) => (
-                        <div
-                          key={lesson.id}
-                          className="flex items-center gap-2 border-b px-5 py-4 last:border-none"
-                        >
-                          {lesson.type === "lecture" ? (
-                            <FileText className="size-4" />
-                          ) : (
-                            <FilePlay className="size-4" />
-                          )}
-                          <span className="text-foreground truncate font-medium">
-                            {lesson.title}
+            <div className="overflow-hidden rounded-lg border">
+              <Accordion type="multiple" defaultValue={[data?.chapters[0].id || ""]}>
+                {data?.chapters.map((chapter) => {
+                  return (
+                    <AccordionItem value={chapter.id} key={chapter.id}>
+                      <AccordionTrigger className="bg-primary/10 cursor-pointer rounded-none px-5 transition-colors hover:bg-blue-50 data-[state=open]:border-b">
+                        <div className="flex w-full items-center justify-between gap-4">
+                          <Label> {chapter.title}</Label>
+                          <span className="text-muted-foreground text-sm font-normal">
+                            {chapter.lessons.length} Lessons
                           </span>
                         </div>
-                      ))}
-                    </AccordionContent>
-                  </AccordionItem>
-                );
-              })}
-            </Accordion>
+                      </AccordionTrigger>
+                      <AccordionContent className="p-0">
+                        {chapter.lessons.map((lesson) => (
+                          <div
+                            key={lesson.id}
+                            className="flex items-center gap-2 border-b px-5 py-4 last:border-none"
+                          >
+                            {lesson.type === "lecture" ? (
+                              <FileText className="size-4" />
+                            ) : (
+                              <FilePlay className="size-4" />
+                            )}
+                            <span className="text-foreground truncate font-medium">
+                              {lesson.title}
+                            </span>
+                          </div>
+                        ))}
+                      </AccordionContent>
+                    </AccordionItem>
+                  );
+                })}
+              </Accordion>
+            </div>
           </div>
           <Separator />
         </div>

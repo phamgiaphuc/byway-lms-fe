@@ -1,0 +1,44 @@
+@reference "tailwindcss";
+
+.quill-content {
+  @apply text-sm leading-6 text-slate-900;
+}
+
+/* Paragraphs */
+.quill-content p {
+  @apply mb-4;
+}
+
+/* Lists */
+.quill-content ol,
+.quill-content ul {
+  @apply mb-4 ml-6 list-disc;
+}
+
+.quill-content li {
+  @apply mb-2;
+}
+
+/* Code block container */
+.quill-content .ql-code-block-container {
+  @apply my-4 rounded-lg bg-slate-900 p-4 text-sm text-slate-100;
+}
+
+/* Individual code lines */
+.quill-content .ql-code-block {
+  @apply font-mono leading-6;
+}
+
+/* Inline code (if used) */
+.quill-content code {
+  @apply rounded bg-slate-200 px-1 py-0.5 font-mono text-sm;
+}
+
+/* Headings (if enabled in editor) */
+.quill-content h1 {
+  @apply mb-4 text-2xl font-semibold;
+}
+
+.quill-content h2 {
+  @apply mb-3 text-xl font-semibold;
+}

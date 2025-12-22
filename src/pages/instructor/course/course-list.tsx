@@ -21,7 +21,7 @@ const CourseList = ({ courses }: CourseListProps) => {
         return (
           <Card
             key={course.id}
-            className="cursor-pointer gap-0 pt-0 shadow-xs transition-shadow duration-200 hover:shadow-md"
+            className="cursor-pointer gap-0 overflow-hidden pt-0 shadow-xs transition-shadow duration-200 hover:shadow-md"
             onClick={() =>
               navigate({
                 to: "/instructor/course/$courseId",

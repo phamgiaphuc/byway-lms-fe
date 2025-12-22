@@ -19,14 +19,17 @@ export const Route = createFileRoute("/_authenticated/instructor/course/$courseI
 function RouteComponent() {
   const { courseId } = Route.useParams();
   const { setIsHeaderHidden } = useSidebarStore();
-  const { updateFilter } = useFilterStore();
+  const { updateFilter, resetFilter } = useFilterStore();
 
   useEffect(() => {
     setIsHeaderHidden(true);
     updateFilter("course", { id: courseId });
   }, []);
 
-  useWillUnmount(() => setIsHeaderHidden(false));
+  useWillUnmount(() => {
+    setIsHeaderHidden(false);
+    resetFilter("course");
+  });
 
   return (
     <>

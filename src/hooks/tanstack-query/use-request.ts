@@ -3,8 +3,14 @@ import { createTeachRequest, getRequests, updateRequest } from "@/services/reque
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const useCreateTeachRequest = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: createTeachRequest,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [KEYs.request],
+      });
+    },
   });
 };
 

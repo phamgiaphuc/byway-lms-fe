@@ -15,6 +15,7 @@ function RouteComponent() {
   useEffect(() => {
     updateFilter("course", {
       id: id,
+      detail: true,
     });
   }, []);
 

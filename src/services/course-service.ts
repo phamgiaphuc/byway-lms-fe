@@ -1,7 +1,7 @@
 import { generateSearchParams } from "@/lib/helpers";
 import { api } from "@/lib/ky";
 import type { ApiResponse } from "@/types/api-response";
-import type { Course, CourseFilter, CreateCourseSchema } from "@/types/course";
+import type { Course, CourseFilter, CreateCourseSchema, UpdateCourseSchema } from "@/types/course";
 
 export const getCourses = async (course: CourseFilter) => {
   const searchParams = generateSearchParams(course);
@@ -13,15 +13,28 @@ export const getCourses = async (course: CourseFilter) => {
   return data;
 };
 
-export const getCourseById = async (courseId: string) => {
-  const { data } = await api.get(`courses/${courseId}`).json<ApiResponse<Course>>();
+export const updateCourseById = async (course: UpdateCourseSchema) => {
+  return api
+    .put(`courses/${course.id}`, {
+      json: course,
+    })
+    .json<ApiResponse<Course>>();
+};
+
+export const getCourseById = async (courseId: string, detail: boolean) => {
+  const searchParams = generateSearchParams({
+    detail,
+  });
+  const { data } = await api
+    .get(`courses/${courseId}`, { searchParams })
+    .json<ApiResponse<Course>>();
   return data;
 };
 
-export const createCourse = (category: CreateCourseSchema) => {
+export const createCourse = (course: CreateCourseSchema) => {
   return api
     .post("courses", {
-      json: category,
+      json: course,
     })
     .json<ApiResponse<Course>>();
 };

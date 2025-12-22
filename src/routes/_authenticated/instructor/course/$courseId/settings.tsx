@@ -1,11 +1,13 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { useGetCourseById } from "@/hooks/tanstack-query/use-instructor";
+import CourseSettingsPage from "@/pages/instructor/course/settings/course-settings-page";
+import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute(
-  '/_authenticated/instructor/course/$courseId/settings',
-)({
+export const Route = createFileRoute("/_authenticated/instructor/course/$courseId/settings")({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
-  return <div>Hello "/_authenticated/instructor/course/$id/settings"!</div>
+  const { data } = useGetCourseById();
+
+  return data && <CourseSettingsPage course={data} />;
 }
