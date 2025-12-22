@@ -8,6 +8,7 @@ export type CourseFilter = {
   id: string;
   categoryIds: string[];
   prices: string[];
+  detail: boolean;
 };
 
 export type Course = {
@@ -61,4 +62,38 @@ export const createCourseSchema = z
     }
   });
 
+export const updateCourseSchema = z
+  .object({
+    id: z.uuid(),
+    title: z.string().min(1, "Title is required"),
+    subtitle: z
+      .string()
+      .min(1, "Subtitle is required")
+      .max(200, "Subtitle must be at most 200 characters"),
+    description: z.string().min(1, "Description is required"),
+    image: fileSchema,
+    isFree: z.boolean(),
+    price: z.number(),
+    isPublished: z.boolean(),
+    level: z.enum(["beginner", "intermediate", "expert"]),
+    categoryIds: z.array(z.uuid()).min(1, "Select at least one category"),
+  })
+  .superRefine((data, ctx) => {
+    if (!data.isFree && data.price <= 0) {
+      ctx.addIssue({
+        path: ["price"],
+        message: "Price is required for paid courses",
+        code: "custom",
+      });
+    }
+    if (data.isFree && data.price !== 0) {
+      ctx.addIssue({
+        path: ["price"],
+        message: "Free courses must have price 0",
+        code: "custom",
+      });
+    }
+  });
+
 export type CreateCourseSchema = z.infer<typeof createCourseSchema>;
+export type UpdateCourseSchema = z.infer<typeof updateCourseSchema>;

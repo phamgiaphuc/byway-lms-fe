@@ -44,14 +44,13 @@ import { Route as AuthenticatedUserProfileSettingsRouteImport } from './routes/_
 import { Route as AuthenticatedUserProfileMyRequestRouteImport } from './routes/_authenticated/_user/_profile/my-request'
 import { Route as AuthenticatedUserProfileMyProfileRouteImport } from './routes/_authenticated/_user/_profile/my-profile'
 import { Route as AuthenticatedUserProfileMyCourseRouteImport } from './routes/_authenticated/_user/_profile/my-course'
-import { Route as AuthenticatedLearnLearnCourseIdRouteImport } from './routes/_authenticated/_learn/learn/$courseId'
 import { Route as AuthenticatedInstructorCourseCourseIdRouteRouteImport } from './routes/_authenticated/instructor/course/$courseId/route'
 import { Route as AuthenticatedInstructorCourseCourseIdIndexRouteImport } from './routes/_authenticated/instructor/course/$courseId/index'
 import { Route as AuthenticatedInstructorCourseCourseIdStudentRouteImport } from './routes/_authenticated/instructor/course/$courseId/student'
 import { Route as AuthenticatedInstructorCourseCourseIdSettingsRouteImport } from './routes/_authenticated/instructor/course/$courseId/settings'
 import { Route as AuthenticatedInstructorCourseCourseIdReviewRouteImport } from './routes/_authenticated/instructor/course/$courseId/review'
-import { Route as AuthenticatedInstructorCourseCourseIdDetailRouteImport } from './routes/_authenticated/instructor/course/$courseId/detail'
 import { Route as AuthenticatedInstructorCourseCourseIdChapterRouteImport } from './routes/_authenticated/instructor/course/$courseId/chapter'
+import { Route as AuthenticatedLearnLearnCourseIdLessonLessonIdRouteImport } from './routes/_authenticated/_learn/learn/$courseId/lesson/$lessonId'
 
 const PublicRoute = PublicRouteImport.update({
   id: '/_public',
@@ -243,12 +242,6 @@ const AuthenticatedUserProfileMyCourseRoute =
     path: '/my-course',
     getParentRoute: () => AuthenticatedUserProfileRoute,
   } as any)
-const AuthenticatedLearnLearnCourseIdRoute =
-  AuthenticatedLearnLearnCourseIdRouteImport.update({
-    id: '/learn/$courseId',
-    path: '/learn/$courseId',
-    getParentRoute: () => AuthenticatedLearnRoute,
-  } as any)
 const AuthenticatedInstructorCourseCourseIdRouteRoute =
   AuthenticatedInstructorCourseCourseIdRouteRouteImport.update({
     id: '/course/$courseId',
@@ -279,17 +272,17 @@ const AuthenticatedInstructorCourseCourseIdReviewRoute =
     path: '/review',
     getParentRoute: () => AuthenticatedInstructorCourseCourseIdRouteRoute,
   } as any)
-const AuthenticatedInstructorCourseCourseIdDetailRoute =
-  AuthenticatedInstructorCourseCourseIdDetailRouteImport.update({
-    id: '/detail',
-    path: '/detail',
-    getParentRoute: () => AuthenticatedInstructorCourseCourseIdRouteRoute,
-  } as any)
 const AuthenticatedInstructorCourseCourseIdChapterRoute =
   AuthenticatedInstructorCourseCourseIdChapterRouteImport.update({
     id: '/chapter',
     path: '/chapter',
     getParentRoute: () => AuthenticatedInstructorCourseCourseIdRouteRoute,
+  } as any)
+const AuthenticatedLearnLearnCourseIdLessonLessonIdRoute =
+  AuthenticatedLearnLearnCourseIdLessonLessonIdRouteImport.update({
+    id: '/learn/$courseId/lesson/$lessonId',
+    path: '/learn/$courseId/lesson/$lessonId',
+    getParentRoute: () => AuthenticatedLearnRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -315,7 +308,6 @@ export interface FileRoutesByFullPath {
   '/course/$id': typeof PublicCourseIdRoute
   '/course': typeof PublicCourseIndexRoute
   '/instructor/course/$courseId': typeof AuthenticatedInstructorCourseCourseIdRouteRouteWithChildren
-  '/learn/$courseId': typeof AuthenticatedLearnLearnCourseIdRoute
   '/my-course': typeof AuthenticatedUserProfileMyCourseRoute
   '/my-profile': typeof AuthenticatedUserProfileMyProfileRoute
   '/my-request': typeof AuthenticatedUserProfileMyRequestRoute
@@ -325,11 +317,11 @@ export interface FileRoutesByFullPath {
   '/instructor/lesson/add-new': typeof AuthenticatedInstructorLessonAddNewRoute
   '/instructor/course': typeof AuthenticatedInstructorCourseIndexRoute
   '/instructor/course/$courseId/chapter': typeof AuthenticatedInstructorCourseCourseIdChapterRoute
-  '/instructor/course/$courseId/detail': typeof AuthenticatedInstructorCourseCourseIdDetailRoute
   '/instructor/course/$courseId/review': typeof AuthenticatedInstructorCourseCourseIdReviewRoute
   '/instructor/course/$courseId/settings': typeof AuthenticatedInstructorCourseCourseIdSettingsRoute
   '/instructor/course/$courseId/student': typeof AuthenticatedInstructorCourseCourseIdStudentRoute
   '/instructor/course/$courseId/': typeof AuthenticatedInstructorCourseCourseIdIndexRoute
+  '/learn/$courseId/lesson/$lessonId': typeof AuthenticatedLearnLearnCourseIdLessonLessonIdRoute
 }
 export interface FileRoutesByTo {
   '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
@@ -353,7 +345,6 @@ export interface FileRoutesByTo {
   '/instructor/revenue': typeof AuthenticatedInstructorRevenueRoute
   '/course/$id': typeof PublicCourseIdRoute
   '/course': typeof PublicCourseIndexRoute
-  '/learn/$courseId': typeof AuthenticatedLearnLearnCourseIdRoute
   '/my-course': typeof AuthenticatedUserProfileMyCourseRoute
   '/my-profile': typeof AuthenticatedUserProfileMyProfileRoute
   '/my-request': typeof AuthenticatedUserProfileMyRequestRoute
@@ -363,11 +354,11 @@ export interface FileRoutesByTo {
   '/instructor/lesson/add-new': typeof AuthenticatedInstructorLessonAddNewRoute
   '/instructor/course': typeof AuthenticatedInstructorCourseIndexRoute
   '/instructor/course/$courseId/chapter': typeof AuthenticatedInstructorCourseCourseIdChapterRoute
-  '/instructor/course/$courseId/detail': typeof AuthenticatedInstructorCourseCourseIdDetailRoute
   '/instructor/course/$courseId/review': typeof AuthenticatedInstructorCourseCourseIdReviewRoute
   '/instructor/course/$courseId/settings': typeof AuthenticatedInstructorCourseCourseIdSettingsRoute
   '/instructor/course/$courseId/student': typeof AuthenticatedInstructorCourseCourseIdStudentRoute
   '/instructor/course/$courseId': typeof AuthenticatedInstructorCourseCourseIdIndexRoute
+  '/learn/$courseId/lesson/$lessonId': typeof AuthenticatedLearnLearnCourseIdLessonLessonIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -399,7 +390,6 @@ export interface FileRoutesById {
   '/_public/course/$id': typeof PublicCourseIdRoute
   '/_public/course/': typeof PublicCourseIndexRoute
   '/_authenticated/instructor/course/$courseId': typeof AuthenticatedInstructorCourseCourseIdRouteRouteWithChildren
-  '/_authenticated/_learn/learn/$courseId': typeof AuthenticatedLearnLearnCourseIdRoute
   '/_authenticated/_user/_profile/my-course': typeof AuthenticatedUserProfileMyCourseRoute
   '/_authenticated/_user/_profile/my-profile': typeof AuthenticatedUserProfileMyProfileRoute
   '/_authenticated/_user/_profile/my-request': typeof AuthenticatedUserProfileMyRequestRoute
@@ -409,11 +399,11 @@ export interface FileRoutesById {
   '/_authenticated/instructor/lesson/add-new': typeof AuthenticatedInstructorLessonAddNewRoute
   '/_authenticated/instructor/course/': typeof AuthenticatedInstructorCourseIndexRoute
   '/_authenticated/instructor/course/$courseId/chapter': typeof AuthenticatedInstructorCourseCourseIdChapterRoute
-  '/_authenticated/instructor/course/$courseId/detail': typeof AuthenticatedInstructorCourseCourseIdDetailRoute
   '/_authenticated/instructor/course/$courseId/review': typeof AuthenticatedInstructorCourseCourseIdReviewRoute
   '/_authenticated/instructor/course/$courseId/settings': typeof AuthenticatedInstructorCourseCourseIdSettingsRoute
   '/_authenticated/instructor/course/$courseId/student': typeof AuthenticatedInstructorCourseCourseIdStudentRoute
   '/_authenticated/instructor/course/$courseId/': typeof AuthenticatedInstructorCourseCourseIdIndexRoute
+  '/_authenticated/_learn/learn/$courseId/lesson/$lessonId': typeof AuthenticatedLearnLearnCourseIdLessonLessonIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -440,7 +430,6 @@ export interface FileRouteTypes {
     | '/course/$id'
     | '/course'
     | '/instructor/course/$courseId'
-    | '/learn/$courseId'
     | '/my-course'
     | '/my-profile'
     | '/my-request'
@@ -450,11 +439,11 @@ export interface FileRouteTypes {
     | '/instructor/lesson/add-new'
     | '/instructor/course'
     | '/instructor/course/$courseId/chapter'
-    | '/instructor/course/$courseId/detail'
     | '/instructor/course/$courseId/review'
     | '/instructor/course/$courseId/settings'
     | '/instructor/course/$courseId/student'
     | '/instructor/course/$courseId/'
+    | '/learn/$courseId/lesson/$lessonId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/admin'
@@ -478,7 +467,6 @@ export interface FileRouteTypes {
     | '/instructor/revenue'
     | '/course/$id'
     | '/course'
-    | '/learn/$courseId'
     | '/my-course'
     | '/my-profile'
     | '/my-request'
@@ -488,11 +476,11 @@ export interface FileRouteTypes {
     | '/instructor/lesson/add-new'
     | '/instructor/course'
     | '/instructor/course/$courseId/chapter'
-    | '/instructor/course/$courseId/detail'
     | '/instructor/course/$courseId/review'
     | '/instructor/course/$courseId/settings'
     | '/instructor/course/$courseId/student'
     | '/instructor/course/$courseId'
+    | '/learn/$courseId/lesson/$lessonId'
   id:
     | '__root__'
     | '/_auth'
@@ -523,7 +511,6 @@ export interface FileRouteTypes {
     | '/_public/course/$id'
     | '/_public/course/'
     | '/_authenticated/instructor/course/$courseId'
-    | '/_authenticated/_learn/learn/$courseId'
     | '/_authenticated/_user/_profile/my-course'
     | '/_authenticated/_user/_profile/my-profile'
     | '/_authenticated/_user/_profile/my-request'
@@ -533,11 +520,11 @@ export interface FileRouteTypes {
     | '/_authenticated/instructor/lesson/add-new'
     | '/_authenticated/instructor/course/'
     | '/_authenticated/instructor/course/$courseId/chapter'
-    | '/_authenticated/instructor/course/$courseId/detail'
     | '/_authenticated/instructor/course/$courseId/review'
     | '/_authenticated/instructor/course/$courseId/settings'
     | '/_authenticated/instructor/course/$courseId/student'
     | '/_authenticated/instructor/course/$courseId/'
+    | '/_authenticated/_learn/learn/$courseId/lesson/$lessonId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -793,13 +780,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedUserProfileMyCourseRouteImport
       parentRoute: typeof AuthenticatedUserProfileRoute
     }
-    '/_authenticated/_learn/learn/$courseId': {
-      id: '/_authenticated/_learn/learn/$courseId'
-      path: '/learn/$courseId'
-      fullPath: '/learn/$courseId'
-      preLoaderRoute: typeof AuthenticatedLearnLearnCourseIdRouteImport
-      parentRoute: typeof AuthenticatedLearnRoute
-    }
     '/_authenticated/instructor/course/$courseId': {
       id: '/_authenticated/instructor/course/$courseId'
       path: '/course/$courseId'
@@ -835,19 +815,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedInstructorCourseCourseIdReviewRouteImport
       parentRoute: typeof AuthenticatedInstructorCourseCourseIdRouteRoute
     }
-    '/_authenticated/instructor/course/$courseId/detail': {
-      id: '/_authenticated/instructor/course/$courseId/detail'
-      path: '/detail'
-      fullPath: '/instructor/course/$courseId/detail'
-      preLoaderRoute: typeof AuthenticatedInstructorCourseCourseIdDetailRouteImport
-      parentRoute: typeof AuthenticatedInstructorCourseCourseIdRouteRoute
-    }
     '/_authenticated/instructor/course/$courseId/chapter': {
       id: '/_authenticated/instructor/course/$courseId/chapter'
       path: '/chapter'
       fullPath: '/instructor/course/$courseId/chapter'
       preLoaderRoute: typeof AuthenticatedInstructorCourseCourseIdChapterRouteImport
       parentRoute: typeof AuthenticatedInstructorCourseCourseIdRouteRoute
+    }
+    '/_authenticated/_learn/learn/$courseId/lesson/$lessonId': {
+      id: '/_authenticated/_learn/learn/$courseId/lesson/$lessonId'
+      path: '/learn/$courseId/lesson/$lessonId'
+      fullPath: '/learn/$courseId/lesson/$lessonId'
+      preLoaderRoute: typeof AuthenticatedLearnLearnCourseIdLessonLessonIdRouteImport
+      parentRoute: typeof AuthenticatedLearnRoute
     }
   }
 }
@@ -911,7 +891,6 @@ const AuthenticatedInstructorLessonRouteRouteWithChildren =
 
 interface AuthenticatedInstructorCourseCourseIdRouteRouteChildren {
   AuthenticatedInstructorCourseCourseIdChapterRoute: typeof AuthenticatedInstructorCourseCourseIdChapterRoute
-  AuthenticatedInstructorCourseCourseIdDetailRoute: typeof AuthenticatedInstructorCourseCourseIdDetailRoute
   AuthenticatedInstructorCourseCourseIdReviewRoute: typeof AuthenticatedInstructorCourseCourseIdReviewRoute
   AuthenticatedInstructorCourseCourseIdSettingsRoute: typeof AuthenticatedInstructorCourseCourseIdSettingsRoute
   AuthenticatedInstructorCourseCourseIdStudentRoute: typeof AuthenticatedInstructorCourseCourseIdStudentRoute
@@ -922,8 +901,6 @@ const AuthenticatedInstructorCourseCourseIdRouteRouteChildren: AuthenticatedInst
   {
     AuthenticatedInstructorCourseCourseIdChapterRoute:
       AuthenticatedInstructorCourseCourseIdChapterRoute,
-    AuthenticatedInstructorCourseCourseIdDetailRoute:
-      AuthenticatedInstructorCourseCourseIdDetailRoute,
     AuthenticatedInstructorCourseCourseIdReviewRoute:
       AuthenticatedInstructorCourseCourseIdReviewRoute,
     AuthenticatedInstructorCourseCourseIdSettingsRoute:
@@ -974,11 +951,12 @@ const AuthenticatedInstructorRouteRouteWithChildren =
   )
 
 interface AuthenticatedLearnRouteChildren {
-  AuthenticatedLearnLearnCourseIdRoute: typeof AuthenticatedLearnLearnCourseIdRoute
+  AuthenticatedLearnLearnCourseIdLessonLessonIdRoute: typeof AuthenticatedLearnLearnCourseIdLessonLessonIdRoute
 }
 
 const AuthenticatedLearnRouteChildren: AuthenticatedLearnRouteChildren = {
-  AuthenticatedLearnLearnCourseIdRoute: AuthenticatedLearnLearnCourseIdRoute,
+  AuthenticatedLearnLearnCourseIdLessonLessonIdRoute:
+    AuthenticatedLearnLearnCourseIdLessonLessonIdRoute,
 }
 
 const AuthenticatedLearnRouteWithChildren =

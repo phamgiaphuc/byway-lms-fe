@@ -1,5 +1,9 @@
-import { optionalFileSchema } from "@/types/file";
+import { optionalFileSchema, type File } from "@/types/file";
 import z from "zod";
+
+export type LessonFilter = {
+  id: string;
+};
 
 export type LessonType = "lecture" | "video";
 
@@ -15,6 +19,7 @@ export type Lesson = {
   content: string;
   createdAt: string;
   updatedAt: string;
+  video: File;
 };
 
 export const createLessonSchema = z.object({

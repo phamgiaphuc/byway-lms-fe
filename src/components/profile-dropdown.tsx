@@ -21,14 +21,13 @@ import {
   Users,
 } from "lucide-react";
 import { ls } from "@/lib/helpers";
-import type { QueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { useUserStore } from "@/hooks/zustand/use-user-store";
 import { useMemo } from "react";
 
 type ProfileDropdownProps = {
   profile: User;
-  queryClient: QueryClient;
 };
 
 type MenuItems = {
@@ -81,9 +80,10 @@ const menu: Record<Role, MenuSection[]> = {
   ],
 };
 
-const ProfileDropdown = ({ profile, queryClient }: ProfileDropdownProps) => {
+const ProfileDropdown = ({ profile }: ProfileDropdownProps) => {
   const navigate = useNavigate();
   const { signOut } = useUserStore();
+  const queryClient = useQueryClient();
 
   const sections = useMemo(() => menu[profile.role] ?? [], []);
 

@@ -17,7 +17,7 @@ const UserSidebar = () => {
   const matchRoute = useMatchRoute();
 
   return (
-    <div className="h-fit w-full max-w-[300px] overflow-hidden rounded-lg bg-[#F8FAFC]">
+    <div className="h-fit w-full max-w-[300px] overflow-hidden rounded-lg border bg-[#F8FAFC]">
       <div className="flex flex-col items-center justify-center gap-4 p-6">
         <img src={profile.image} alt={profile.name} className="size-24 rounded-full" />
         <Label className="text-lg font-semibold">{profile.name}</Label>

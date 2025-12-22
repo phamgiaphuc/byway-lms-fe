@@ -110,21 +110,6 @@ const CourseDetailHeader = () => {
             Reviews
           </Link>
           <Link
-            to="/instructor/course/$courseId/detail"
-            params={{ courseId: data.id }}
-            className={cn(
-              "px-4 py-2 font-medium transition-colors",
-              matchRoute({
-                to: "/instructor/course/$courseId/detail",
-                params: { courseId: data.id },
-              })
-                ? "border-primary text-primary border-b-2"
-                : "text-muted-foreground hover:text-primary",
-            )}
-          >
-            Detail
-          </Link>
-          <Link
             to="/instructor/course/$courseId/settings"
             params={{ courseId: data.id }}
             className={cn(

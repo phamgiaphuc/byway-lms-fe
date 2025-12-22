@@ -6,7 +6,7 @@ import { getExtFileIcon } from "@/lib/helpers";
 import type { File } from "@/types/file";
 import { Link } from "@tanstack/react-router";
 import { UploadCloud, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDropzone, type DropzoneOptions } from "react-dropzone";
 
 type FileDropzoneProps = {
@@ -34,7 +34,7 @@ const FileDropzone = ({
   subLabel = "JPEG, PNG, and SVG formats, up to 10MB",
   onFilesChange,
 }: FileDropzoneProps) => {
-  const [currentFiles, setCurrentFiles] = useState<File[]>(files);
+  const [currentFiles, setCurrentFiles] = useState<File[]>([]);
   const { mutate, isPending } = useUploadMultiple();
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -67,6 +67,10 @@ const FileDropzone = ({
     setCurrentFiles(files);
     onFilesChange(files);
   };
+
+  useEffect(() => {
+    setCurrentFiles(files);
+  }, [files]);
 
   return (
     <div>
